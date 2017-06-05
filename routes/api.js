@@ -7,7 +7,7 @@ const router = express.Router()
  * Return the current Authenticated User.
  */
 router.get('/me',
-  passport.authenticate('bearer', { session: false }),
+  passport.authenticate('jwt', { session: false }),
   (req, res) => {
     res.json(req.user)
   }

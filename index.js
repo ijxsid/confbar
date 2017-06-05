@@ -10,6 +10,7 @@ import config from './config'
 import User from './models/User'
 import authTwitter from './authTwitter'
 import bearerStrategy from './bearerStrategy'
+import jwtStrategy from './jwtStrategy'
 /**
  * configureApp - adds configuration and bootstraps express App.
  *
@@ -39,7 +40,7 @@ function configureApp () {
   }))
 
   passport.use(authTwitter)
-  passport.use(bearerStrategy)
+  passport.use(jwtStrategy)
   passport.serializeUser((user, cb) => {
     cb(null, user._id)
   })
