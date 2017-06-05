@@ -1,6 +1,6 @@
 {
-  "name": "express-twitter-login",
-  "version": "92.0.0",
+  "name": "confy-conf",
+  "version": "1.0.0",
   "main": "index.js",
   "license": "MIT",
   "scripts": {
