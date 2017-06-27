@@ -9,7 +9,6 @@ import myRoutes from './routes/index'
 import config from './config'
 import User from './models/User'
 import authTwitter from './authTwitter'
-import bearerStrategy from './bearerStrategy'
 import jwtStrategy from './jwtStrategy'
 /**
  * configureApp - adds configuration and bootstraps express App.
