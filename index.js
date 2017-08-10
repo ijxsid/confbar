@@ -3,22 +3,22 @@ import bodyParser from 'body-parser'
 import passport from 'passport'
 import session from 'express-session'
 import mongoose from 'mongoose'
-import connectMongo from 'connect-mongo'
 import morgan from 'morgan'
 import myRoutes from './routes/index'
 import config from './config'
 import User from './models/User'
 import authTwitter from './authTwitter'
 import jwtStrategy from './jwtStrategy'
+
 /**
  * configureApp - adds configuration and bootstraps express App.
  *
  * @returns {object}  Express App Object
  */
+
 function configureApp () {
   const app = express()
   mongoose.connect(config.database.url)
-  const MongoStore = connectMongo(session)
 
   mongoose.connection.on('error', function (err) {
     console.error('MongoDB error: %s', err)
@@ -29,6 +29,12 @@ function configureApp () {
   app.use(bodyParser.urlencoded({
     extended: true
   }))
+
+  app.use((req, res, next) => {
+    res.header('Access-Control-Allow-Origin', '*')
+    res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept, Authorization')
+    next()
+  })
 
   app.use(session({
     secret: config.express.secret,
@@ -59,6 +65,7 @@ function configureApp () {
   return app
 }
 
+mongoose.Promise = global.Promise
 const app = configureApp()
 
 
