@@ -8,23 +8,20 @@ const app = next({ dev })
 const handle = app.getRequestHandler()
 
 app.prepare()
-.then(() => {
-  const server = express()
-  server.use(cookieParser())
+  .then(() => {
+    const server = express()
+    server.use(cookieParser())
 
-  server.get('/auth', (req, res) => {
-    if (req.query.jwt) {
-      res.cookie('token', req.query.jwt, { maxAge: 60 * 60 * 24 * 100, httpOnly: true, path: '/' })
-    }
-    return app.render(req, res, '/auth', req.query)
-  })
+    server.get('/auth', (req, res) => {
+      return app.render(req, res, '/auth', req.query)
+    })
 
-  server.get('*', (req, res) => {
-    return handle(req, res)
-  })
+    server.get('*', (req, res) => {
+      return handle(req, res)
+    })
 
-  server.listen(process.env.PORT, (err) => {
-    if (err) throw err
-    console.log(`> Ready on http://localhost:${process.env.PORT}`)
+    server.listen(process.env.PORT, (err) => {
+      if (err) throw err
+      console.log(`> Ready on http://localhost:${process.env.PORT}`)
+    })
   })
-})

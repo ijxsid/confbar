@@ -6,6 +6,7 @@ import Link from 'next/link'
 import config from '../config'
 import { string, object } from 'prop-types'
 import UserCard from '../components/UserCard'
+import Layout from '../components/Layout'
 
 class Index extends Component {
   componentDidMount () {
@@ -14,10 +15,10 @@ class Index extends Component {
   render () {
     const { token, user } = this.props
     return (
-      <div>
+      <Layout>
         { !token && <a href={`${config.backend.base}${config.backend.auth}`}>Login With Twitter</a> }
         { !!token && <UserCard user={user} /> }
-      </div>
+      </Layout>
     )
   }
 }

@@ -1,6 +1,6 @@
 {
   "backend": {
-    "base": "http://127.0.0.1:3005",
+    "base": "http://127.0.0.1:3001",
     "auth": "/login/twitter/",
     "api": "/api/"
   }

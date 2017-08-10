@@ -3,7 +3,6 @@ import { makeStore } from '../lib/reducers'
 import withRedux from 'next-redux-wrapper'
 import Link from 'next/link'
 
-
 let Auth = ({ token }) => (
   <div>
     <Link href="/"><a>Go to Home Page</a></Link>
@@ -11,13 +10,15 @@ let Auth = ({ token }) => (
   </div>
 )
 
-Auth.getInitialProps = ({ store, isServer, pathname, query }) => {
+Auth.getInitialProps = ({ store, req, isServer, pathname, query }) => {
+
+  console.log(req.cookies.token)
   store.dispatch({
     type: 'ADD_TOKEN',
-    token: query.jwt
+    token: req.cookies.token
   })
 
-  return { token: query.jwt }
+  return { token: req.cookies.token }
 }
 
 Auth = withRedux(makeStore)(Auth)
