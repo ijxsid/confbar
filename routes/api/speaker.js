@@ -2,15 +2,15 @@ import passport from 'passport'
 import mongoose from 'mongoose'
 
 
-import Conference from '../../models/Conference'
+import Speaker from '../../models/Speaker'
 
 
 function isValidObjectID (string) {
   return mongoose.Types.ObjectId.isValid(string)
 }
 
-export default function conference (router) {
-  router.post('/conferences/',
+export default function speaker (router) {
+  router.post('/speakers/',
     passport.authenticate('jwt', { session: false }),
     (req, res) => {
       const currentTime = (new Date()).getTime()
@@ -19,42 +19,41 @@ export default function conference (router) {
         createdAt: currentTime
       })
 
-      Conference
-        .find({'name': data.name, 'year': data.year})
+      Speaker
+        .find({'name': data.name, 'twitterUsername': data.twitterUsername})
         .exec()
-        .then((confs) => {
-          if (confs.length > 0) {
-            throw new Error(`Conference ${data.name} already exists for year ${data.year}`)
+        .then((speakers) => {
+          if (speakers.length > 0) {
+            throw new Error(`Speaker ${data.name}(${data.twitterUsername}) already exists.`)
           }
-          let conf = new Conference(data)
-          return conf.save()
+          let speaker = new Speaker(data)
+          return speaker.save()
         })
         .catch(err => {
-          // Conflict Error.
+          // Speaker Already Exists. Conflict Error.
           res.status(409).json({
             info: err.message
           })
         })
-        .then((savedconf) => {
-          return res.json(savedconf)
+        .then((savedspeaker) => {
+          return res.json(savedspeaker)
         })
         .catch((err) => {
-          console.log(err);
           return res.status(400).json({err})
         })
     }
   )
 
-  router.get('/conferences/', (req, res) => {
+  router.get('/speakers/', (req, res) => {
     const { page, search } = req.query
 
-    Conference
+    Speaker
       .find({name: {'$regex': search || '', '$options': 'i'}})
       .skip((page || 0) * 20)
       .limit(20)
       .exec()
-      .then((confs) => {
-        return res.status(200).send(confs)
+      .then((speakers) => {
+        return res.status(200).send(speakers)
       })
       .catch((err) => {
         return res.status(400).json({err})
