@@ -1,14 +1,12 @@
 import React from 'react'
 import Head from 'next/head'
 import { injectGlobal } from 'styled-components'
+import { object } from 'prop-types'
 
 injectGlobal`
-  body {
-    background: #a8f8f8;
-  }
 `
 
-export default ({ children }) => (
+const Layout = ({ children }) => (
   <div>
     <Head>
       <meta charSet="UTF-8"/>
@@ -20,3 +18,9 @@ export default ({ children }) => (
     {children}
   </div>
 )
+
+Layout.propTypes = {
+  children: object
+}
+
+export default Layout

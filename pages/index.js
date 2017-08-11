@@ -1,23 +1,38 @@
 import React, { Component } from "react"
-import { makeStore } from '../lib/reducers'
+import makeStore from '../lib/makeStore'
 import withRedux from 'next-redux-wrapper'
 import fetch from 'isomorphic-unfetch'
-import Link from 'next/link'
 import config from '../config'
-import { string, object } from 'prop-types'
-import UserCard from '../components/UserCard'
+import { string, object, func } from 'prop-types'
 import Layout from '../components/Layout'
+import { authActions } from '../lib/actions'
+
+
+/**
+ * Index will show a list of All Conferences.
+ * TODO: This will move to Conferences page afterwards.
+ */
 
 class Index extends Component {
   componentDidMount () {
     console.log("Component Did Mount")
+    this.props.dispatch(authActions.addToken('2949401002394994'))
+    this.props.dispatch(authActions.addUserInfo(
+      {
+        name: 'Inderjit'
+      }
+    ))
+    this.props.dispatch({
+      type: 'AJD_1'
+    })
   }
   render () {
-    const { token, user } = this.props
+    const { token } = this.props
     return (
       <Layout>
-        { !token && <a href={`${config.backend.base}${config.backend.auth}`}>Login With Twitter</a> }
-        { !!token && <UserCard user={user} /> }
+        <div>
+          { !token && <a href={`${config.backend.base}${config.backend.auth}`}>Login With Twitter</a> }
+        </div>
       </Layout>
     )
   }
@@ -25,33 +40,17 @@ class Index extends Component {
 
 Index.propTypes = {
   token: string,
-  user: object
+  user: object,
+  dispatch: func
 }
 
 
-Index.getInitialProps = async ({ store, isServer, req, pathname, query }) => {
-  if (isServer) {
+Index.getInitialProps = ({ store, isServer, req, pathname, query }) => {
+  if (isServer && req.cookies.token) {
     console.log("req.cookies =>", req.cookies)
-    store.dispatch({
-      type: 'ADD_TOKEN',
-      token: req.cookies.token
-    })
+    store.dispatch(authActions.addToken(req.cookies.token))
   } else {
     console.log(store.getState())
-  }
-  try {
-    const userReq = await fetch(`${config.backend.base}${config.backend.api}/me`, {
-      headers: {
-        'Authorization': `JWT ${store.getState().token}`,
-        'Content-Type': 'application/json'
-      }
-    })
-    const user = await userReq.json()
-    return { user }
-    console.log("user =>", user)
-  } catch (err) {
-    console.log("err => ", err)
-    return { err }
   }
 }
 

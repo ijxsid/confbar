@@ -12,8 +12,8 @@ app.prepare()
     const server = express()
     server.use(cookieParser())
 
-    server.get('/auth', (req, res) => {
-      return app.render(req, res, '/auth', req.query)
+    server.get('/authenticated', (req, res) => {
+      return app.render(req, res, '/authenticated', req.query)
     })
 
     server.get('*', (req, res) => {
