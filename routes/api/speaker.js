@@ -1,13 +1,8 @@
 import passport from 'passport'
-import mongoose from 'mongoose'
 
-
+import { isValidObjectID } from './utils'
 import Speaker from '../../models/Speaker'
 
-
-function isValidObjectID (string) {
-  return mongoose.Types.ObjectId.isValid(string)
-}
 
 export default function speaker (router) {
   router.post('/speakers/',

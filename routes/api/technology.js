@@ -1,10 +1,10 @@
 import passport from 'passport'
 
 import { isValidObjectID } from './utils'
-import Conference from '../../models/Conference'
+import Technology from '../../models/Technology'
 
 export default function conference (router) {
-  router.post('/conferences/',
+  router.post('/technologies/',
     passport.authenticate('jwt', { session: false }),
     (req, res) => {
       const currentTime = (new Date()).getTime()
@@ -13,24 +13,24 @@ export default function conference (router) {
         createdAt: currentTime
       })
 
-      Conference
-        .find({'name': data.name, 'year': data.year})
+      Technology
+        .find({'name': data.name})
         .exec()
-        .then((confs) => {
-          if (confs.length > 0) {
-            throw new Error(`Conference ${data.name} already exists for year ${data.year}`)
+        .then((techs) => {
+          if (techs.length > 0) {
+            throw new Error(`Technology ${data.name} already exists.`)
           }
-          let conf = new Conference(data)
-          return conf.save()
+          let tech = new Technology(data)
+          return tech.save()
         })
         .catch(err => {
-          // Conference Already Exists. Conflict Error.
+          // Technology Already Exists. Conflict Error.
           res.status(409).json({
             info: err.message
           })
         })
-        .then((savedconf) => {
-          return res.json(savedconf)
+        .then((savedtech) => {
+          return res.json(savedtech)
         })
         .catch((err) => {
           return res.status(400).json({err})
@@ -38,16 +38,16 @@ export default function conference (router) {
     }
   )
 
-  router.get('/conferences/', (req, res) => {
+  router.get('/technologies/', (req, res) => {
     const { page, search } = req.query
 
-    Conference
+    Technology
       .find({name: {'$regex': search || '', '$options': 'i'}})
       .skip((page || 0) * 20)
       .limit(20)
       .exec()
-      .then((confs) => {
-        return res.status(200).send(confs)
+      .then((techs) => {
+        return res.status(200).send(techs)
       })
       .catch((err) => {
         return res.status(400).json({err})
