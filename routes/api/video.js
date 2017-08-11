@@ -1,6 +1,6 @@
 import passport from 'passport'
 
-import { isValidObjectID } from './utils'
+import { isValidObjectID, ConflictError } from './utils'
 import Video from '../../models/Video'
 
 export default function conference (router) {
@@ -18,16 +18,20 @@ export default function conference (router) {
         .exec()
         .then((videos) => {
           if (videos.length > 0) {
-            throw new Error(`Video ${data.link} already exists.`)
+            throw new ConflictError(`Video ${data.link} already exists.`)
           }
           let video = new Video(data)
           return video.save()
         })
         .catch(err => {
           // Technology Already Exists. Conflict Error.
-          res.status(409).json({
-            info: err.message
-          })
+          if (err instanceof ConflictError) {
+            res.status(409).json({
+              info: err.message
+            })
+          } else {
+            throw err
+          }
         })
         .then((savedvideo) => {
           return res.json(savedvideo)

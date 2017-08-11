@@ -1,6 +1,6 @@
 import passport from 'passport'
 
-import { isValidObjectID } from './utils'
+import { isValidObjectID, ConflictError } from './utils'
 import Speaker from '../../models/Speaker'
 
 
@@ -26,9 +26,13 @@ export default function speaker (router) {
         })
         .catch(err => {
           // Speaker Already Exists. Conflict Error.
-          res.status(409).json({
-            info: err.message
-          })
+          if (err instanceof ConflictError) {
+            res.status(409).json({
+              info: err.message
+            })
+          } else {
+            throw err
+          }
         })
         .then((savedspeaker) => {
           return res.json(savedspeaker)

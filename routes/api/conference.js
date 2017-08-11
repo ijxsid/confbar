@@ -1,6 +1,6 @@
 import passport from 'passport'
 
-import { isValidObjectID } from './utils'
+import { isValidObjectID, ConflictError } from './utils'
 import Conference from '../../models/Conference'
 
 export default function conference (router) {
@@ -25,9 +25,13 @@ export default function conference (router) {
         })
         .catch(err => {
           // Conference Already Exists. Conflict Error.
-          res.status(409).json({
-            info: err.message
-          })
+          if (err instanceof ConflictError) {
+            res.status(409).json({
+              info: err.message
+            })
+          } else {
+            throw err
+          }
         })
         .then((savedconf) => {
           return res.json(savedconf)
