@@ -1,9 +1,9 @@
 import React from "react"
 import makeStore from '../lib/makeStore'
+import { authActions, fetchUserInfo } from '../lib/actions'
 import withRedux from 'next-redux-wrapper'
 import Link from 'next/link'
-import fetch from 'isomorphic-unfetch'
-import config from '../config'
+import { object } from 'prop-types'
 
 let Authenticated = ({ user }) => (
   <div>
@@ -13,29 +13,18 @@ let Authenticated = ({ user }) => (
 )
 
 Authenticated.getInitialProps = async ({ store, req, isServer, pathname, query }) => {
-  console.log(req.cookies.token)
-
-  if (req.cookies.token) {
-    store.dispatch({
-      type: 'ADD_TOKEN',
-      token: req.cookies.token
-    })
+  if (isServer && req.cookies.token) {
+    store.dispatch(authActions.addToken(req.cookies.token))
+  } else {
+    console.log(store.getState())
   }
+  const token = store.getState().auth.token
+  await store.dispatch(fetchUserInfo(token))
+  return { user: store.getState().auth.user }
+}
 
-  try {
-    const userReq = await fetch(`${config.backend.base}${config.backend.api}/me`, {
-      headers: {
-        'Authorization': `JWT ${store.getState().token}`,
-        'Content-Type': 'application/json'
-      }
-    })
-    const user = await userReq.json()
-    return { user }
-    console.log("user =>", user)
-  } catch (err) {
-    console.log("err => ", err)
-    return { err }
-  }
+Authenticated.propTypes = {
+  user: object
 }
 
 Authenticated = withRedux(makeStore)(Authenticated)

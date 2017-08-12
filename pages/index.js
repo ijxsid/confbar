@@ -1,11 +1,10 @@
 import React, { Component } from "react"
 import makeStore from '../lib/makeStore'
 import withRedux from 'next-redux-wrapper'
-import fetch from 'isomorphic-unfetch'
 import config from '../config'
-import { string, object, func } from 'prop-types'
+import { string, object, func, array } from 'prop-types'
 import Layout from '../components/Layout'
-import { authActions } from '../lib/actions'
+import { authActions, doFetchConferences, fetchUserInfo } from '../lib/actions'
 
 
 /**
@@ -16,15 +15,7 @@ import { authActions } from '../lib/actions'
 class Index extends Component {
   componentDidMount () {
     console.log("Component Did Mount")
-    this.props.dispatch(authActions.addToken('2949401002394994'))
-    this.props.dispatch(authActions.addUserInfo(
-      {
-        name: 'Inderjit'
-      }
-    ))
-    this.props.dispatch({
-      type: 'AJD_1'
-    })
+    console.log(this.props.conferences, this.props.token)
   }
   render () {
     const { token } = this.props
@@ -32,6 +23,7 @@ class Index extends Component {
       <Layout>
         <div>
           { !token && <a href={`${config.backend.base}${config.backend.auth}`}>Login With Twitter</a> }
+          <pre><code>{ JSON.stringify({ conferences: this.props.conferences }, 2, 4)}</code></pre>
         </div>
       </Layout>
     )
@@ -41,19 +33,25 @@ class Index extends Component {
 Index.propTypes = {
   token: string,
   user: object,
-  dispatch: func
+  dispatch: func,
+  conferences: array
 }
 
 
-Index.getInitialProps = ({ store, isServer, req, pathname, query }) => {
+Index.getInitialProps = async ({ store, isServer, req, pathname, query }) => {
   if (isServer && req.cookies.token) {
-    console.log("req.cookies =>", req.cookies)
     store.dispatch(authActions.addToken(req.cookies.token))
   } else {
     console.log(store.getState())
   }
+  const token = store.getState().auth.token
+  await store.dispatch(doFetchConferences())
+
+  if (token) {
+    await store.dispatch(fetchUserInfo(token))
+  }
 }
 
-Index = withRedux(makeStore, (state) => ({ token: state.token }))(Index)
+Index = withRedux(makeStore, (state) => ({ token: state.auth.token, conferences: state.conferences }))(Index)
 
 export default Index
