@@ -4,6 +4,7 @@ import withRedux from 'next-redux-wrapper'
 import { string, object, func, array } from 'prop-types'
 import Layout from '../components/Layout'
 import { authActions, doFetchConferences, fetchUserInfo } from '../lib/actions'
+import ConfList from '../components/ConfList'
 
 
 /**
@@ -13,7 +14,6 @@ import { authActions, doFetchConferences, fetchUserInfo } from '../lib/actions'
 
 class Index extends Component {
   componentDidMount () {
-    console.log("Component Did Mount")
     console.log(this.props.conferences, this.props.token)
   }
   render () {
@@ -21,7 +21,7 @@ class Index extends Component {
     return (
       <Layout user={user}>
         <div>
-          <pre><code>{ JSON.stringify({ conferences: this.props.conferences }, 2, 4)}</code></pre>
+          <ConfList conferences={this.props.conferences.items} />
         </div>
       </Layout>
     )

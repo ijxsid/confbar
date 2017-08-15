@@ -17,6 +17,7 @@ const Layout = ({ user, children }) => (
       <meta httpEquiv="X-UA-Compatible" content="ie=edge"/>
       <title>Confbar v0.1</title>
       <link rel="stylesheet" href="/static/css/index.css"/>
+      <link rel="stylesheet" href="/static/icons/styles.css"/>
     </Head>
     <Navbar user={user}/>
     {children}
