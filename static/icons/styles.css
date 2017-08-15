@@ -71,3 +71,12 @@
 .icon-heart:before {
   content: "\6b";
 }
+.icon-tags:before {
+  content: "\6c";
+}
+.icon-microphone:before {
+  content: "\6d";
+}
+.icon-youtube:before {
+  content: "\6e";
+}
