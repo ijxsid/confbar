@@ -1,6 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
 import { getThumbnail } from '../lib/youtubeUtils'
+import ConferenceSticky from './ConferenceSticky'
 
 const VideoListContainer = styled.div`
   width: 75%;
@@ -26,13 +27,12 @@ const VideoThumbnail = styled.img`
   width: 100%;
 `
 
-
 const VideoInfo = ({ video }) => (
   <VideoContainer>
     <VideoThumbnail src={getThumbnail(video.link)} alt=""/>
     <VideoInfoContainer>
-      <div className="title is-6">{video.name}</div>
-      <div>Part of : {video.conference.name} ({video.conference.year}) </div>
+      <div className="title is-6" style={{ marginBottom: '0.65rem' }}>{video.name}</div>
+      <ConferenceSticky conference={video.conference} />
       <div><i className="icon-microphone"/>: {video.speaker.name} </div>
       <div><i className="icon-tags" /> {video.tags.map(t => t.name).join(', ')}</div>
     </VideoInfoContainer>
