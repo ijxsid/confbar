@@ -1,7 +1,6 @@
 import React, { Component } from "react"
 import makeStore from '../lib/makeStore'
 import withRedux from 'next-redux-wrapper'
-import config from '../config'
 import { string, object, func, array } from 'prop-types'
 import Layout from '../components/Layout'
 import { authActions, doFetchConferences, fetchUserInfo } from '../lib/actions'
@@ -18,11 +17,10 @@ class Index extends Component {
     console.log(this.props.conferences, this.props.token)
   }
   render () {
-    const { token } = this.props
+    const { user } = this.props
     return (
-      <Layout>
+      <Layout user={user}>
         <div>
-          { !token && <a href={`${config.backend.base}${config.backend.auth}`}>Login With Twitter</a> }
           <pre><code>{ JSON.stringify({ conferences: this.props.conferences }, 2, 4)}</code></pre>
         </div>
       </Layout>
@@ -52,6 +50,8 @@ Index.getInitialProps = async ({ store, isServer, req, pathname, query }) => {
   }
 }
 
-Index = withRedux(makeStore, (state) => ({ token: state.auth.token, conferences: state.conferences }))(Index)
+Index = withRedux(makeStore,
+  (state) => ({ token: state.auth.token, conferences: state.conferences, user: state.auth.user })
+)(Index)
 
 export default Index
