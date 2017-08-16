@@ -89,3 +89,6 @@
 .icon-tag:before {
   content: "\71";
 }
+.icon-play:before {
+  content: "\72";
+}

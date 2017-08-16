@@ -1,6 +1,7 @@
 import React from 'react'
 import { shape, string } from 'prop-types'
 import config from '../config'
+import Link from 'next/link'
 
 const LoginWithTwitter = () => (
   <div className="navbar-item">
@@ -62,9 +63,12 @@ class Navbar extends React.Component {
     return (
       <nav className="navbar">
         <div className="navbar-brand">
-          <a className="navbar-item" href="/">
-            <h1 className="title is-3" style={{ color: '#C02727' }}>Confbar</h1>
-          </a>
+          <Link href="/">
+            <a className="navbar-item">
+              <h1 className="title is-3" style={{ color: '#C02727' }}>Confbar</h1>
+            </a>
+          </Link>
+
 
           <div className={`navbar-burger burger ${hamburgerClicked ? 'is-active' : ''}`}
             data-target="navMenuExample"

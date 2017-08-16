@@ -1,6 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
 import simpleDate from '../lib/simpleDate'
+import Link from 'next/link'
 import { object, array } from 'prop-types'
 
 const ConfListContainer = styled.div`
@@ -52,8 +53,9 @@ const Conference = ({ conf }) => (
     <ConfLogo src={conf.logo} />
     <ConfInfo>
       <div className="title is-4">
-        <a href={`/conference?id=${conf._id}`}>{conf.name} - {conf.year}
-        </a>
+        <Link href={`/conference?id=${conf._id}`}>
+          <a>{conf.name} - {conf.year}</a>
+        </Link>
       </div>
       <div><FontIconStyled className="icon-location" /> {conf.location}</div>
       <div>
