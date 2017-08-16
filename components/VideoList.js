@@ -84,7 +84,7 @@ class VideoInfo extends React.Component {
       <VideoContainer>
         <VideoInfoContainer>
           <div className="title is-6" style={{ marginBottom: '0.15rem' }}>
-            <Link href={`/videos?id=${video._id}`}>
+            <Link href={`/video?id=${video._id}`}>
               <a>{video.name}</a>
             </Link>
           </div>
