@@ -31,7 +31,7 @@ const ConferenceSticky = ({ conference }) => (
     <ConferenceStickyPad />
     <ConferenceStickyStyled>
       <Link href={`/conference?id=${conference._id}`}>
-        {`${conference.name} ● ${conference.year}`}
+        <a>{`${conference.name} ● ${conference.year}`}</a>
       </Link>
     </ConferenceStickyStyled>
   </ConferenceStickyContainer>

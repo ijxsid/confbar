@@ -80,3 +80,12 @@
 .icon-youtube:before {
   content: "\6e";
 }
+.icon-files:before {
+  content: "\6f";
+}
+.icon-github:before {
+  content: "\70";
+}
+.icon-tag:before {
+  content: "\71";
+}
