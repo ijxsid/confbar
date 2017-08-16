@@ -2,6 +2,7 @@ import passport from 'passport'
 
 import { isValidObjectID, ConflictError } from './utils'
 import Conference from '../../models/Conference'
+import Video from '../../models/Video'
 
 export default function conference (router) {
   router.post('/conferences/',
@@ -51,10 +52,61 @@ export default function conference (router) {
       .limit(20)
       .exec()
       .then((confs) => {
-        return res.status(200).send(confs)
+        return res.status(200).json(confs)
       })
       .catch((err) => {
         return res.status(400).json({err})
       })
   })
+
+
+  router.get('/conferences/:id/', (req, res) => {
+    const { id } = req.params
+
+    if (!isValidObjectID(id)) return res.status(400).json({info: `conference with id:${id} does not exist.`})
+
+    const conferenceQuery = Conference.findById(id).exec()
+    const videosQuery = Video.find({ conference: id }).populate('speaker').populate('tags').exec()
+
+    Promise.all([conferenceQuery, videosQuery])
+      .then(([conference, videos]) => {
+        return res.status(200).send({conference, videos})
+      })
+      .catch(err => {
+        return res.status(400).json({err})
+      })
+  })
+
+  router.put('/conferences/:id',
+    passport.authenticate('jwt', { session: false }),
+    (req, res) => {
+      const { id } = req.params
+
+      if (!isValidObjectID(id)) return res.status(400).json({info: `conference with id:${id} does not exist.`})
+
+      if (!req.user.isAdmin) return res.status(401).json({info: `Not Authorized to make this request.`})
+
+      Conference
+        .findById(id)
+        .exec()
+        .then((conf) => {
+          if (conf) {
+            const data = Object.assign({}, req.body, {
+              lastModifiedAt: Date.now(),
+              lastModifiedBy: req.user._id
+            })
+            conf.updateData(data)
+            return conf.save()
+          } else {
+            res.status(404).json({info: `conference with id:${id} does not exist.`})
+          }
+        })
+        .then(conf => {
+          console.log('Conference Updated.')
+          return res.status(200).json(conf)
+        })
+        .catch(err => {
+          return res.status(400).json({err})
+        })
+    })
 }

@@ -8,7 +8,8 @@ const userSchema = new mongoose.Schema({
   following: Number,
   twitterAccessToken: String,
   twitterAccessTokenSecret: String,
-  appToken: String
+  appToken: String,
+  isAdmin: {type: Boolean, default: false}
 })
 
 export default mongoose.model('User', userSchema)
