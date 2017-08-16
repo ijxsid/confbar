@@ -24,9 +24,12 @@ const VideoContainer = styled.div`
   :hover {
     box-shadow: 0px 0px 20px 15px rgba(170, 170, 190, 0.1);
   }
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 `
 const VideoInfoContainer = styled.div`
-  padding: 2px 20px 15px;
+  padding: 10px 20px 10px;
 `
 
 
@@ -79,6 +82,13 @@ class VideoInfo extends React.Component {
     const { videoClicked } = this.state
     return (
       <VideoContainer>
+        <VideoInfoContainer>
+          <div className="title is-6" style={{ marginBottom: '0.15rem' }}>
+            <Link href={`/videos?id=${video._id}`}>
+              <a>{video.name}</a>
+            </Link>
+          </div>
+        </VideoInfoContainer>
         { videoClicked ?
           <YoutubeEmbed src={getEmbed(video.link)} frameBorder="0" allowFullScreen /> :
           <ThumbnailOverlay background={getThumbnail(video.link)} onClick={this.onThumbnailClick}>
@@ -86,11 +96,6 @@ class VideoInfo extends React.Component {
           </ThumbnailOverlay>
         }
         <VideoInfoContainer>
-          <div className="title is-6" style={{ marginBottom: '0.65rem' }}>
-            <Link href={`/videos?id=${video._id}`}>
-              <a>{video.name}</a>
-            </Link>
-          </div>
           <ConferenceSticky conference={video.conference} />
           <SpeakerSticky speaker={video.speaker}/>
           <TagSticky tags={video.tags}/>
