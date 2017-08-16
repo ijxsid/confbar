@@ -16,8 +16,8 @@ const ConferenceStickyStyled = styled.span`
 
 const ConferenceStickyPad = styled.span`
   display: inline-block;
-  width: 6px;
-  height: auto;
+  padding: 4px 5px;
+  color: rgb(254, 221, 223);
   background-color: rgb(251, 86, 96);
 `
 
@@ -28,7 +28,7 @@ const ConferenceStickyContainer = styled.div`
 `
 const ConferenceSticky = ({ conference }) => (
   <ConferenceStickyContainer>
-    <ConferenceStickyPad />
+    <ConferenceStickyPad> Part of </ConferenceStickyPad>
     <ConferenceStickyStyled>
       <Link href={`/conference?id=${conference._id}`}>
         <a>{`${conference.name} ● ${conference.year}`}</a>
