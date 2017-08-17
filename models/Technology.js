@@ -8,8 +8,19 @@ const technologySchema = new mongoose.Schema({
   repo: String,
   logo: String,
   addedBy: { type: String, ref: 'User', required: true },
-  createdAt: { type: Number, required: true }
+  createdAt: { type: Number, required: true },
+  lastModifiedAt: { type: Date },
+  lastModifiedBy: { type: String, ref: 'User' }
 })
 
+technologySchema.methods.updateData = function (data) {
+  this.name = data.name || this.name
+  this.website = data.website || this.website
+  this.blog = data.blog || this.blog
+  this.logo = data.logo || this.logo
+  this.repo = data.repo || this.repo
+  this.lastModifiedBy = data.lastModifiedBy || this.lastModifiedBy
+  this.lastModifiedAt = data.lastModifiedAt || this.lastModifiedAt
+}
 
 export default mongoose.model('Technology', technologySchema)
