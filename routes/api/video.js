@@ -98,12 +98,16 @@ export default function conference (router) {
         .exec()
         .then((video) => {
           if (video) {
-            const data = Object.assign({}, req.body, {
-              lastModifiedAt: Date.now(),
-              lastModifiedBy: req.user._id
-            })
-            video.updateData(data)
-            return video.save()
+            if (Object.keys(req.body).length > 0) {
+              const data = Object.assign({}, req.body, {
+                lastModifiedAt: Date.now(),
+                lastModifiedBy: req.user._id
+              })
+              video.updateData(data)
+              return video.save()
+            } else {
+              return video
+            }
           } else {
             res.status(404).json({info: `video with id:${id} does not exist.`})
           }

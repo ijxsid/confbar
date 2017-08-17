@@ -24,6 +24,8 @@ conferenceSchema.methods.updateData = function (data) {
   this.endDate = data.endDate || this.endDate
   this.location = data.location || this.location
   this.url = data.url || this.url
+  this.lastModifiedBy = data.lastModifiedBy || this.lastModifiedBy
+  this.lastModifiedAt = data.lastModifiedAt || this.lastModifiedAt
 }
 
 

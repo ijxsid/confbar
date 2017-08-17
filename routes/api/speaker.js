@@ -2,7 +2,7 @@ import passport from 'passport'
 
 import { isValidObjectID, ConflictError } from './utils'
 import Speaker from '../../models/Speaker'
-
+import Video from '../../models/Video'
 
 export default function speaker (router) {
   router.post('/speakers/',
@@ -58,4 +58,58 @@ export default function speaker (router) {
         return res.status(400).json({err})
       })
   })
+
+  router.get('/speakers/:id/', (req, res) => {
+    const { id } = req.params
+
+    if (!isValidObjectID(id)) return res.status(404).json({info: `speaker with id:${id} does not exist.`})
+
+    const speakerQuery = Speaker.findById(id).exec()
+    const videosQuery = Video.find({ speaker: id }).populate('conference').populate('tags').exec()
+
+    Promise.all([speakerQuery, videosQuery])
+      .then(([speaker, videos]) => {
+        return res.status(200).send({speaker, videos})
+      })
+      .catch(err => {
+        return res.status(400).json({err})
+      })
+  })
+
+  router.put('/speakers/:id',
+    passport.authenticate('jwt', { session: false }),
+    (req, res) => {
+      const { id } = req.params
+
+      if (!isValidObjectID(id)) return res.status(404).json({info: `speaker with id:${id} does not exist.`})
+
+      if (!req.user.isAdmin) return res.status(401).json({info: `Not Authorized to make this request.`})
+
+      Speaker
+        .findById(id)
+        .exec()
+        .then((speaker) => {
+          if (speaker) {
+            if (Object.keys(req.body).length > 0) {
+              const data = Object.assign({}, req.body, {
+                lastModifiedAt: Date.now(),
+                lastModifiedBy: req.user._id
+              })
+              speaker.updateData(data)
+              return speaker.save()
+            } else {
+              return speaker
+            }
+          } else {
+            res.status(404).json({info: `speaker with id:${id} does not exist.`})
+          }
+        })
+        .then(speaker => {
+          console.log('Speaker Updated.')
+          return res.status(200).json(speaker)
+        })
+        .catch(err => {
+          return res.status(400).json({err})
+        })
+    })
 }

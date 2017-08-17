@@ -63,7 +63,7 @@ export default function conference (router) {
   router.get('/conferences/:id/', (req, res) => {
     const { id } = req.params
 
-    if (!isValidObjectID(id)) return res.status(400).json({info: `conference with id:${id} does not exist.`})
+    if (!isValidObjectID(id)) return res.status(404).json({info: `conference with id:${id} does not exist.`})
 
     const conferenceQuery = Conference.findById(id).exec()
     const videosQuery = Video.find({ conference: id }).populate('speaker').populate('tags').exec()
@@ -82,7 +82,7 @@ export default function conference (router) {
     (req, res) => {
       const { id } = req.params
 
-      if (!isValidObjectID(id)) return res.status(400).json({info: `conference with id:${id} does not exist.`})
+      if (!isValidObjectID(id)) return res.status(404).json({info: `conference with id:${id} does not exist.`})
 
       if (!req.user.isAdmin) return res.status(401).json({info: `Not Authorized to make this request.`})
 
@@ -91,12 +91,16 @@ export default function conference (router) {
         .exec()
         .then((conf) => {
           if (conf) {
-            const data = Object.assign({}, req.body, {
-              lastModifiedAt: Date.now(),
-              lastModifiedBy: req.user._id
-            })
-            conf.updateData(data)
-            return conf.save()
+            if (Object.keys(req.body).length > 0) {
+              const data = Object.assign({}, req.body, {
+                lastModifiedAt: Date.now(),
+                lastModifiedBy: req.user._id
+              })
+              conf.updateData(data)
+              return conf.save()
+            } else {
+              return conf
+            }
           } else {
             res.status(404).json({info: `conference with id:${id} does not exist.`})
           }
