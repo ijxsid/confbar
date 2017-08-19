@@ -6,16 +6,19 @@ import Layout from '../components/Layout'
 import { fetchUserInfo, authActions, fetchConfById } from '../lib/actions'
 import VideoList from '../components/VideoList'
 
+import { confById } from '../lib/normalizers'
+
 
 class Conference extends React.Component {
-  componentDidMount () {
-    console.log("Current Conference Videos ->", this.props.conferences[this.props.id], this.props)
-  }
   render () {
+    const conference = this.props.entities.conferences[this.props.id]
+    const videoData = confById.denormalizeVideos(conference.videos, this.props.entities)
+    const videos = videoData.videos
     return (
       <Layout user={this.props.user}>
         <div>
-          <VideoList videos={this.props.conferences[this.props.id]} />
+          <VideoList videos={videos}
+          />
         </div>
       </Layout>
     )
@@ -24,9 +27,9 @@ class Conference extends React.Component {
 
 Conference.propTypes = {
   user: object,
-  dispatch: func,
-  conferences: object,
-  id: string
+  entities: object,
+  id: string,
+  dispatch: func
 }
 
 Conference.getInitialProps = async ({ store, isServer, req, pathname, query }) => {
@@ -40,12 +43,14 @@ Conference.getInitialProps = async ({ store, isServer, req, pathname, query }) =
   if (token) {
     await store.dispatch(fetchUserInfo(token))
   }
-
   return { id: query.id }
 }
 
 Conference = withRedux(makeStore,
-  (state) => ({ conferences: state.conferences.items, user: state.auth.user })
+  (state) => ({
+    user: state.auth.user,
+    entities: state.data
+  })
 )(Conference)
 
 export default Conference

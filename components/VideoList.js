@@ -115,7 +115,12 @@ VideoInfo.propTypes = {
 const VideoList = ({ videos }) => (
   <VideoListContainer>
     {
-      Array.isArray(videos) && videos.map(v => <VideoInfo video={v} key={v._id}/>)
+      Array.isArray(videos) && videos.map(v => (
+        <VideoInfo
+          video={v}
+          key={v._id}
+        />
+      ))
     }
   </VideoListContainer>
 )

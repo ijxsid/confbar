@@ -51,7 +51,7 @@ Index.getInitialProps = async ({ store, isServer, req, pathname, query }) => {
 
 Index = withRedux(makeStore,
   (state) => ({
-    conferences: Object.values(state.conferences.items),
+    conferences: Object.values(state.data.conferences),
     user: state.auth.user
   })
 )(Index)
