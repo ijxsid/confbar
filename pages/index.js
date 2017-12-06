@@ -2,7 +2,7 @@ import React, { Component } from "react"
 import makeStore from '../lib/makeStore'
 import withRedux from 'next-redux-wrapper'
 import { object, func, array } from 'prop-types'
-import Layout from '../components/Layout'
+import Layout from '../components/shared/Layout'
 import { authActions, doFetchConferences, fetchUserInfo } from '../lib/actions'
 import ConfList from '../components/ConfList'
 

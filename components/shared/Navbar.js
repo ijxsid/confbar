@@ -1,6 +1,6 @@
 import React from 'react'
 import { shape, string } from 'prop-types'
-import config from '../config'
+import config from '../../config'
 import Link from 'next/link'
 
 const LoginWithTwitter = () => (
@@ -120,7 +120,7 @@ class Navbar extends React.Component {
 
 Navbar.propTypes = {
   user: shape({
-    displayName: string.isRequired
+    displayName: string
   })
 }
 export default Navbar

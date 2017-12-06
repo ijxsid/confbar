@@ -2,20 +2,20 @@ import React from 'react'
 import makeStore from '../lib/makeStore'
 import withRedux from 'next-redux-wrapper'
 import { string, object, func } from 'prop-types'
-import Layout from '../components/Layout'
+import Layout from '../components/shared/Layout'
 import { fetchUserInfo, authActions, fetchConfById } from '../lib/actions'
 import SingleVideo from '../components/SingleVideo'
 
 
 class Video extends React.Component {
   componentDidMount () {
-    console.log("Current Conference Videos ->", this.props.conferences[this.props.id], this.props)
+    console.log("Current Conference Videos ->", this.props.videos, this.props)
   }
   render () {
     return (
       <Layout user={this.props.user}>
         <div>
-          <SingleVideo video={this.props.conferences[this.props.id][0]} />
+          <SingleVideo video={this.props.videos[0]} />
         </div>
       </Layout>
     )
@@ -45,7 +45,7 @@ Video.getInitialProps = async ({ store, isServer, req, pathname, query }) => {
 }
 
 Video = withRedux(makeStore,
-  (state) => ({ conferences: state.conferences.items, user: state.auth.user })
+  (state) => ({ videos: state.data.videos, user: state.auth.user })
 )(Video)
 
 export default Video

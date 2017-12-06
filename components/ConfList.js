@@ -85,7 +85,7 @@ const ConfList = ({ conferences }) => (
 )
 
 ConfList.propTypes = {
-  conferences: array
+  conferences: array  
 }
 
 export default ConfList
