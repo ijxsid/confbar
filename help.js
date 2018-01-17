@@ -1,5 +1,7 @@
 import clc from 'cli-color'
 
+/* npm run help will display this help screen */
+
 const bold = clc.bold
 const blueBold = clc.blue.bold
 

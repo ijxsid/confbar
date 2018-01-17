@@ -1,7 +1,24 @@
 {
   "name": "confbar-frontend",
-  "version": "1.0.0",
+  "version": "0.2.1",
   "description": "Frontend for Conference video Aggregator",
+  "license": "No License (NL)",
+  "bugs": {
+    "url":"https://bitbucket.org/falloutx/confbar-frontend/issues",
+    "email": "ijxsid@gmail.com"
+  },
+  "author": {
+    "name": "Inderjit Sidhu",
+    "email": "ijxsid@gmail.com"    
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@bitbucket.org:falloutx/confbar-frontend.git"
+  },
+  "os": [
+    "linux"
+  ],
+  "private": true,
   "scripts": {
     "dev": "PORT=8088 babel-node server.js --presets env",
     "build": "next build",
@@ -36,7 +53,7 @@
     "universal-cookie": "^2.1.2"
   },
   "devDependencies": {
-    "ava": "^0.24.0",    
+    "ava": "^0.24.0",
     "babel-eslint": "^8.1.2",
     "cli-color": "^1.2.0",
     "eslint": "^4.14.0",
