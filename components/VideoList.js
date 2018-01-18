@@ -62,8 +62,8 @@ const VideoFooter = styled.div`
 `
 
 class VideoInfo extends React.Component {
-  constructor () {
-    super()
+  constructor (props) {
+    super(props)
 
     this.state = {
       videoClicked: false
@@ -78,7 +78,7 @@ class VideoInfo extends React.Component {
     }))
   }
   render () {
-    const { video } = this.props
+    const { video, hideComponents } = this.props
     const { videoClicked } = this.state
     return (
       <VideoContainer>
@@ -96,9 +96,20 @@ class VideoInfo extends React.Component {
           </ThumbnailOverlay>
         }
         <VideoInfoContainer>
-          <ConferenceSticky conference={video.conference} />
-          <SpeakerSticky speaker={video.speaker}/>
-          <TagSticky tags={video.tags}/>
+          {
+            !hideComponents.conference &&
+            <ConferenceSticky conference={video.conference} />
+          }
+
+          {
+            !hideComponents.speaker &&
+            <SpeakerSticky speaker={video.speaker}/>
+          }
+
+          {
+            !hideComponents.tag &&
+            <TagSticky tags={video.tags}/>
+          }
         </VideoInfoContainer>
         <VideoFooter>
           Comments | Shares
@@ -109,15 +120,17 @@ class VideoInfo extends React.Component {
 }
 
 VideoInfo.propTypes = {
-  video: object.isRequired
+  video: object.isRequired,
+  hideComponents: object
 }
 
-const VideoList = ({ videos }) => (
+const VideoList = ({ videos, hideComponents }) => (
   <VideoListContainer>
     {
       Array.isArray(videos) && videos.map(v => (
         <VideoInfo
           video={v}
+          hideComponents={hideComponents}
           key={v._id}
         />
       ))
@@ -126,7 +139,12 @@ const VideoList = ({ videos }) => (
 )
 
 VideoList.propTypes = {
-  videos: array.isRequired
+  videos: array.isRequired,
+  hideComponents: object
+}
+
+VideoList.defaultProps = {
+  hideComponents: {}
 }
 
 export default VideoList

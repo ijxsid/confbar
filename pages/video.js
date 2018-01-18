@@ -7,9 +7,13 @@ import { fetchUserInfo, authActions, fetchVideoById } from '../lib/actions'
 import SingleVideo from '../components/SingleVideo'
 import { videoById } from '../lib/normalizers'
 
+/**
+ * Page for showing a single Video and information about that.
+ * */
+
 class Video extends React.Component {
   componentDidMount () {
-    console.log("Current Conference Videos ->", this.props.videos, this.props)
+    console.log("Current Conference Videos ->", this.props)
   }
   render () {
     const video = videoById.denormalize(this.props.id, this.props.entities)
@@ -27,7 +31,8 @@ Video.propTypes = {
   user: object,
   dispatch: func,
   conferences: object,
-  id: string
+  id: string,
+  entities: object
 }
 
 Video.getInitialProps = async ({ store, isServer, req, pathname, query }) => {

@@ -17,7 +17,9 @@ class Conference extends React.Component {
     return (
       <Layout user={this.props.user}>
         <div>
-          <VideoList videos={videos}
+          <VideoList
+            videos={videos}
+            hideComponents={{ conference: true }}
           />
         </div>
       </Layout>
