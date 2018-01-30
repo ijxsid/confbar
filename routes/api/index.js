@@ -1,17 +1,17 @@
 import express from 'express'
-import profile from './profile'
-import conference from './conference'
-import speaker from './speaker'
-import technology from './technology'
-import video from './video'
+import profiles from './profiles'
+import conferences from './conferences'
+import speakers from './speakers'
+import technologies from './technologies'
+import videos from './videos'
 
 
 const router = express.Router()
 
-conference(router)
-profile(router)
-speaker(router)
-technology(router)
-video(router)
+router.use('/conferences', conferences)
+router.use('/me', profiles)
+router.use('/speakers', speakers)
+router.use('/technologies', technologies)
+router.use('/videos', videos)
 
 export default router
