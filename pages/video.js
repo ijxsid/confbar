@@ -1,7 +1,7 @@
 import React from 'react'
 import makeStore from '../lib/makeStore'
 import withRedux from 'next-redux-wrapper'
-import { string, object, func } from 'prop-types'
+import { object, func } from 'prop-types'
 import Layout from '../components/shared/Layout'
 import { fetchUserInfo, authActions, fetchVideoById } from '../lib/actions'
 import SingleVideo from '../components/SingleVideo'
@@ -12,15 +12,11 @@ import { videoById } from '../lib/normalizers'
  * */
 
 class Video extends React.Component {
-  componentDidMount () {
-    console.log("Current Conference Videos ->", this.props)
-  }
   render () {
-    const video = videoById.denormalize(this.props.id, this.props.entities)
     return (
       <Layout user={this.props.user}>
         <div>
-          <SingleVideo video={video} />
+          <SingleVideo video={this.props.video} />
         </div>
       </Layout>
     )
@@ -31,8 +27,7 @@ Video.propTypes = {
   user: object,
   dispatch: func,
   conferences: object,
-  id: string,
-  entities: object
+  video: object
 }
 
 Video.getInitialProps = async ({ store, isServer, req, pathname, query }) => {
@@ -51,7 +46,10 @@ Video.getInitialProps = async ({ store, isServer, req, pathname, query }) => {
 }
 
 Video = withRedux(makeStore,
-  (state) => ({ entities: state.data, user: state.auth.user })
+  (state, ownProps) => ({
+    video: videoById.denormalize(ownProps.id, state.data),
+    user: state.auth.user
+  })
 )(Video)
 
 export default Video
