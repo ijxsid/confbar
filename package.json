@@ -25,6 +25,7 @@
     "build:styles": "./node_modules/.bin/gulp sass",
     "test": "babel-node test_normalizer.js --presets env",
     "start": "NODE_ENV=production PORT=8088 babel-node server.js --presets env",
+    "postinstall": "npm run build:styles",
     "ava": "ava",
     "help": "babel-node help.js --presets env"
   },
