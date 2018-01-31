@@ -1,6 +1,6 @@
 import React from 'react'
 import { injectGlobal } from 'styled-components'
-import { object } from 'prop-types'
+import { object, array, oneOfType } from 'prop-types'
 import Navbar from './Navbar'
 import AppHead from './AppHead'
 
@@ -21,7 +21,7 @@ const Layout = ({ user, headChildren, children }) => (
 
 Layout.propTypes = {
   user: object,
-  children: object,
+  children: oneOfType([array, object]),
   headChildren: object
 }
 

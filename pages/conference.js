@@ -5,7 +5,7 @@ import { string, object, func } from 'prop-types'
 import Layout from '../components/shared/Layout'
 import { fetchUserInfo, authActions, fetchConfById } from '../lib/actions'
 import VideoList from '../components/VideoList'
-
+import ConfInfo from '../components/ConfInfo'
 import { confById } from '../lib/normalizers'
 
 
@@ -16,6 +16,7 @@ class Conference extends React.Component {
     const videos = videoData.videos
     return (
       <Layout user={this.props.user}>
+        <ConfInfo conference={conference} />
         <div>
           <VideoList
             videos={videos}
