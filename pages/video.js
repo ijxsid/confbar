@@ -12,6 +12,12 @@ import { videoById } from '../lib/normalizers'
  * */
 
 class Video extends React.Component {
+  static propTypes = {
+    user: object,
+    dispatch: func,
+    conferences: object,
+    video: object
+  }
   render () {
     return (
       <Layout user={this.props.user}>
@@ -23,12 +29,6 @@ class Video extends React.Component {
   }
 }
 
-Video.propTypes = {
-  user: object,
-  dispatch: func,
-  conferences: object,
-  video: object
-}
 
 Video.getInitialProps = async ({ store, isServer, req, pathname, query }) => {
   if (isServer && req.cookies.token) {
@@ -36,11 +36,11 @@ Video.getInitialProps = async ({ store, isServer, req, pathname, query }) => {
   }
   const token = store.getState().auth.token
 
-  await store.dispatch(fetchVideoById(query.id))
-
   if (token) {
     await store.dispatch(fetchUserInfo(token))
   }
+
+  await store.dispatch(fetchVideoById(query.id))
 
   return { id: query.id }
 }
