@@ -16,6 +16,7 @@ const VideoListContainer = styled.div`
   padding: 15px 0;
   display: grid;
   grid-template-columns: repeat(auto-fit, 50%);
+  justify-content: center;
 `
 const VideoContainer = styled.div`
   margin: 15px 20px;
