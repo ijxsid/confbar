@@ -2,6 +2,28 @@ import React from 'react'
 import styled from 'styled-components'
 import { shape, string } from 'prop-types'
 
+const tagInfoAreas = props => {
+  if (props.simpleLayout && props.noDescription) {
+    return `
+      "name name"
+      "links links"
+      ". ."
+    `
+  } else if (props.simpleLayout) {
+    return `
+      "name name"
+      "description description"
+      "links links"
+    `
+  } else {
+    return `
+      "icon name"
+      "icon description"
+      "icon links"
+    `
+  }
+}
+
 const Styled = {
   TagInfo: styled.div`
     width: 75%;
@@ -12,10 +34,8 @@ const Styled = {
     grid-template-columns: 1fr 3fr;
     grid-template-rows: 2fr repeat(2, 1fr);
     grid-gap: 5px;
-    grid-template-areas:
-      "icon name"
-      "icon description"
-      "icon links";
+    justify-content: center;
+    grid-template-areas: ${tagInfoAreas};
   `,
   Logo: styled.img`
     width: 100%;
@@ -70,17 +90,25 @@ const Styled = {
 }
 
 const TagInfo = ({ tag }) => (
-  <Styled.TagInfo>
-    <Styled.Logo
-      src={`${tag.logo}`}
-      alt={`Logo for ${tag.name}`} />
+  <Styled.TagInfo simpleLayout={!tag.logo} noDescription={!tag.description}>
+    {
+      tag.logo &&
+      <Styled.Logo
+        src={`${tag.logo}`}
+        alt={`Logo for ${tag.name}`} />
+    }
+
     <Styled.Name>
       {tag.name}
     </Styled.Name>
 
-    <Styled.Description>
-      {tag.description}
-    </Styled.Description>
+    {
+      tag.description &&
+      <Styled.Description>
+        {tag.description}
+      </Styled.Description>
+    }
+
     <Styled.Links>
 
       {
