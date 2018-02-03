@@ -69,8 +69,8 @@ router.get('/:id/', (req, res) => {
   const videosQuery = Video.find({tags: id}).populate('conference').populate('speaker').populate('tags').exec()
 
   Promise.all([techQuery, videosQuery])
-    .then(([tech, videos]) => {
-      return res.status(200).send({tech, videos})
+    .then(([tag, videos]) => {
+      return res.status(200).send({tag, videos})
     })
     .catch(err => {
       return res.status(400).json({err})
