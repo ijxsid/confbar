@@ -3,32 +3,38 @@ import styled from 'styled-components'
 import { shape, string } from 'prop-types'
 
 const Styled = {
-  SpeakerInfo: styled.div`
+  TagInfo: styled.div`
     width: 75%;
     max-width: 850px;
     min-width: 450px;
     margin: 2.5rem auto 1rem;
     display:grid;
     grid-template-columns: 1fr 3fr;
-    grid-template-rows: repeat(2, 1fr);
-    grid-gap: 20px;
+    grid-template-rows: 2fr repeat(2, 1fr);
+    grid-gap: 5px;
     grid-template-areas:
       "icon name"
+      "icon description"
       "icon links";
   `,
-  SpeakerAvatar: styled.img`
+  Logo: styled.img`
     width: 100%;
     grid-area: icon;
     border-radius: 20px;
   `,
-  SpeakerName: styled.div`
+  Name: styled.div`
     grid-area: name;
     align-self: center;
-    font-size: 2.5rem;
+    font-size: 4rem;
     padding-left: 2rem;
     align-self: end;
   `,
-  SpeakerLinks: styled.div`
+  Description: styled.div`
+    grid-area: description;
+    padding-left: 2rem;
+    font-size: 0.90rem;
+  `,
+  Links: styled.div`
     grid-area: links;
     font-size: 1.5rem;
     padding-left: 2rem;
@@ -39,7 +45,7 @@ const Styled = {
     justify-items: start;
     grid-gap: 5px;
   `,
-  SpeakerLink: styled.div`
+  Link: styled.div`
     transition: all 0.4s ease;
 
     > a {
@@ -63,56 +69,60 @@ const Styled = {
 
 }
 
-const SpeakerInfo = ({ speaker }) => (
-  <Styled.SpeakerInfo>
-    <Styled.SpeakerAvatar
-      src={`https://avatars.io/twitter/${speaker.twitterUsername}`}
-      alt={`Twitter Avatar of ${speaker.name}`} />
-    <Styled.SpeakerName>
-      {speaker.name}
-    </Styled.SpeakerName>
-    <Styled.SpeakerLinks>
+const TagInfo = ({ tag }) => (
+  <Styled.TagInfo>
+    <Styled.Logo
+      src={`${tag.logo}`}
+      alt={`Logo for ${tag.name}`} />
+    <Styled.Name>
+      {tag.name}
+    </Styled.Name>
+
+    <Styled.Description>
+      {tag.description}
+    </Styled.Description>
+    <Styled.Links>
 
       {
-        speaker.twitterUsername &&
-        <Styled.SpeakerLink color="#1DA1F2">
-          <a href={`https://twitter.com/${speaker.twitterUsername}`}>
+        tag.twitter &&
+        <Styled.Link color="#1DA1F2">
+          <a href={`https://twitter.com/${tag.twitter}`}>
             <Styled.Icon className="icon-twitter"/>
           </a>
-        </Styled.SpeakerLink>
+        </Styled.Link>
       }
 
       {
-        speaker.github &&
-        <Styled.SpeakerLink color="#333">
-          <a href={`https://github.com/${speaker.github}`}>
+        tag.repo &&
+        <Styled.Link color="#333">
+          <a href={`${tag.repo}`}>
             <Styled.Icon className="icon-github"/>
           </a>
-        </Styled.SpeakerLink>
+        </Styled.Link>
       }
 
       {
-        (speaker.website || speaker.blog) &&
-        <Styled.SpeakerLink color="#818199">
-          <a href={`${speaker.website || speaker.blog}`}>
+        (tag.website || tag.blog) &&
+        <Styled.Link color="#818199">
+          <a href={`${tag.website || tag.blog}`}>
             <Styled.Icon className="icon-link"/>
           </a>
-        </Styled.SpeakerLink>
+        </Styled.Link>
       }
 
-    </Styled.SpeakerLinks>
+    </Styled.Links>
 
-  </Styled.SpeakerInfo>
+  </Styled.TagInfo>
 )
 
-SpeakerInfo.propTypes = {
-  speaker: shape({
+TagInfo.propTypes = {
+  tag: shape({
     name: string,
-    twitterUsername: string,
-    github: string,
+    twitter: string,
+    repo: string,
     website: string,
     blog: string
   }).isRequired
 }
 
-export default SpeakerInfo
+export default TagInfo
