@@ -15,7 +15,7 @@ class Conference extends React.Component {
     const videoData = confById.denormalizeVideos(conference.videos, this.props.entities)
     const videos = videoData.videos
     return (
-      <Layout user={this.props.user}>
+      <Layout>
         <ConfInfo conference={conference} />
         <div>
           <VideoList
@@ -51,7 +51,6 @@ Conference.getInitialProps = async ({ store, isServer, req, pathname, query }) =
 
 Conference = withRedux(makeStore,
   (state) => ({
-    user: state.auth.user,
     entities: state.data
   })
 )(Conference)

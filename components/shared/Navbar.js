@@ -1,13 +1,19 @@
 import React from 'react'
-import { shape, string } from 'prop-types'
+import { shape, string, func } from 'prop-types'
 import config from '../../config'
 import Link from 'next/link'
+import Cookies from 'js-cookie'
+import { connect } from 'react-redux'
+import { authActions } from '../../lib/actions'
 
 const LoginWithTwitter = () => (
   <div className="navbar-item">
     <div className="field is-grouped">
       <p className="control">
-        <a className="button is-primary" href={`${config.backend.base}${config.backend.auth}`}>
+        <a className="button is-primary" href={`${config.backend.base}${config.backend.auth}`}
+          onClick={(e) => {
+            Cookies.set('afterLoginPath', window.location.pathname)
+          }}>
           <span>Login With Twitter</span>
         </a>
       </p>
@@ -15,21 +21,25 @@ const LoginWithTwitter = () => (
   </div>
 )
 
-const UserInfoDropdown = ({ user }) => (
+const UserInfoDropdown = ({ user, performLogout }) => (
   <div className="navbar-item has-dropdown is-hoverable">
     <a className="navbar-link is-active" href="/">
       {user.displayName}
     </a>
     <div className="navbar-dropdown ">
-      <a className="navbar-item " href="/documentation/overview/start/">
+      <a className="navbar-item " href="/profile/">
         Profile
       </a>
 
-      <a className="navbar-item " href="/documentation/overview/start/">
+      <a className="navbar-item " href="/settings/">
         Settings
       </a>
 
-      <a className="navbar-item " href="/documentation/overview/start/">
+      <a className="navbar-item " href="#"
+        onClick={(e) => {
+          Cookies.remove('token')
+          performLogout()
+        }}>
         Logout
       </a>
     </div>
@@ -39,7 +49,8 @@ const UserInfoDropdown = ({ user }) => (
 UserInfoDropdown.propTypes = {
   user: shape({
     displayName: string.isRequired
-  })
+  }),
+  performLogout: func
 }
 
 class Navbar extends React.Component {
@@ -109,7 +120,7 @@ class Navbar extends React.Component {
           <div className="navbar-end">
             { !this.props.user.displayName ?
               <LoginWithTwitter /> :
-              <UserInfoDropdown user={this.props.user} />
+              <UserInfoDropdown user={this.props.user} performLogout={this.props.performLogout} />
             }
           </div>
         </div>
@@ -121,6 +132,16 @@ class Navbar extends React.Component {
 Navbar.propTypes = {
   user: shape({
     displayName: string
-  })
+  }),
+  performLogout: func
 }
+
+Navbar = connect(
+  state => ({
+    user: state.auth.user
+  }),
+  dispatch => ({
+    performLogout: () => dispatch(authActions.performLogout())
+  })
+)(Navbar)
 export default Navbar

@@ -2,7 +2,7 @@ import React from 'react'
 import styled from 'styled-components'
 import simpleDate from '../lib/simpleDate'
 import Link from 'next/link'
-import { object, array } from 'prop-types'
+import { object, array, bool } from 'prop-types'
 
 const ConfListContainer = styled.div`
   width: 75%;
@@ -48,7 +48,7 @@ const ConfFooter = styled.div`
   font-weight: 600;
   color: #E20049;
 `
-const Conference = ({ conf }) => (
+const Conference = ({ conf, sharing }) => (
   <ConfContainer>
     <ConfLogo src={conf.logo} />
     <ConfInfo>
@@ -67,15 +67,20 @@ const Conference = ({ conf }) => (
         <a href={conf.url}>{conf.url}</a>
       </div>
     </ConfInfo>
-    <ConfFooter>
-      <div>39 shares | 454 views | 8 Talks</div>
-
-    </ConfFooter>
+    { sharing &&
+      <ConfFooter>
+        <div>39 shares | 454 views | 8 Talks</div>
+      </ConfFooter>
+    }
   </ConfContainer>
 )
 
 Conference.propTypes = {
-  conf: object.isRequired
+  conf: object.isRequired,
+  sharing: bool
+}
+Conference.defaultProps = {
+  sharing: false
 }
 
 const ConfList = ({ conferences }) => (
