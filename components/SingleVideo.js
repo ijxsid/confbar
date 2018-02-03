@@ -6,6 +6,7 @@ import { getEmbed } from '../lib/youtubeUtils'
 import ConferenceSticky from './ConferenceSticky'
 import SpeakerSticky from './SpeakerSticky'
 import TagSticky from './TagSticky'
+import config from '../config'
 
 const Container = styled.div`
   width: 75%;
@@ -42,8 +43,23 @@ const VideoFooter = styled.div`
   font-weight: 600;
   color: #E20049;
   margin-top: 15px;
+
+  a {
+    color: #E20049;
+  }
+
+  a:hover {
+    color: #3273dc;
+  }
+`
+const Icon = styled.i`
+  font-size: inherit;
+  color: inherit;
+  vertical-align: middle;
+  margin-right: 8px;
 `
 
+const getFullLink = (video) => `${config.frontend.base}/video?id=${video._id}`
 
 const SingleVideo = ({ video }) => (
   <Container>
@@ -62,7 +78,15 @@ const SingleVideo = ({ video }) => (
         <TagSticky tags={video.tags}/>
       </VideoInfoContainer>
       <VideoFooter>
-        Comments | Shares
+        <div>
+          <span>Share on: </span>
+          <a href={`https://www.facebook.com/sharer/sharer.php?u=${getFullLink(video)}`}>
+            <Icon className="icon-facebook"/>
+          </a>
+          <a href={`https://twitter.com/home?status=Watch '${video.name}' on Confbar: ${getFullLink(video)}}`}>
+            <Icon className="icon-twitter"/>
+          </a>
+        </div>
       </VideoFooter>
     </VideoContainer>
   </Container>

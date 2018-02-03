@@ -6,6 +6,7 @@ import ConferenceSticky from './ConferenceSticky'
 import SpeakerSticky from './SpeakerSticky'
 import TagSticky from './TagSticky'
 import { object, array } from 'prop-types'
+import config from '../config'
 
 
 const VideoListContainer = styled.div`
@@ -60,6 +61,20 @@ const VideoFooter = styled.div`
   padding: 7px 20px;
   font-weight: 600;
   color: #E20049;
+
+  a {
+    color: #E20049;
+  }
+
+  a:hover {
+    color: #3273dc;
+  }
+`
+const Icon = styled.i`
+  font-size: inherit;
+  color: inherit;
+  vertical-align: middle;
+  margin-right: 8px;
 `
 
 class VideoInfo extends React.Component {
@@ -81,6 +96,7 @@ class VideoInfo extends React.Component {
   render () {
     const { video, hideComponents } = this.props
     const { videoClicked } = this.state
+    const fullLink = `${config.frontend.base}/video?id=${video._id}`
     return (
       <VideoContainer>
         <VideoInfoContainer>
@@ -113,7 +129,15 @@ class VideoInfo extends React.Component {
           }
         </VideoInfoContainer>
         <VideoFooter>
-          Comments | Shares
+          <div>
+            <span>Share on: </span>
+            <a href={`https://www.facebook.com/sharer/sharer.php?u=${fullLink}`}>
+              <Icon className="icon-facebook"/>
+            </a>
+            <a href={`https://twitter.com/home?status=Watch '${video.name}' on Confbar: ${fullLink}`}>
+              <Icon className="icon-twitter"/>
+            </a>
+          </div>
         </VideoFooter>
       </VideoContainer>
     )

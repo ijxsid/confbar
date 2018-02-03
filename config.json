@@ -3,5 +3,8 @@
     "base": "http://127.0.0.1:3001",
     "auth": "/login/twitter/",
     "api": "/api/"
+  },
+  "frontend": {
+    "base": "http://127.0.0.1:8088"
   }
 }
