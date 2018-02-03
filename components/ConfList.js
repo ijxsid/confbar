@@ -2,7 +2,8 @@ import React from 'react'
 import styled from 'styled-components'
 import simpleDate from '../lib/simpleDate'
 import Link from 'next/link'
-import { object, array, bool } from 'prop-types'
+import { object, array } from 'prop-types'
+import config from '../config'
 
 const ConfListContainer = styled.div`
   width: 75%;
@@ -47,8 +48,26 @@ const ConfFooter = styled.div`
   padding: 7px 20px;
   font-weight: 600;
   color: #E20049;
+
+  a {
+    color: #E20049;
+  }
+
+  a:hover {
+    color: #3273dc;
+  }
 `
-const Conference = ({ conf, sharing }) => (
+const Icon = styled.i`
+  font-size: inherit;
+  color: inherit;
+  vertical-align: middle;
+  margin-right: 8px;
+`
+
+const getFullLink = (conf) => `${config.frontend.base}/conference?id=${conf._id}`
+
+
+const Conference = ({ conf }) => (
   <ConfContainer>
     <ConfLogo src={conf.logo} />
     <ConfInfo>
@@ -67,20 +86,22 @@ const Conference = ({ conf, sharing }) => (
         <a href={conf.url}>{conf.url}</a>
       </div>
     </ConfInfo>
-    { sharing &&
-      <ConfFooter>
-        <div>39 shares | 454 views | 8 Talks</div>
-      </ConfFooter>
-    }
+    <ConfFooter>
+      <div>
+        <span>Share on: </span>
+        <a href={`https://www.facebook.com/sharer/sharer.php?u=${getFullLink(conf)}`}>
+          <Icon className="icon-facebook"/>
+        </a>
+        <a href={`https://twitter.com/home?status=Watch '${conf.name} - ${conf.year}' on Confbar: ${getFullLink(conf)}`}>
+          <Icon className="icon-twitter"/>
+        </a>
+      </div>
+    </ConfFooter>
   </ConfContainer>
 )
 
 Conference.propTypes = {
-  conf: object.isRequired,
-  sharing: bool
-}
-Conference.defaultProps = {
-  sharing: false
+  conf: object.isRequired
 }
 
 const ConfList = ({ conferences }) => (
