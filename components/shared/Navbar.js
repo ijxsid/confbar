@@ -12,7 +12,7 @@ const LoginWithTwitter = () => (
       <p className="control">
         <a className="button is-primary" href={`${config.backend.base}${config.backend.auth}`}
           onClick={(e) => {
-            Cookies.set('afterLoginPath', window.location.pathname)
+            Cookies.set('afterLoginPath', `${window.location.pathname}${window.location.search}`)
           }}>
           <span>Login With Twitter</span>
         </a>
