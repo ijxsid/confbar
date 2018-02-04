@@ -1,8 +1,9 @@
 {
   "name": "confy-conf",
-  "version": "1.0.0",
-  "main": "index.js",
-  "license": "MIT",
+  "version": "0.2.2",
+  "private": true,
+  "main": "server/index.js",
+  "license": "NO LICENSE",
   "scripts": {
     "dev": "node_modules/.bin/nodemon src/index.js --exec babel-node --presets env",
     "prestart": "rm -rf built/ && babel src/ -d built/ -s --presets env",
