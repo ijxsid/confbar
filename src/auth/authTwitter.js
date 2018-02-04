@@ -1,6 +1,6 @@
-import config from './config'
+import config from '../../config'
 import passportTwitter from 'passport-twitter'
-import User from './models/User'
+import User from '../models/User'
 import jwt from 'jsonwebtoken'
 
 function generateJWT (username) {

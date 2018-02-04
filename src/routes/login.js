@@ -1,5 +1,5 @@
 import express from 'express'
-import config from '../config'
+import config from '../../config'
 import passport from 'passport'
 
 const router = express.Router()

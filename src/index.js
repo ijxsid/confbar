@@ -5,10 +5,10 @@ import session from 'express-session'
 import mongoose from 'mongoose'
 import morgan from 'morgan'
 import myRoutes from './routes/index'
-import config from './config'
+import config from '../config.json'
 import User from './models/User'
-import authTwitter from './authTwitter'
-import jwtStrategy from './jwtStrategy'
+import authTwitter from './auth/authTwitter'
+import jwtStrategy from './auth/jwtStrategy'
 
 /**
  * configureApp - adds configuration and bootstraps express App.

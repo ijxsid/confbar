@@ -4,8 +4,9 @@
   "main": "index.js",
   "license": "MIT",
   "scripts": {
-    "watch": "node_modules/.bin/nodemon index.js --exec babel-node --presets env",
-    "start": "babel-node --presets env index.js"
+    "dev": "node_modules/.bin/nodemon src/index.js --exec babel-node --presets env",
+    "prestart": "rm -rf built/ && babel src/ -d built/ -s --presets env",
+    "start": "node built/index.js"
   },
   "devDependencies": {
     "babel-cli": "^6.26.0",
