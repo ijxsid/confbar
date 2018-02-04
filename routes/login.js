@@ -29,7 +29,7 @@ router.get('/twitter/return',
   }),
   (req, res) => {
     // Cookie Age is set to about 100 days.
-    res.cookie('token', req.user.appToken, { maxAge: 1000 * 60 * 60 * 24 * 100, httpOnly: true, path: '/' })
+    res.cookie('token', req.user.appToken, { maxAge: 1000 * 60 * 60 * 24 * 100, path: '/' })
     // Redirect to frontend server with the access token in the request
     res.redirect(`${config.frontend.server}authenticated`)
   })
