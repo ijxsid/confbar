@@ -11,17 +11,6 @@ router.get('/twitter',
   })
 )
 
-router.get('/guess/user',
-  passport.authenticate('jwt', { session: false }),
-  (req, res) => {
-    if (req.user) {
-      res.json({info: 'successfully-booted-up', user: req.user, token: req.user.appToken})
-    } else {
-      res.json({info: 'successfully-booted-up', login: 'http://127.0.0.1:3001/login/twitter'})
-    }
-  }
-)
-
 router.get('/twitter/return',
   passport.authenticate('twitter', {
     failureRedirect: '/login/twitter',
@@ -29,7 +18,12 @@ router.get('/twitter/return',
   }),
   (req, res) => {
     // Cookie Age is set to about 100 days.
-    res.cookie('token', req.user.appToken, { maxAge: 1000 * 60 * 60 * 24 * 100, path: '/' })
+    let cookieProperties = { maxAge: 1000 * 60 * 60 * 24 * 100, path: '/' }
+
+    if (config.frontend.cookieDomain) {
+      cookieProperties.domain = config.frontend.cookieDomain
+    }
+    res.cookie('token', req.user.appToken, cookieProperties)
     // Redirect to frontend server with the access token in the request
     res.redirect(`${config.frontend.server}authenticated`)
   })
