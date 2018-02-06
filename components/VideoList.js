@@ -114,17 +114,17 @@ class VideoInfo extends React.Component {
         }
         <VideoInfoContainer>
           {
-            !hideComponents.conference &&
+            !hideComponents.conference && video.conference &&
             <ConferenceSticky conference={video.conference} />
           }
 
           {
-            !hideComponents.speaker &&
+            !hideComponents.speaker && video.speaker &&
             <SpeakerSticky speaker={video.speaker}/>
           }
 
           {
-            !hideComponents.tag &&
+            !hideComponents.tag && video.tags.length > 0 &&
             <TagSticky tags={video.tags}/>
           }
         </VideoInfoContainer>

@@ -73,9 +73,18 @@ const SingleVideo = ({ video }) => (
       </VideoInfoContainer>
       <YoutubeEmbed src={getEmbed(video.link)} frameBorder="0" allowFullScreen/>
       <VideoInfoContainer>
-        <ConferenceSticky conference={video.conference} />
-        <SpeakerSticky speaker={video.speaker}/>
-        <TagSticky tags={video.tags}/>
+        {
+          video.conference &&
+          <ConferenceSticky conference={video.conference} />
+        }
+        {
+          video.speaker &&
+          <SpeakerSticky speaker={video.speaker}/>
+        }
+        {
+          video.tags && video.tags.length > 0 &&
+          <TagSticky tags={video.tags}/>
+        }
       </VideoInfoContainer>
       <VideoFooter>
         <div>
