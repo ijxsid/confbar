@@ -14,10 +14,6 @@ const Styled = {
     margin: 0 auto;
     padding: 1.5rem 0;
 
-    @media (max-width: 800px) {
-      width: 95%;
-      margin: 0 auto;
-    }
     @media (min-width: 1720px) {
       max-width: unset;
       width: 75%;
@@ -26,6 +22,12 @@ const Styled = {
       grid-template-columns: repeat(auto-fit, minmax(360px, 1fr));
       grid-gap: 25px;
     }
+
+    @media (max-width: 800px) {
+      width: 95%;
+      margin: 0 auto;
+    }
+
   `,
   Item: styled.div`
     display: grid;
@@ -75,16 +77,7 @@ const Styled = {
     padding: 0.75rem 1.5rem;
     font-weight: 700;
     font-size: 1.4rem;
-    @media (max-width: 480px) {
-      a {
-        color: inherit;
-      }
-      text-align: center;
-      align-self: start;
-      font-size: 1.15rem;
-      color: #f0f0f0;
-      background-color: #3273dc;
-    }
+
     @media (min-width: 1720px) {
       a {
         color: inherit;
@@ -99,22 +92,38 @@ const Styled = {
       background-color: #3273dc;
     }
 
+
+    @media (max-width: 480px) {
+      a {
+        color: inherit;
+      }
+      text-align: center;
+      align-self: start;
+      font-size: 1.15rem;
+      color: #f0f0f0;
+      background-color: #3273dc;
+    }
+
+
   `,
   Logo: styled.img`
     grid-area: sideimage;
     min-height: 200px;
     margin: 0 auto;
     align-self: center;
-    @media (max-width: 480px) {
-      height: 150px;
-      margin: 0 auto;
-      padding: 10px 20px;
-    }
+
     @media (min-width: 1720px) {
       height: 360px;
       margin: 0 auto;
       padding: 10px 20px;
     }
+
+    @media (max-width: 480px) {
+      height: 150px;
+      margin: 0 auto;
+      padding: 10px 20px;
+    }
+
 
   `,
   Info: styled.div`
@@ -137,10 +146,10 @@ const Styled = {
     }
   `,
   ConfLink: styled.a`
-    @media (max-width: 800px) {
+    @media (min-width: 1720px) {
       word-break: break-all;
     }
-    @media (min-width: 1720px) {
+    @media (max-width: 800px) {
       word-break: break-all;
     }
   `,
