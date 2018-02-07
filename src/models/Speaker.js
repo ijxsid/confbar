@@ -1,7 +1,7 @@
 import mongoose from 'mongoose'
 
 const speakerSchema = new mongoose.Schema({
-  _id: { type: String },
+  _id: { type: String, required: true },
   name: { type: String, required: true },
   twitterUsername: String,
   website: String,
