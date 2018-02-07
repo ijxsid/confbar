@@ -3,10 +3,9 @@ import styled from 'styled-components'
 import Link from 'next/link'
 import { object } from 'prop-types'
 import { getEmbed } from '../lib/youtubeUtils'
-import ConferenceSticky from './ConferenceSticky'
-import SpeakerSticky from './SpeakerSticky'
-import TagSticky from './TagSticky'
+import { ConferenceSticky, TagSticky, SpeakerSticky } from './common/Sticky'
 import config from '../config'
+
 
 const Container = styled.div`
   width: 75%;

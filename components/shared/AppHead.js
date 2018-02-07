@@ -7,7 +7,7 @@ const AppHead = ({ children }) => (
     <meta charSet="UTF-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <meta httpEquiv="X-UA-Compatible" content="ie=edge"/>
-    <title>Confbar v0.1</title>
+    <title>Confbar</title>
     <link rel="stylesheet" href="/static/css/index.css"/>
     <link rel="stylesheet" href="/static/icons/styles.css"/>
     {children}

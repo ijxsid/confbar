@@ -10,14 +10,13 @@ const Styled = {
     align-content: center;
     justify-content: center;
     justify-items: center;
-
-    p {
-      font-size: 1.9rem;
-    }
-    img {
-      width: 100px;
-      margin-bottom: 20px;
-    }
+  `,
+  Title: styled.p`
+    font-size: 2.0rem;
+  `,
+  Loader: styled.img`
+    width: 100px;
+    margin-bottom: 20px;
   `,
   NoJSLink: styled.div`
     text-align: center;
@@ -29,10 +28,10 @@ const Styled = {
 
 const AuthSuccess = ({ user, nextPath }) => (
   <Styled.Container>
-    <img src={`/static/images/dual-ring-loader.svg`} alt="Loading Animation"/>
-    <p>
+    <Styled.Loader src={`/static/images/dual-ring-loader.svg`} alt="Loading Animation"/>
+    <Styled.Title>
       Hi {user.displayName}, Welcome to Confbar
-    </p>
+    </Styled.Title>
     <Styled.NoJSLink>
       If you're not automatically redirected, click
       <Link href={nextPath}>
