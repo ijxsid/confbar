@@ -1,6 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
-import { object } from 'prop-types'
+import { object, string } from 'prop-types'
 import Link from 'next/link'
 import Cookies from 'js-cookie'
 
@@ -29,7 +29,7 @@ const Styled = {
   `
 }
 
-const AuthSuccess = ({ user }) => (
+const AuthSuccess = ({ user, nextPath }) => (
   <Styled.Container>
     <img src={`/static/images/dual-ring-loader.svg`} alt="Loading Animation"/>
     <p>
@@ -37,15 +37,16 @@ const AuthSuccess = ({ user }) => (
     </p>
     <Styled.NoJSLink>
       If you're not automatically redirected, click
-      <Link href={Cookies.get('afterLoginPath')}>
-        <a> here</a>
+      <Link href={nextPath}>
+        <a> here </a>
       </Link>
     </Styled.NoJSLink>
   </Styled.Container>
 )
 
 AuthSuccess.propTypes = {
-  user: object
+  user: object,
+  nextPath: string
 }
 
 

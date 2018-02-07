@@ -20,24 +20,30 @@ class Authenticated extends React.Component {
     window.clearTimeout(this.timeout)
   }
   render () {
-    const { user } = this.props
+    const { user, nextPath } = this.props
     return (
       <Layout>
-        <AuthSuccess user={user}/>
+        <AuthSuccess user={user} nextPath={nextPath}/>
       </Layout>
     )
   }
 }
 
 Authenticated.getInitialProps = async ({ store, req, isServer, pathname, query }) => {
+  let nextPath
   if (isServer && req.cookies.token) {
     store.dispatch(authActions.addToken(req.cookies.token))
   } else {
     console.log(store.getState())
   }
+
+  if (req && req.cookies) {
+    nextPath = req.cookies.afterLoginPath || '/'
+  }
   const token = store.getState().auth.token
   await store.dispatch(fetchUserInfo(token))
-  return { user: store.getState().auth.user }
+  console.log(nextPath)
+  return { user: store.getState().auth.user, nextPath }
 }
 
 Authenticated.propTypes = {
