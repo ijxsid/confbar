@@ -10,6 +10,7 @@ const conferenceSchema = new Schema({
   endDate: Date,
   location: String,
   url: String,
+  youtubePlaylistId: String,
   addedBy: { type: String, ref: 'User', required: true },
   createdAt: { type: Number, required: true },
   lastModifiedAt: { type: Date },

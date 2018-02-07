@@ -25,7 +25,7 @@ router.post('/',
         return video.save()
       })
       .catch(err => {
-        // Technology Already Exists. Conflict Error.
+        // Video Already Exists. Conflict Error.
         if (err instanceof ConflictError) {
           res.status(409).json({
             info: err.message

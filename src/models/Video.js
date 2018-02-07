@@ -5,6 +5,10 @@ const Schema = mongoose.Schema
 const videoSchema = new Schema({
   name: { type: String, required: true },
   link: { type: String, required: true },
+  description: String,
+  youtubeChannelId: String,
+  youtubeChannelTitle: String,
+  youtubePrivate: Boolean,
   conference: { type: Schema.Types.ObjectId, ref: 'Conference' },
   speaker: { type: Schema.Types.ObjectId, ref: 'Speaker' },
   tags: [{type: Schema.Types.ObjectId, ref: 'Technology'}],
@@ -18,6 +22,10 @@ const videoSchema = new Schema({
 videoSchema.methods.updateData = function (data) {
   this.name = data.name || this.name
   this.link = data.link || this.link
+  this.description = data.description || this.description
+  this.youtubeChannelId = data.youtubeChannelId || this.youtubeChannelId
+  this.youtubeChannelTitle = data.youtubeChannelTitle || this.youtubeChannelTitle
+  this.youtubePrivate = data.youtubePrivate || this.youtubePrivate
   this.conference = data.conference || this.conference
   this.speaker = data.speaker || this.speaker
   this.tags = data.tags || this.tags

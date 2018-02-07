@@ -12,7 +12,9 @@ router.post('/',
     const currentTime = (new Date()).getTime()
     const data = Object.assign({}, req.body, {
       addedBy: req.user._id,
-      createdAt: currentTime
+      createdAt: currentTime,
+      lastModifiedBy: req.user._id,
+      lastModifiedAt: currentTime
     })
 
     Conference
@@ -20,13 +22,14 @@ router.post('/',
       .exec()
       .then((confs) => {
         if (confs.length > 0) {
-          throw new Error(`Conference ${data.name} already exists for year ${data.year}`)
+          throw new ConflictError(`Conference ${data.name} already exists for year ${data.year}`)
         }
         let conf = new Conference(data)
         return conf.save()
       })
       .catch(err => {
         // Conference Already Exists. Conflict Error.
+        console.log(err, err.message);
         if (err instanceof ConflictError) {
           res.status(409).json({
             info: err.message
