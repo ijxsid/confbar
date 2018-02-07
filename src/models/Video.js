@@ -3,7 +3,7 @@ import mongoose from 'mongoose'
 const Schema = mongoose.Schema
 
 const videoSchema = new Schema({
-  id: { type: String, required: true },
+  _id: { type: String, required: true },
   name: { type: String, required: true },
   link: { type: String, required: true },
   description: String,
