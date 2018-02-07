@@ -2,8 +2,6 @@ import React from 'react'
 import styled from 'styled-components'
 import { object, string } from 'prop-types'
 import Link from 'next/link'
-import Cookies from 'js-cookie'
-
 
 const Styled = {
   Container: styled.div`

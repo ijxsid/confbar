@@ -6,14 +6,14 @@ import Layout from '../components/shared/Layout'
 import { fetchUserInfo, authActions, fetchSpeakerById } from '../lib/actions'
 import VideoList from '../components/VideoList'
 import SpeakerInfo from '../components/SpeakerInfo'
-import { speakerById } from '../lib/normalizers'
+import { speakerNormalizer } from '../lib/normalizers'
 
 
 class Speaker extends React.Component {
   render () {
     const speaker = this.props.entities.speakers[this.props.id]
     console.log("speaker", speaker)
-    const videoData = speakerById.denormalizeVideos(speaker.videos, this.props.entities)
+    const videoData = speakerNormalizer.denormalizeVideos(speaker.videos, this.props.entities)
     const videos = videoData.videos
     return (
       <Layout user={this.props.user}>

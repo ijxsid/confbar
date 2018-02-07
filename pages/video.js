@@ -5,7 +5,7 @@ import { object, func } from 'prop-types'
 import Layout from '../components/shared/Layout'
 import { fetchUserInfo, authActions, fetchVideoById } from '../lib/actions'
 import SingleVideo from '../components/SingleVideo'
-import { videoById } from '../lib/normalizers'
+import { videoNormalizer } from '../lib/normalizers'
 
 /**
  * Page for showing a single Video and information about that.
@@ -47,7 +47,7 @@ Video.getInitialProps = async ({ store, isServer, req, pathname, query }) => {
 
 Video = withRedux(makeStore,
   (state, ownProps) => ({
-    video: videoById.denormalize(ownProps.id, state.data),
+    video: videoNormalizer.denormalizeById(ownProps.id, state.data),
     user: state.auth.user
   })
 )(Video)

@@ -6,13 +6,13 @@ import Layout from '../components/shared/Layout'
 import { fetchUserInfo, authActions, fetchConfById } from '../lib/actions'
 import VideoList from '../components/VideoList'
 import ConfInfo from '../components/ConfInfo'
-import { confById } from '../lib/normalizers'
+import { confNormalizer } from '../lib/normalizers'
 
 
 class Conference extends React.Component {
   render () {
     const conference = this.props.entities.conferences[this.props.id]
-    const videoData = confById.denormalizeVideos(conference.videos, this.props.entities)
+    const videoData = confNormalizer.denormalizeVideos(conference.videos, this.props.entities)
     const videos = videoData.videos
     return (
       <Layout>
