@@ -1,6 +1,6 @@
 import passport from 'passport'
 import express from 'express'
-import { isValidObjectID, ConflictError } from './utils'
+import { ConflictError, addModel } from './utils'
 import Video from '../../models/Video'
 
 const router = express.Router()
@@ -21,8 +21,7 @@ router.post('/',
         if (videos.length > 0) {
           throw new ConflictError(`Video ${data.link} already exists.`)
         }
-        let video = new Video(data)
-        return video.save()
+        return addModel(Video, data)
       })
       .catch(err => {
         // Video Already Exists. Conflict Error.
@@ -65,8 +64,6 @@ router.get('/', (req, res) => {
 router.get('/:id/', (req, res) => {
   const { id } = req.params
 
-  if (!isValidObjectID(id)) return res.status(404).json({info: `video with id:${id} does not exist.`})
-
   Video
     .findById(id)
     .populate('conference')
@@ -89,8 +86,6 @@ router.put('/:id/',
   passport.authenticate('jwt', { session: false }),
   (req, res) => {
     const { id } = req.params
-
-    if (!isValidObjectID(id)) return res.status(404).json({info: `video with id:${id} does not exist.`})
 
     if (!req.user.isAdmin) return res.status(401).json({info: `Not Authorized to make this request.`})
 
@@ -126,8 +121,6 @@ router.delete('/:id/',
   passport.authenticate('jwt', { session: false }),
   (req, res) => {
     const { id } = req.params
-
-    if (!isValidObjectID(id)) return res.status(404).json({info: `video with id:${id} does not exist.`})
 
     if (!req.user.isAdmin) return res.status(401).json({info: `Not Authorized to make this request.`})
 

@@ -3,6 +3,7 @@ import mongoose from 'mongoose'
 const Schema = mongoose.Schema
 
 const conferenceSchema = new Schema({
+  _id: { type: String, required: true },
   name: { type: String, required: true },
   logo: String,
   year: Number,
@@ -13,8 +14,8 @@ const conferenceSchema = new Schema({
   youtubePlaylistId: String,
   addedBy: { type: String, ref: 'User', required: true },
   createdAt: { type: Number, required: true },
-  lastModifiedAt: { type: Date },
-  lastModifiedBy: { type: String, ref: 'User', required: true }
+  lastModifiedAt: { type: Number },
+  lastModifiedBy: { type: String, ref: 'User' }
 })
 
 conferenceSchema.methods.updateData = function (data) {

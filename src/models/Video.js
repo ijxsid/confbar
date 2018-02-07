@@ -3,15 +3,16 @@ import mongoose from 'mongoose'
 const Schema = mongoose.Schema
 
 const videoSchema = new Schema({
+  id: { type: String, required: true },
   name: { type: String, required: true },
   link: { type: String, required: true },
   description: String,
   youtubeChannelId: String,
   youtubeChannelTitle: String,
   youtubePrivate: Boolean,
-  conference: { type: Schema.Types.ObjectId, ref: 'Conference' },
-  speaker: { type: Schema.Types.ObjectId, ref: 'Speaker' },
-  tags: [{type: Schema.Types.ObjectId, ref: 'Technology'}],
+  conference: { type: String, ref: 'Conference' },
+  speaker: { type: String, ref: 'Speaker' },
+  tags: [{type: String, ref: 'Technology'}],
   attachments: [String],
   addedBy: { type: String, ref: 'User', required: true },
   createdAt: { type: Number, required: true },

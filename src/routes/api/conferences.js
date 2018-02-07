@@ -1,6 +1,6 @@
 import passport from 'passport'
 import express from 'express'
-import { isValidObjectID, ConflictError } from './utils'
+import { ConflictError, addModel } from './utils'
 import Conference from '../../models/Conference'
 import Video from '../../models/Video'
 
@@ -12,9 +12,7 @@ router.post('/',
     const currentTime = (new Date()).getTime()
     const data = Object.assign({}, req.body, {
       addedBy: req.user._id,
-      createdAt: currentTime,
-      lastModifiedBy: req.user._id,
-      lastModifiedAt: currentTime
+      createdAt: currentTime
     })
 
     Conference
@@ -24,8 +22,7 @@ router.post('/',
         if (confs.length > 0) {
           throw new ConflictError(`Conference ${data.name} already exists for year ${data.year}`)
         }
-        let conf = new Conference(data)
-        return conf.save()
+        return addModel(Conference, data)
       })
       .catch(err => {
         // Conference Already Exists. Conflict Error.
@@ -67,7 +64,7 @@ router.get('/', (req, res) => {
 router.get('/:id/', (req, res) => {
   const { id } = req.params
 
-  if (!isValidObjectID(id)) return res.status(404).json({info: `conference with id:${id} does not exist.`})
+  // if (!isValidObjectID(id)) return res.status(404).json({info: `conference with id:${id} does not exist.`})
 
   const conferenceQuery = Conference.findById(id).exec()
   const videosQuery = Video.find({ conference: id }).populate('speaker').populate('tags').exec()
@@ -85,8 +82,6 @@ router.put('/:id',
   passport.authenticate('jwt', { session: false }),
   (req, res) => {
     const { id } = req.params
-
-    if (!isValidObjectID(id)) return res.status(404).json({info: `conference with id:${id} does not exist.`})
 
     if (!req.user.isAdmin) return res.status(401).json({info: `Not Authorized to make this request.`})
 

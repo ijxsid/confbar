@@ -2,6 +2,7 @@ import mongoose from 'mongoose'
 
 
 const technologySchema = new mongoose.Schema({
+  _id: { type: String, required: true },
   name: { type: String, required: true },
   website: String,
   blog: String,
@@ -11,7 +12,7 @@ const technologySchema = new mongoose.Schema({
   twitter: String,
   addedBy: { type: String, ref: 'User', required: true },
   createdAt: { type: Number, required: true },
-  lastModifiedAt: { type: Date },
+  lastModifiedAt: { type: Number },
   lastModifiedBy: { type: String, ref: 'User' }
 })
 

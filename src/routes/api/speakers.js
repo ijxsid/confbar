@@ -1,6 +1,6 @@
 import passport from 'passport'
 import express from 'express'
-import { isValidObjectID, ConflictError } from './utils'
+import { ConflictError, addModel } from './utils'
 import Speaker from '../../models/Speaker'
 import Video from '../../models/Video'
 
@@ -21,13 +21,13 @@ router.post('/',
       .exec()
       .then((speakers) => {
         if (speakers.length > 0) {
-          throw new Error(`Speaker ${data.name}(${data.twitterUsername}) already exists.`)
+          throw new ConflictError(`Speaker ${data.name}(${data.twitterUsername}) already exists.`)
         }
-        let speaker = new Speaker(data)
-        return speaker.save()
+        return addModel(Speaker, data)
       })
       .catch(err => {
         // Speaker Already Exists. Conflict Error.
+        console.log(err)
         if (err instanceof ConflictError) {
           res.status(409).json({
             info: err.message
@@ -64,8 +64,6 @@ router.get('/', (req, res) => {
 router.get('/:id/', (req, res) => {
   const { id } = req.params
 
-  if (!isValidObjectID(id)) return res.status(404).json({info: `speaker with id:${id} does not exist.`})
-
   const speakerQuery = Speaker.findById(id).exec()
   const videosQuery = Video.find({ speaker: id }).populate('conference').populate('tags').exec()
 
@@ -82,8 +80,6 @@ router.put('/:id/',
   passport.authenticate('jwt', { session: false }),
   (req, res) => {
     const { id } = req.params
-
-    if (!isValidObjectID(id)) return res.status(404).json({info: `speaker with id:${id} does not exist.`})
 
     if (!req.user.isAdmin) return res.status(401).json({info: `Not Authorized to make this request.`})
 

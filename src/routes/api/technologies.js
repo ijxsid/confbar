@@ -1,6 +1,6 @@
 import passport from 'passport'
 import express from 'express'
-import { isValidObjectID, ConflictError } from './utils'
+import { ConflictError, addModel } from './utils'
 import Technology from '../../models/Technology'
 import Video from '../../models/Video'
 
@@ -22,8 +22,7 @@ router.post('/',
         if (techs.length > 0) {
           throw new Error(`Technology ${data.name} already exists.`)
         }
-        let tech = new Technology(data)
-        return tech.save()
+        return addModel(Technology, data)
       })
       .catch(err => {
         // Technology Already Exists. Conflict Error.
@@ -63,8 +62,6 @@ router.get('/', (req, res) => {
 router.get('/:id/', (req, res) => {
   const { id } = req.params
 
-  if (!isValidObjectID(id)) return res.status(404).json({info: `Tag with id:${id} does not exist.`})
-
   const techQuery = Technology.findById(id).exec()
   const videosQuery = Video.find({tags: id}).populate('conference').populate('speaker').populate('tags').exec()
 
@@ -81,8 +78,6 @@ router.put('/:id/',
   passport.authenticate('jwt', { session: false }),
   (req, res) => {
     const { id } = req.params
-
-    if (!isValidObjectID(id)) return res.status(404).json({info: `Tag with id:${id} does not exist.`})
 
     if (!req.user.isAdmin) return res.status(401).json({info: `Not Authorized to make this request.`})
 
