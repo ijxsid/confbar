@@ -12,6 +12,43 @@ app.prepare()
     const server = express()
     server.use(cookieParser())
 
+
+    server.get('/conference/:id/:slug?', (req, res) => {
+      return app.render(req, res, '/conference', { id: req.params.id })
+    })
+
+    server.get('/c/:id/:slug?', (req, res) => {
+      return app.render(req, res, '/conference', { id: req.params.id })
+    })
+
+    server.get('/video/:id/:slug?', (req, res) => {
+      return app.render(req, res, '/video', { id: req.params.id })
+    })
+
+    server.get('/v/:id/:slug?', (req, res) => {
+      return app.render(req, res, '/video', { id: req.params.id })
+    })
+
+    server.get('/tag/:id/:slug?', (req, res) => {
+      return app.render(req, res, '/tag', { id: req.params.id })
+    })
+
+    server.get('/technology/:id/:slug?', (req, res) => {
+      return app.render(req, res, '/tag', { id: req.params.id })
+    })
+
+    server.get('/t/:id/:slug?', (req, res) => {
+      return app.render(req, res, '/tag', { id: req.params.id })
+    })
+
+    server.get('/speaker/:id/:slug?', (req, res) => {
+      return app.render(req, res, '/speaker', { id: req.params.id })
+    })
+
+    server.get('/s/:id/:slug?', (req, res) => {
+      return app.render(req, res, '/speaker', { id: req.params.id })
+    })
+
     server.get('/authenticated', (req, res) => {
       return app.render(req, res, '/authenticated', req.query)
     })

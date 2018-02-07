@@ -64,7 +64,7 @@ const Icon = styled.i`
   margin-right: 8px;
 `
 
-const getFullLink = (conf) => `${config.frontend.base}/conference?id=${conf._id}`
+const getFullLink = (conf) => `${config.frontend.base}/conference/${conf._id}`
 
 
 const Conference = ({ conf }) => (
@@ -72,7 +72,7 @@ const Conference = ({ conf }) => (
     <ConfLogo src={conf.logo} />
     <ConfInfo>
       <div className="title is-4">
-        <Link href={`/conference?id=${conf._id}`}>
+        <Link href={`/conference?id=${conf._id}`} as={`/conference/${conf._id}`}>
           <a>{conf.name} - {conf.year}</a>
         </Link>
       </div>

@@ -59,14 +59,14 @@ const Icon = styled.i`
   margin-right: 8px;
 `
 
-const getFullLink = (video) => `${config.frontend.base}/video?id=${video._id}`
+const getFullLink = (video) => `${config.frontend.base}/video/${video._id}`
 
 const SingleVideo = ({ video }) => (
   <Container>
     <VideoContainer>
       <VideoInfoContainer>
         <div className="title is-4" style={{ marginBottom: '1.2rem', textAlign: 'center', width: '100%' }}>
-          <Link href={`/video?id=${video._id}`}>
+          <Link href={`/video?id=${video._id}`} as={`/video/${video._id}`}>
             <a>{video.name}</a>
           </Link>
         </div>

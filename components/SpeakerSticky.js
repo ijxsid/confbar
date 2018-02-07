@@ -33,7 +33,7 @@ const SpeakerSticky = ({ speaker }) => (
   <SpeakerStickyContainer>
     <SpeakerStickyPad > <i className="icon-microphone" /> </SpeakerStickyPad>
     <SpeakerStickyStyled>
-      <Link href={`/speaker?id=${speaker._id}`}>
+      <Link href={`/speaker?id=${speaker._id}`} as={`/speaker/${speaker._id}`}>
         <a>{speaker.name}</a>
       </Link>
     </SpeakerStickyStyled>

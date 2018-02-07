@@ -96,12 +96,12 @@ class VideoInfo extends React.Component {
   render () {
     const { video, hideComponents } = this.props
     const { videoClicked } = this.state
-    const fullLink = `${config.frontend.base}/video?id=${video._id}`
+    const fullLink = `${config.frontend.base}/video/${video._id}`
     return (
       <VideoContainer>
         <VideoInfoContainer>
           <div className="title is-6" style={{ marginBottom: '0.15rem' }}>
-            <Link href={`/video?id=${video._id}`}>
+            <Link href={`/video?id=${video._id}`} as={`/video/${video._id}`}>
               <a>{video.name}</a>
             </Link>
           </div>

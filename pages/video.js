@@ -19,6 +19,7 @@ class Video extends React.Component {
     video: object
   }
   render () {
+    console.log("video", this.props.video)
     return (
       <Layout user={this.props.user}>
         <div>

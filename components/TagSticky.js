@@ -31,7 +31,7 @@ const SpeakerStickyContainer = styled.div`
 
 
 const Tag = ({ tag }) => (
-  <Link href={`/technology?id=${tag._id}`}>
+  <Link href={`/technology?id=${tag._id}`} as={`/technology/${tag._id}`}>
     <a><span className="tag is-primary">{tag.name}</span></a>
   </Link>
 )
