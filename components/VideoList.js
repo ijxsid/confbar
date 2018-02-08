@@ -5,6 +5,8 @@ import { getThumbnail, getEmbed } from '../lib/youtubeUtils'
 import { ConferenceSticky, SpeakerSticky, TagSticky } from './common/Sticky'
 import { object, array } from 'prop-types'
 import config from '../config'
+import StyledIcon from './styled/Icon'
+import StyledFooter from './styled/Footer'
 
 
 const VideoListContainer = styled.div`
@@ -55,24 +57,10 @@ const ThumbnailOverlay = styled.div`
   }
 `
 const VideoFooter = styled.div`
-  background-color: #FFFFD3;
-  padding: 7px 20px;
-  font-weight: 600;
-  color: #E20049;
-
-  a {
-    color: #E20049;
-  }
-
-  a:hover {
-    color: #3273dc;
-  }
+  ${StyledFooter}
 `
 const Icon = styled.i`
-  font-size: inherit;
-  color: inherit;
-  vertical-align: middle;
-  margin-right: 8px;
+  ${StyledIcon}
 `
 
 class VideoInfo extends React.Component {

@@ -5,6 +5,8 @@ import Link from 'next/link'
 import { object, array } from 'prop-types'
 import { getFullLink } from '../lib/utils'
 import StyledIcon from './styled/Icon'
+import StyledFooter from './styled/Footer'
+
 
 const Styled = {
   Container: styled.div` 
@@ -154,23 +156,9 @@ const Styled = {
     }
   `,
   Footer: styled.div`
+    ${StyledFooter}
     grid-area: footer;
-    background-color: #FFFFD3;
     align-self: end;
-    padding: 7px 20px;
-    font-weight: 600;
-    color: #E20049;
-
-    a {
-      color: #E20049;
-    }
-
-    a:hover {
-      color: #3273dc;
-    }
-    @media (min-width: 1720px) {
-      font-size: 1.3rem;
-    }
   `,
   FooterIcon: styled.i`
     ${StyledIcon}
