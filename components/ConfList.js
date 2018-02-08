@@ -21,7 +21,8 @@ const Styled = {
       width: 75%;
       margin: 0 auto;
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(360px, 1fr));
+      grid-template-columns: repeat(auto-fit, minmax(440px, 1fr));
+      justify-items: center; 
       grid-gap: 25px;
     }
 
@@ -35,6 +36,7 @@ const Styled = {
     display: grid;
     grid-template-columns:  1fr 3fr;
     grid-template-rows: auto;
+
     grid-template-areas:
       "sideimage title"
       "sideimage info"
@@ -47,6 +49,8 @@ const Styled = {
     }
     
     @media (min-width: 1720px) {
+      width: 100%;
+      max-width: 440px;      
       grid-template-columns: 100%;
       grid-template-areas:
       "title"
