@@ -40,7 +40,7 @@ const Styled = {
     margin: 20px 10px;
     box-shadow: 0px 0px 12px 8px rgba(170, 170, 190, 0.15);
     width: 100%;
-    max-width: 480px;
+    max-width: 440px;
     background: white;
     :hover {
       box-shadow: 0px 0px 20px 15px rgba(170, 170, 190, 0.1);

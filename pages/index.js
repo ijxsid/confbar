@@ -1,10 +1,11 @@
 import React, { Component } from "react"
 import makeStore from '../lib/makeStore'
 import withRedux from 'next-redux-wrapper'
-import { object, func, array } from 'prop-types'
+import { object, func, array, bool } from 'prop-types'
 import Layout from '../components/shared/Layout'
-import { authActions, doFetchConferences, fetchUserInfo } from '../lib/actions'
+import { doFetchConferences } from '../lib/actions'
 import ConfList from '../components/ConfList'
+import { setupUser } from '../lib/utils'
 
 
 /**
@@ -13,8 +14,10 @@ import ConfList from '../components/ConfList'
  */
 
 class Index extends Component {
-  componentDidMount () {
-    console.log(this.props.conferences)
+  componentWillMount () {
+    if (this.props.onClient) {
+      this.props.fetchConferences()
+    }
   }
   render () {
     const { user } = this.props
@@ -30,29 +33,30 @@ class Index extends Component {
 
 Index.propTypes = {
   user: object,
-  dispatch: func,
-  conferences: array
+  fetchConferences: func,
+  conferences: array,
+  onClient: bool
 }
 
 
 Index.getInitialProps = async ({ store, isServer, req, pathname, query }) => {
-  if (isServer && req.cookies.token) {
-    store.dispatch(authActions.addToken(req.cookies.token))
-  } else {
-    console.log(store.getState())
-  }
-  const token = store.getState().auth.token
-  await store.dispatch(doFetchConferences())
 
-  if (token) {
-    await store.dispatch(fetchUserInfo(token))
+  if (!isServer) {
+    return { onClient: true }
   }
+
+  await setupUser(req, store)
+
+  await store.dispatch(doFetchConferences())
 }
 
 Index = withRedux(makeStore,
   (state) => ({
     conferences: Object.values(state.data.conferences),
     user: state.auth.user
+  }),
+  (dispatch) => ({
+    fetchConferences: () => (dispatch(doFetchConferences()))
   })
 )(Index)
 

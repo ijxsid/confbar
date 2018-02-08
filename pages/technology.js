@@ -1,19 +1,24 @@
 import React from 'react'
 import makeStore from '../lib/makeStore'
 import withRedux from 'next-redux-wrapper'
-import { string, object, func } from 'prop-types'
+import { string, object, func, bool } from 'prop-types'
 import Layout from '../components/shared/Layout'
-import { fetchUserInfo, authActions, fetchTagById } from '../lib/actions'
+import { fetchTagById } from '../lib/actions'
+import { setupUser } from '../lib/utils'
 import VideoList from '../components/VideoList'
 import TagInfo from '../components/TagInfo'
-import { tagById } from '../lib/normalizers'
+import { tagNormalizer } from '../lib/normalizers'
 
 
 class Technology extends React.Component {
+  componentWillMount () {
+    if (this.props.onClient) {
+      this.props.fetchTag()
+    }
+  }
   render () {
     const tag = this.props.entities.tags[this.props.id]
-    console.log("tag", tag)
-    const videoData = tagById.denormalizeVideos(tag.videos, this.props.entities)
+    const videoData = tagNormalizer.denormalizeVideos(tag.videos, this.props.entities)
     const videos = videoData.videos
     return (
       <Layout user={this.props.user}>
@@ -33,28 +38,32 @@ Technology.propTypes = {
   user: object,
   entities: object,
   id: string,
-  dispatch: func
+  fetchTag: func,
+  onClient: bool
 }
 
 Technology.getInitialProps = async ({ store, isServer, req, pathname, query }) => {
-  if (isServer && req.cookies.token) {
-    store.dispatch(authActions.addToken(req.cookies.token))
+
+  const props = { id: query.id }
+
+  if (!isServer) {
+    return { ...props, ...{ onClient: true } }
   }
-  const token = store.getState().auth.token
+
+  await setupUser(req, store)
 
   await store.dispatch(fetchTagById(query.id))
-  console.log("get State()", store.getState().data)
 
-  if (token) {
-    await store.dispatch(fetchUserInfo(token))
-  }
-  return { id: query.id }
+  return props
 }
 
 Technology = withRedux(makeStore,
   (state) => ({
     user: state.auth.user,
     entities: state.data
+  }),
+  (dispatch, ownProps) => ({
+    fetchTag: () => (dispatch(fetchTagById(ownProps.id)))
   })
 )(Technology)
 
