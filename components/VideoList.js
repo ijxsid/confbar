@@ -58,10 +58,10 @@ const Styled = {
     padding: 10px 20px 10px;
     margin-bottom: 0.25rem;
     font-weight: 600;
-    font-size: 1.30rem;
+    font-size: 1.20rem;
     align-self: start;
 
-    @media (min-width: 1280px) {
+    @media (min-width: 1720px) {
       font-size: 1.45rem;
     }
     @media (max-width: 960px) {
