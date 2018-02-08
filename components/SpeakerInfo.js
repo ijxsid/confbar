@@ -6,27 +6,52 @@ const Styled = {
   SpeakerInfo: styled.div`
     width: 75%;
     max-width: 850px;
-    min-width: 450px;
+    min-width: 240px;
     margin: 2.5rem auto 1rem;
     display:grid;
-    grid-template-columns: 1fr 3fr;
-    grid-template-rows: repeat(2, 1fr);
+    grid-template-columns: 170px auto;
+    grid-template-rows: auto auto;
     grid-gap: 20px;
+    align-items: center;
     grid-template-areas:
       "icon name"
       "icon links";
+    @media (max-width: 800px) {
+      width: 90%;
+      grid-gap: 10px;
+      
+      grid-template-columns: 140px auto;
+    } 
+
+    @media (max-width: 540px) {
+      grid-template-columns: 75px auto;
+    } 
   `,
   SpeakerAvatar: styled.img`
     width: 100%;
     grid-area: icon;
     border-radius: 20px;
+    @media (max-width: 800px) {
+      border-radius: 14px;
+    } 
+    @media (max-width: 540px) {
+      border-radius: 8px;
+    } 
   `,
   SpeakerName: styled.div`
     grid-area: name;
     align-self: center;
-    font-size: 2.5rem;
+    font-size: 3rem;
     padding-left: 2rem;
     align-self: end;
+
+    @media (max-width: 800px) {
+      font-size: 2rem;
+    } 
+
+    @media (max-width: 540px) {
+      font-size: 1.25rem;
+    } 
   `,
   SpeakerLinks: styled.div`
     grid-area: links;
@@ -38,6 +63,14 @@ const Styled = {
     grid-template-columns: repeat(3, 1fr);
     justify-items: start;
     grid-gap: 5px;
+
+    @media (max-width: 800px) {
+      font-size: 1.25rem;
+    } 
+
+    @media (max-width: 540px) {
+      font-size: 1rem;
+    } 
   `,
   SpeakerLink: styled.div`
     transition: all 0.4s ease;
@@ -93,7 +126,7 @@ const SpeakerInfo = ({ speaker }) => (
 
       {
         (speaker.website || speaker.blog) &&
-        <Styled.SpeakerLink color="#818199">
+        <Styled.SpeakerLink color="#3273dc">
           <a href={`${speaker.website || speaker.blog}`}>
             <Styled.Icon className="icon-link"/>
           </a>

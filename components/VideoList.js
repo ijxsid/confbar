@@ -16,7 +16,7 @@ const Styled = {
     padding: 15px 0;
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
-    justify-content: center;
+    justify-items: center;
     grid-gap: 25px;
 
     @media (max-width: 1200px) {
@@ -39,6 +39,8 @@ const Styled = {
   Video: styled.div`
     margin: 20px 10px;
     box-shadow: 0px 0px 12px 8px rgba(170, 170, 190, 0.15);
+    width: 100%;
+    max-width: 480px;
     background: white;
     :hover {
       box-shadow: 0px 0px 20px 15px rgba(170, 170, 190, 0.1);
