@@ -5,15 +5,29 @@ import { object } from 'prop-types'
 import { getEmbed } from '../lib/youtubeUtils'
 import { getFullLink, getFBShareLink, getTwitterShareLink } from '../lib/utils'
 import { ConferenceSticky, TagSticky, SpeakerSticky } from './common/Sticky'
+import StyledIcon from './styled/Icon'
 
 const Styled = {
   Container: styled.div`
     width: 75%;
-    max-width: 850px;
-    min-width: 450px;
+    max-width: 900px;
+    /* min-width: 450px; */
     margin: 0 auto;
     padding: 15px 0;
     min-height: 100vh;
+
+    @media (min-width: 1720px) {
+      max-width: 1200px;
+    }
+    
+    @media (min-width: 1280px) {
+      max-width: 1000px;
+    }
+
+    @media (max-width: 720px) {
+      width: 95%;
+    }
+
   `,
   Video: styled.div`
     margin-top: 2em;
@@ -21,15 +35,60 @@ const Styled = {
     background-color: white;
     box-shadow: 0px 0px 12px 8px rgba(170, 170, 190, 0.15);
   `,
+  Title: styled.div`
+    margin-bottom: 1.2rem;
+    width: 100%;
+    text-align: center;
+    font-size: 1.45rem;
+    font-weight: 600;
+
+    @media (min-width: 1280px) {
+      font-size: 1.75rem;
+      margin-bottom: 0.6rem;
+    }
+
+    @media (max-width: 720px) {
+      font-size: 1.20rem;
+      margin-bottom: 0.6rem;
+    } 
+ 
+    
+    
+  `,
   Info: styled.div`
     display: flex;
     justify-content: space-between;
     padding: 5px 10px;
+    flex-wrap: wrap;
+
+    @media(max-width: 720px) {
+      display: block;
+    }
+
+    @media(min-width: 1280px) {
+      font-size: 1.3rem;
+    }
   `,
   Embed: styled.iframe`
     width: 100%;
-    min-height: 450px;
+    height: 450px;
     padding: 0px 10px;
+
+    @media (min-width: 1720px) {
+      height:650px;
+    }
+    @media (max-width: 1280px) {
+      height: 540px;
+    }
+
+    @media (max-width: 720px) {
+      height: 405px;
+      padding: 0px 0px; 
+      
+    }
+    @media (max-width: 480px) {
+      height: 270px;
+    }
   `,
   Footer: styled.div`
     background-color: #FFFFD3;
@@ -45,12 +104,13 @@ const Styled = {
     a:hover {
       color: #3273dc;
     }
+
+    @media (min-width: 1280px) {
+      font-size: 1.3rem;
+    }
   `,
   Icon: styled.i`
-    font-size: inherit;
-    color: inherit;
-    vertical-align: middle;
-    margin-right: 8px;
+    ${StyledIcon}
   `
 }
 
@@ -58,11 +118,11 @@ const SingleVideo = ({ video }) => (
   <Styled.Container>
     <Styled.Video>
       <Styled.Info>
-        <div className="title is-4" style={{ marginBottom: '1.2rem', textAlign: 'center', width: '100%' }}>
+        <Styled.Title>
           <Link href={`/video?id=${video._id}`} as={`/video/${video._id}`}>
             <a>{video.name}</a>
           </Link>
-        </div>
+        </Styled.Title>
       </Styled.Info>
       <Styled.Embed src={getEmbed(video.link)} frameBorder="0" allowFullScreen/>
       <Styled.Info>
