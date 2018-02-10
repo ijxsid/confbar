@@ -53,6 +53,11 @@ const Styled = {
       font-size: 1.20rem;
       margin-bottom: 0.6rem;
     } 
+
+    @media (max-width: 480px) {
+      font-size: 1rem;
+      margin-bottom: 0.6rem;
+    }
  
     
     
@@ -89,7 +94,7 @@ const Styled = {
       
     }
     @media (max-width: 480px) {
-      height: 270px;
+      height: 240px;
     }
   `,
   Footer: styled.div`

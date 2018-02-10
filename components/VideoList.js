@@ -54,6 +54,9 @@ const Styled = {
     }
     @media (max-width: 700px) {
       display:block;
+      width: 96%;
+      margin: 20px auto;
+      
     }
   `,
   Title: styled.div`
