@@ -76,7 +76,7 @@ class Navbar extends React.Component {
         <div className="navbar-brand">
           <Link href="/">
             <a className="navbar-item">
-              <h1 className="title is-3" style={{ color: '#C02727' }}>Confbar</h1>
+              <img src="/static/images/Confbar_long.svg" />
             </a>
           </Link>
 
