@@ -3,6 +3,7 @@ import styled from 'styled-components'
 import Link from 'next/link'
 import { getThumbnail, getEmbed } from '../lib/youtubeUtils'
 import { ConferenceSticky, SpeakerSticky, TagSticky } from './common/Sticky'
+import AdminTools from './common/AdminTools'
 import { object, array } from 'prop-types'
 import config from '../config'
 import StyledIcon from './styled/Icon'
@@ -73,6 +74,23 @@ const Styled = {
       font-size: 1.02rem;
     }
   `,
+  AdminTools: styled.div`
+    margin: 10px 0px;
+    font-size: 0.90rem;
+    display: flex;
+    align-items: center;
+    > div {
+      margin-right: 10px;
+    }
+    > div:first-child {
+      background-color: #FFFFD3;
+      padding: 5px 10px;
+      border-radius: 10px;
+      font-weight: 500;
+      color:#C02727;
+    }
+
+  `,
   Info: styled.div`
     padding: 10px 20px 10px;
 
@@ -94,12 +112,19 @@ const Styled = {
     justify-content: center;
     align-items: center;
     font-size: 3em;
-    color: #3498DB;
+    color: #C02727;
+    
     cursor: pointer;
-    text-shadow: 0px 0px 15px #0B409C;
     :hover {
-      color: #0B409C;
+      color: #3498DB;    
+      text-shadow: 0px 0px 15px #0B409C88;
+      
     }
+    :hover div {
+      transform: scale(1.2);
+      transition: 0.16s linear;
+    }
+
   `,
 
   Footer: styled.div`
@@ -111,6 +136,24 @@ const Styled = {
   `
 }
 
+const VideoAdminTools = () => (
+  <AdminTools
+    render={
+      [
+        <div key={0}>
+          <button className="button is-info is-small">
+            Edit
+          </button>
+        </div>,
+        <div key={1}>
+          <button className="button is-danger is-small">
+            Delete
+          </button>
+        </div>
+      ]
+    }
+  />
+)
 
 class VideoInfo extends React.Component {
   state = {
@@ -132,6 +175,7 @@ class VideoInfo extends React.Component {
           <Link href={`/video?id=${video._id}`} as={`/video/${video._id}`}>
             <a>{video.name}</a>
           </Link>
+          <VideoAdminTools />
         </Styled.Title>
         { videoClicked ?
           <Styled.Embed src={getEmbed(video.link)} frameBorder="0" allowFullScreen /> :
