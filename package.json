@@ -4,7 +4,10 @@
   "main": "index.js",
   "license": "NO LICENSE",
   "scripts": {
-    "add:playlist": "babel-node src/youtubePlaylistWorker.js --presets env"
+    "add:playlist": "babel-node src/youtubePlaylistWorker.js --presets env",
+    "add:speaker": "babel-node src/addSpeaker.js --presets env",
+    "add:tag": "babel-node src/addTag.js --presets env"
+    
   },
   "devDependencies": {
     "babel-cli": "^6.26.0",
