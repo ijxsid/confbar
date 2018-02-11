@@ -178,7 +178,7 @@ class VideoInfo extends React.Component {
             as={`/video/${video._id}/${textToSlug(video.name)}`} >
             <a>{video.name}</a>
           </Link>
-          <VideoAdminTools />
+          <VideoAdminTools videoId={video._id}/>
         </Styled.Title>
         { videoClicked ?
           <Styled.Embed src={getEmbed(video.link)} frameBorder="0" allowFullScreen /> :

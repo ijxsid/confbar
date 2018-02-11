@@ -8,6 +8,7 @@ import { setupUser } from '../lib/utils'
 import VideoList from '../components/VideoList'
 import ConfInfo from '../components/ConfInfo'
 import { confNormalizer } from '../lib/normalizers'
+import Dialog from '../components/common/Dialog'
 
 
 class Conference extends React.Component {
@@ -29,6 +30,9 @@ class Conference extends React.Component {
             hideComponents={{ conference: true }}
           />
         </div>
+        <Dialog >
+          <div> Content for Dialog </div>
+        </Dialog>
       </Layout>
     )
   }
