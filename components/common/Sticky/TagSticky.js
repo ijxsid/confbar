@@ -2,6 +2,7 @@ import React from 'react'
 import styled from 'styled-components'
 import { array, object } from 'prop-types'
 import Link from 'next/link'
+import { textToSlug } from '../../../lib/utils'
 
 const SpeakerStickyStyled = styled.span`
   display: inline-block;
@@ -31,7 +32,9 @@ const SpeakerStickyContainer = styled.div`
 
 
 const Tag = ({ tag }) => (
-  <Link href={`/technology?id=${tag._id}`} as={`/technology/${tag._id}`}>
+  <Link
+    href={`/technology?id=${tag._id}`}
+    as={`/technology/${tag._id}/${textToSlug(tag.name)}`}>
     <a><span className="tag is-primary">{tag.name}</span></a>
   </Link>
 )
@@ -41,7 +44,7 @@ Tag.propTypes = {
 }
 
 
-const SpeakerSticky = ({ tags }) => (
+const TagsSticky = ({ tags }) => (
   <SpeakerStickyContainer>
     <SpeakerStickyPad > <i className="icon-tag" /> </SpeakerStickyPad>
     <SpeakerStickyStyled>
@@ -54,9 +57,9 @@ const SpeakerSticky = ({ tags }) => (
   </SpeakerStickyContainer>
 )
 
-SpeakerSticky.propTypes = {
+TagsSticky.propTypes = {
   tags: array
 }
 
 
-export default SpeakerSticky
+export default TagsSticky

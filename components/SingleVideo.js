@@ -7,6 +7,7 @@ import { getFullLink, getFBShareLink, getTwitterShareLink } from '../lib/utils'
 import { ConferenceSticky, TagSticky, SpeakerSticky } from './common/Sticky'
 import StyledIcon from './styled/Icon'
 import StyledFooter from './styled/Footer'
+import { textToSlug } from '../lib/utils'
 
 
 const Styled = {
@@ -110,7 +111,9 @@ const SingleVideo = ({ video }) => (
     <Styled.Video>
       <Styled.Info>
         <Styled.Title>
-          <Link href={`/video?id=${video._id}`} as={`/video/${video._id}`}>
+          <Link
+            href={`/video?id=${video._id}`}
+            as={`/video/${video._id}/${textToSlug(video.name)}`}>
             <a>{video.name}</a>
           </Link>
         </Styled.Title>

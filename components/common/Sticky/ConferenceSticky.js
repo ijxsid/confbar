@@ -2,6 +2,7 @@ import React from 'react'
 import styled from 'styled-components'
 import { object } from 'prop-types'
 import Link from 'next/link'
+import { textToSlug } from '../../../lib/utils'
 
 const ConferenceStickyStyled = styled.span`
   display: inline-block;
@@ -30,7 +31,9 @@ const ConferenceSticky = ({ conference }) => (
   <ConferenceStickyContainer>
     <ConferenceStickyPad> Part of </ConferenceStickyPad>
     <ConferenceStickyStyled>
-      <Link href={`/conference?id=${conference._id}`} as={`/conference/${conference._id}`}>
+      <Link
+        href={`/conference?id=${conference._id}`}
+        as={`/conference/${conference._id}/${textToSlug(`${conference.name} ${conference.year}`)}`}>
         <a>{`${conference.name} ● ${conference.year}`}</a>
       </Link>
     </ConferenceStickyStyled>

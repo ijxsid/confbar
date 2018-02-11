@@ -30,15 +30,15 @@ app.prepare()
     })
 
     server.get('/tag/:id/:slug?', (req, res) => {
-      return app.render(req, res, '/tag', { id: req.params.id })
+      return app.render(req, res, '/technology', { id: req.params.id })
     })
 
     server.get('/technology/:id/:slug?', (req, res) => {
-      return app.render(req, res, '/tag', { id: req.params.id })
+      return app.render(req, res, '/technology', { id: req.params.id })
     })
 
     server.get('/t/:id/:slug?', (req, res) => {
-      return app.render(req, res, '/tag', { id: req.params.id })
+      return app.render(req, res, '/technology', { id: req.params.id })
     })
 
     server.get('/speaker/:id/:slug?', (req, res) => {

@@ -2,6 +2,7 @@ import React from 'react'
 import styled from 'styled-components'
 import { object } from 'prop-types'
 import Link from 'next/link'
+import { textToSlug } from '../../../lib/utils'
 
 const SpeakerStickyStyled = styled.span`
   display: inline-block;
@@ -33,7 +34,9 @@ const SpeakerSticky = ({ speaker }) => (
   <SpeakerStickyContainer>
     <SpeakerStickyPad > <i className="icon-microphone" /> </SpeakerStickyPad>
     <SpeakerStickyStyled>
-      <Link href={`/speaker?id=${speaker._id}`} as={`/speaker/${speaker._id}`}>
+      <Link
+        href={`/speaker?id=${speaker._id}`}
+        as={`/speaker/${speaker._id}/${textToSlug(speaker.name)}`}>
         <a>{speaker.name}</a>
       </Link>
     </SpeakerStickyStyled>

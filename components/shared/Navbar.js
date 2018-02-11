@@ -76,7 +76,7 @@ class Navbar extends React.Component {
         <div className="navbar-brand">
           <Link href="/">
             <a className="navbar-item">
-              <img src="/static/images/Confbar_long.svg" />
+              <img src="/static/images/Confbar_long.svg" alt="Confbar Logo"/>
             </a>
           </Link>
 

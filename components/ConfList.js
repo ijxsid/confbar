@@ -6,6 +6,7 @@ import { object, array } from 'prop-types'
 import { getFullLink } from '../lib/utils'
 import StyledIcon from './styled/Icon'
 import StyledFooter from './styled/Footer'
+import { textToSlug } from '../lib/utils'
 
 
 const Styled = {
@@ -173,7 +174,9 @@ const Conference = ({ conf }) => (
   <Styled.Item>
     <Styled.Logo src={conf.logo} />
     <Styled.Title>
-      <Link href={`/conference?id=${conf._id}`} as={`/conference/${conf._id}`}>
+      <Link
+        href={`/conference?id=${conf._id}`}
+        as={`/conference/${conf._id}/${textToSlug(`${conf.name} ${conf.year}`)}`}>
         <a>{conf.name} - {conf.year}</a>
       </Link>
     </Styled.Title>
