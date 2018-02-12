@@ -7,7 +7,7 @@ const Styled = {
     position: fixed;
     top: 0px;
     left: 0px;
-    background: #33333355;
+    background: #33333388;
     width: 100%;
     height: 100%;
     display: grid;

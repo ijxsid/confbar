@@ -50,7 +50,6 @@ Conference.propTypes = {
 }
 
 Conference.getInitialProps = async ({ store, isServer, req, pathname, query }) => {
-
   const props = { id: query.id }
 
   if (!isServer) {

@@ -119,6 +119,15 @@
 .icon-play-circle-o:before {
   content: "\41";
 }
-.icon-edit:before {
+.icon-edit-1:before {
   content: "\42";
+}
+.icon-delete:before {
+  content: "\43";
+}
+.icon-people:before {
+  content: "\44";
+}
+.icon-edit:before {
+  content: "\45";
 }

@@ -1,7 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
-import { object, string } from 'prop-types'
-import Link from 'next/link'
+import { string, func } from 'prop-types'
+import Tabs from '../common/Tabs'
 
 const Styled = {
   Container: styled.div`
@@ -50,6 +50,33 @@ const TextField = ({ label, name, onChange, placeholder, value }) => (
   </Styled.Field>
 )
 
+TextField.propTypes = {
+  label: string,
+  name: string,
+  onChange: func,
+  placeholder: string,
+  value: string
+}
+const VideoFormTab = () => (
+  <div>
+    <TextField label="Video Name" name="name" />
+    <TextField label="Description" name="description" />
+    <TextField label="Link" name="link" />
+    <TextField label="Youtube Channel Id" name="youtubeChannelId" />
+    <TextField label="Youtube Channel" name="youtubeChannelTitle" />
+  </div>
+)
+
+const ConferenceFormTab = () => (
+  <div>
+    <TextField label="Conference Name" name="name" />
+    <TextField label="Description" name="description" />
+    <TextField label="Link" name="link" />
+    <TextField label="Youtube Channel Id" name="youtubeChannelId" />
+    <TextField label="Youtube Channel" name="youtubeChannelTitle" />
+  </div>
+)
+
 class EditVideo extends React.Component {
   render () {
     return (
@@ -59,11 +86,12 @@ class EditVideo extends React.Component {
             Editing Video: Video Name
           </div>
         </Styled.Heading>
-        <TextField label="Video Name" name="name" />
-        <TextField label="Description" name="description" />
-        <TextField label="Link" name="link" />
-        <TextField label="Youtube Channel Id" name="youtubeChannelId" />
-        <TextField label="Youtube Channel" name="youtubeChannelTitle" />
+        <Tabs
+          comps={{
+            Video: <VideoFormTab />,
+            Conference: <ConferenceFormTab />
+          }}
+        />
 
         <Styled.ButtonGroup>
           <div className="field is-grouped">

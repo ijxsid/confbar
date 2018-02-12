@@ -4,7 +4,7 @@ import Link from 'next/link'
 import { getThumbnail, getEmbed } from '../lib/youtubeUtils'
 import { ConferenceSticky, SpeakerSticky, TagSticky } from './common/Sticky'
 import AdminTools from './common/AdminTools'
-import { object, array } from 'prop-types'
+import { object, array, func, string } from 'prop-types'
 import config from '../config'
 import StyledIcon from './styled/Icon'
 import StyledFooter from './styled/Footer'
@@ -145,18 +145,23 @@ let VideoAdminTools = ({ id, startEditingVideo }) => (
       [
         <div key={0}>
           <button className="button is-info is-small" onClick={() => { startEditingVideo(id) }}>
-            Edit
+            <Styled.Icon className="icon-edit"/> Edit
           </button>
         </div>,
         <div key={1}>
           <button className="button is-danger is-small">
-            Delete
+            <Styled.Icon className="icon-delete"/> Delete
           </button>
         </div>
       ]
     }
   />
 )
+
+VideoAdminTools.propTypes = {
+  id: string,
+  startEditingVideo: func
+}
 
 VideoAdminTools = connect(null, dispatch => ({
   startEditingVideo: id => dispatch(adminActions.startEditVideo(id))
