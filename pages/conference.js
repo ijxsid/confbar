@@ -9,6 +9,7 @@ import VideoList from '../components/VideoList'
 import ConfInfo from '../components/ConfInfo'
 import { confNormalizer } from '../lib/normalizers'
 import Dialog from '../components/common/Dialog'
+import EditVideo from '../components/admin/EditVideo'
 
 
 class Conference extends React.Component {
@@ -18,8 +19,9 @@ class Conference extends React.Component {
     }
   }
   render () {
-    const conference = this.props.entities.conferences[this.props.id]
-    const videoData = confNormalizer.denormalizeVideos(conference.videos, this.props.entities)
+    const { id, entities, editing } = this.props
+    const conference = this.props.entities.conferences[id]
+    const videoData = confNormalizer.denormalizeVideos(conference.videos, entities)
     const videos = videoData.videos
     return (
       <Layout>
@@ -30,8 +32,8 @@ class Conference extends React.Component {
             hideComponents={{ conference: true }}
           />
         </div>
-        <Dialog >
-          <div> Content for Dialog </div>
+        <Dialog open={editing.type === 'video' && editing.id}>
+          <EditVideo />
         </Dialog>
       </Layout>
     )
@@ -43,7 +45,8 @@ Conference.propTypes = {
   entities: object,
   id: string,
   fetchConf: func,
-  onClient: bool
+  onClient: bool,
+  editing: object
 }
 
 Conference.getInitialProps = async ({ store, isServer, req, pathname, query }) => {
@@ -63,7 +66,8 @@ Conference.getInitialProps = async ({ store, isServer, req, pathname, query }) =
 
 Conference = withRedux(makeStore,
   (state) => ({
-    entities: state.data
+    entities: state.data,
+    editing: state.data.editing
   }),
   (dispatch, ownProps) => ({
     fetchConf: () => dispatch(fetchConfById(ownProps.id))

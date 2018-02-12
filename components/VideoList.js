@@ -9,6 +9,8 @@ import config from '../config'
 import StyledIcon from './styled/Icon'
 import StyledFooter from './styled/Footer'
 import { textToSlug } from '../lib/utils'
+import { connect } from 'react-redux'
+import { adminActions } from '../lib/actions'
 
 
 const Styled = {
@@ -137,12 +139,12 @@ const Styled = {
   `
 }
 
-const VideoAdminTools = () => (
+let VideoAdminTools = ({ id, startEditingVideo }) => (
   <AdminTools
     render={
       [
         <div key={0}>
-          <button className="button is-info is-small">
+          <button className="button is-info is-small" onClick={() => { startEditingVideo(id) }}>
             Edit
           </button>
         </div>,
@@ -155,6 +157,11 @@ const VideoAdminTools = () => (
     }
   />
 )
+
+VideoAdminTools = connect(null, dispatch => ({
+  startEditingVideo: id => dispatch(adminActions.startEditVideo(id))
+}))(VideoAdminTools)
+
 
 class VideoInfo extends React.Component {
   state = {
@@ -178,7 +185,7 @@ class VideoInfo extends React.Component {
             as={`/video/${video._id}/${textToSlug(video.name)}`} >
             <a>{video.name}</a>
           </Link>
-          <VideoAdminTools videoId={video._id}/>
+          <VideoAdminTools id={video._id}/>
         </Styled.Title>
         { videoClicked ?
           <Styled.Embed src={getEmbed(video.link)} frameBorder="0" allowFullScreen /> :

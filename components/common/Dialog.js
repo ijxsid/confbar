@@ -16,12 +16,12 @@ const Styled = {
   `,
   Inner: styled.div`
     background-color: #fff;
-    min-width: 640px;
-    box-shadow: 0px 0px 10px 5px rgba(120, 120, 120, 0.25);
+    min-width: 720px;
+    box-shadow: 0px 0px 5px 2px rgba(50, 50, 50, 0.25);
     transition: 0.2s all linear;
 
     :hover {
-      box-shadow: 0px 0px 16px 8px rgba(140, 140, 140, 0.25);
+      box-shadow: 0px 0px 10px 5px rgba(80, 80, 80, 0.25);
     }
   `
 }
