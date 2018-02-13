@@ -1,4 +1,5 @@
 import React from 'react'
+import dynamic from 'next/dynamic'
 import makeStore from '../lib/makeStore'
 import withRedux from 'next-redux-wrapper'
 import { string, object, func, bool } from 'prop-types'
@@ -9,8 +10,8 @@ import VideoList from '../components/VideoList'
 import ConfInfo from '../components/ConfInfo'
 import { confNormalizer } from '../lib/normalizers'
 import Dialog from '../components/common/Dialog'
-import EditVideo from '../components/admin/EditVideo'
 
+const EditVideoDynamic = dynamic(import('../components/admin/EditVideo'))
 
 class Conference extends React.Component {
   componentWillMount () {
@@ -36,7 +37,7 @@ class Conference extends React.Component {
           open={!!(editing.type === 'video' && editing.id)}
           onOuterClick={cancelEditing}
         >
-          <EditVideo />
+          <EditVideoDynamic />
         </Dialog>
       </Layout>
     )
