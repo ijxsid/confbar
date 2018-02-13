@@ -39,7 +39,6 @@ class Video extends React.Component {
 
 
 Video.getInitialProps = async ({ store, isServer, req, pathname, query }) => {
-
   const props = { id: query.id }
 
   if (!isServer) {

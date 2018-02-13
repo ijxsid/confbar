@@ -16,7 +16,6 @@ const Styled = {
   `,
   Inner: styled.div`
     background-color: #fff;
-    min-width: 720px;
     box-shadow: 0px 0px 5px 2px rgba(50, 50, 50, 0.25);
     transition: 0.2s all linear;
 
