@@ -1,5 +1,5 @@
 import React from 'react'
-import { func, number, array, object } from 'prop-types'
+import { func, number, array, object, string } from 'prop-types'
 
 class TabState extends React.Component {
   state = { currentTab: 0 }
@@ -23,8 +23,8 @@ TabState.propTypes = {
   render: func
 }
 
-const TabButtons = ({ currentTab, onUpdate, tabHeadings }) => (
-  <div className="tabs">
+const TabButtons = ({ currentTab, onUpdate, tabHeadings, tabsClass }) => (
+  <div className={tabsClass}>
     <ul>
       { tabHeadings.map((tabHeading, i) => (
         <li className={`${i === currentTab ? 'is-active' : ''}`} key={i} >
@@ -39,7 +39,11 @@ const TabButtons = ({ currentTab, onUpdate, tabHeadings }) => (
 TabButtons.propTypes = {
   currentTab: number,
   onUpdate: func,
-  tabHeadings: array.isRequired
+  tabHeadings: array.isRequired,
+  tabsClass: string
+}
+TabButtons.defaultProps = {
+  tabsClass: 'tabs'
 }
 
 const TabDisplay = ({ currentTab, comps }) => comps[currentTab]
@@ -49,7 +53,7 @@ TabDisplay.propTypes = {
   comps: array.isRequired
 }
 
-const Tabs = ({ comps }) => {
+const Tabs = ({ comps, tabsClass }) => {
   const headings = Object.keys(comps)
   const components = headings.map(heading => comps[heading])
   return (
@@ -61,6 +65,7 @@ const Tabs = ({ comps }) => {
               currentTab={currentTab}
               onUpdate={onUpdate}
               tabHeadings={headings}
+              tabsClass={tabsClass}
             />
             <TabDisplay
               currentTab={currentTab}
@@ -74,8 +79,8 @@ const Tabs = ({ comps }) => {
 }
 
 Tabs.propTypes = {
-  comps: object.isRequired
+  comps: object.isRequired,
+  tabsClass: string
 }
-
 
 export default Tabs

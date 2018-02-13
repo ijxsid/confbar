@@ -23,7 +23,7 @@ const Styled = {
   `
 }
 
-const TextField = ({ label, name, onChange, placeholder, value }) => (
+const TextField = ({ label, name, onChange, placeholder, value, help }) => (
   <Styled.Field className="field" label={label}>
     <label className="label">{ label }</label>
     <div className="control">
@@ -35,6 +35,9 @@ const TextField = ({ label, name, onChange, placeholder, value }) => (
         value={value}
         onChange={onChange} />
     </div>
+    { help &&
+      <p className="help is-info">{help}</p>
+    }
   </Styled.Field>
 )
 
@@ -43,7 +46,8 @@ TextField.propTypes = {
   name: string,
   onChange: func,
   placeholder: string,
-  value: string
+  value: string,
+  help: string
 }
 
 export default TextField

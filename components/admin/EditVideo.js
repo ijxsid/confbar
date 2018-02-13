@@ -37,8 +37,11 @@ class EditVideo extends React.Component {
   onSelectConf = (conf) => {
     this.props.onChangeForm('conference', conf)
   }
+  onEditAddConferenceForm = (e) => {
+    this.props.onChangeAddForm('conference', e.target.name, e.target.value)
+  }
   render () {
-    const { video, conference, tags, speaker, search, confSearchResults } = this.props
+    const { video, conference, tags, speaker, search, confSearchResults, addForm } = this.props
     const { searchConf, searchTag, searchSpeaker } = search
     console.log(this.props)
     return (
@@ -57,6 +60,8 @@ class EditVideo extends React.Component {
               onSearch={this.onChangeSearchForm}
               searchResults={confSearchResults}
               onSelect={this.onSelectConf}
+              newConference={addForm.conference}
+              onEditAddConferenceForm={this.onEditAddConferenceForm}
             />
           }}
         />
@@ -64,14 +69,14 @@ class EditVideo extends React.Component {
         <Styled.ButtonGroup>
           <div className="field is-grouped">
             <p className="control">
-              <a className="button is-info">
+              <button className="button is-info">
                 Submit
-              </a>
+              </button>
             </p>
             <p className="control">
-              <a className="button is-light">
+              <button className="button is-light">
                 Cancel
-              </a>
+              </button>
             </p>
           </div>
         </Styled.ButtonGroup>
@@ -88,13 +93,15 @@ EditVideo.propTypes = {
   search: object,
   onChangeForm: func,
   onChangeSearch: func,
-  confSearchResults: array
+  confSearchResults: array,
+  addForm: object,
+  onChangeAddForm: func
 }
 
 export default connect(
   state => {
     const { editing, conferences, speakers, tags } = state.data
-    const { form, search } = editing
+    const { form, search, add } = editing
     return {
       video: form,
       conference: form.conference ?
@@ -105,6 +112,7 @@ export default connect(
         null,
       tags: form.tags.map(tag => tags[tag]),
       id: editing.id,
+      addForm: add,
       search: search,
       confSearchResults: selectConferencesByTerm(state, search.searchConf)
     }
@@ -112,6 +120,7 @@ export default connect(
 
   dispatch => ({
     onChangeForm: (field, value) => dispatch(adminActions.editForm(field, value)),
-    onChangeSearch: (field, value) => dispatch(searchConferences(field, value))
+    onChangeSearch: (field, value) => dispatch(searchConferences(field, value)),
+    onChangeAddForm: (type, field, value) => dispatch(adminActions.editAddForm(type, field, value))
   })
 )(EditVideo)
