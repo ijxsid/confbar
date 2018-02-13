@@ -3,10 +3,12 @@ import styled from 'styled-components'
 import { func, object, array } from 'prop-types'
 import { connect } from 'react-redux'
 import Tabs from '../common/Tabs'
-import { adminActions, searchConferences } from '../../lib/actions'
-import { selectConferencesByTerm } from '../../lib/selectors'
+import { adminActions, searchConferences, searchSpeakers } from '../../lib/actions'
+import { selectConferencesByTerm, selectSpeakersByTerm } from '../../lib/selectors'
 import ConferenceFormTab from './ConferenceFormTab'
 import VideoFormTab from './VideoFormTab'
+import SpeakerFormTab from './SpeakerFormTab'
+
 
 const Styled = {
   Container: styled.div`
@@ -27,23 +29,30 @@ const Styled = {
 
 class EditVideo extends React.Component {
   onChangeVideoForm = (e) => {
-    console.log(e.target.name)
     this.props.onChangeForm(e.target.name, e.target.value)
   }
-  onChangeSearchForm = (e) => {
-    console.log(e.target.name)
-    this.props.onChangeSearch(e.target.name, e.target.value)
+  onConfSearch = (e) => {
+    this.props.onConfSearch(e.target.name, e.target.value)
+  }
+  onSpeakerSearch = (e) => {
+    this.props.onSpeakerSearch(e.target.name, e.target.value)
   }
   onSelectConf = (conf) => {
     this.props.onChangeForm('conference', conf)
   }
+  onSelectSpeaker = (speaker) => {
+    this.props.onChangeForm('speaker', speaker)
+  }
   onEditAddConferenceForm = (e) => {
     this.props.onChangeAddForm('conference', e.target.name, e.target.value)
   }
+  onEditAddSpeakerForm = (e) => {
+    this.props.onChangeAddForm('speaker', e.target.name, e.target.value)
+  }
   render () {
-    const { video, conference, tags, speaker, search, confSearchResults, addForm } = this.props
+    const { video, conference, tags, speaker, search,
+      confSearchResults, addForm, speakerSearchResults } = this.props
     const { searchConf, searchTag, searchSpeaker } = search
-    console.log(this.props)
     return (
       <Styled.Container>
         <Styled.Heading>
@@ -57,11 +66,20 @@ class EditVideo extends React.Component {
             Conference: <ConferenceFormTab
               conference={conference}
               term={searchConf}
-              onSearch={this.onChangeSearchForm}
+              onSearch={this.onConfSearch}
               searchResults={confSearchResults}
               onSelect={this.onSelectConf}
               newConference={addForm.conference}
               onEditAddConferenceForm={this.onEditAddConferenceForm}
+            />,
+            Speaker: <SpeakerFormTab
+              speaker={speaker}
+              term={searchSpeaker}
+              onSearch={this.onSpeakerSearch}
+              searchResults={speakerSearchResults}
+              onSelect={this.onSelectSpeaker}
+              newSpeaker={addForm.speaker}
+              onEditAddSpeakerForm={this.onEditAddSpeakerForm}
             />
           }}
         />
@@ -92,8 +110,10 @@ EditVideo.propTypes = {
   speaker: object,
   search: object,
   onChangeForm: func,
-  onChangeSearch: func,
+  onConfSearch: func,
+  onSpeakerSearch: func,
   confSearchResults: array,
+  speakerSearchResults: array,
   addForm: object,
   onChangeAddForm: func
 }
@@ -114,13 +134,15 @@ export default connect(
       id: editing.id,
       addForm: add,
       search: search,
-      confSearchResults: selectConferencesByTerm(state, search.searchConf)
+      confSearchResults: selectConferencesByTerm(state, search.searchConf),
+      speakerSearchResults: selectSpeakersByTerm(state, search.searchSpeaker)
     }
   },
 
   dispatch => ({
     onChangeForm: (field, value) => dispatch(adminActions.editForm(field, value)),
-    onChangeSearch: (field, value) => dispatch(searchConferences(field, value)),
+    onConfSearch: (field, value) => dispatch(searchConferences(field, value)),
+    onSpeakerSearch: (field, value) => dispatch(searchSpeakers(field, value)),
     onChangeAddForm: (type, field, value) => dispatch(adminActions.editAddForm(type, field, value))
   })
 )(EditVideo)

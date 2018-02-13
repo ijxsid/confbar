@@ -15,7 +15,7 @@ const Styled = {
       font-weight: 600;
     }
   `,
-  ResultConf: styled.div`
+  ResultSpeaker: styled.div`
     cursor:pointer;
     :hover {
       background-color: #f1f1f1;
@@ -27,21 +27,21 @@ const SearchPanelTab = ({ term, searchResults, onSelect, onSearch }) => (
   <div className="panel">
     <div className="panel-block">
       <TextField
-        name="searchConf"
-        placeholder="Search another conference to apply to this video"
+        name="searchSpeaker"
+        placeholder="Search another Speaker to attach to this video"
         onChange={onSearch}
         value={term}
       />
     </div>
     {
-      searchResults.map(conf => (
-        <Styled.ResultConf
+      searchResults.map(speaker => (
+        <Styled.ResultSpeaker
           className="panel-block"
-          key={conf._id}
-          onClick={() => { onSelect(conf._id) }}
+          key={speaker._id}
+          onClick={() => { onSelect(speaker._id) }}
         >
-          {`${conf.name} - ${conf.year}`}
-        </Styled.ResultConf>
+          {`${speaker.name}`}
+        </Styled.ResultSpeaker>
       ))
     }
   </div>
@@ -54,23 +54,48 @@ SearchPanelTab.propTypes = {
   term: string
 }
 
-const AddConfPanelTab = ({ conference, onChange, onSubmit }) => (
+const AddSpeakerPanelTab = ({ speaker, onChange, onSubmit }) => (
   <div className="panel">
     <form onSubmit={(e) => { e.preventDefault(); onSubmit() }}>
       <div className="panel-block">
         <TextField
           label="Name"
           name="name"
-          value={conference.name}
+          value={speaker.name}
           onChange={onChange}
         />
       </div>
       <div className="panel-block">
         <TextField
-          label="Year"
-          name="year"
-          placeholder="Year of the Starting Date for this conference"
-          value={conference.year}
+          label="Twitter Username"
+          name="twitterUsername"
+          placeholder="Twitter Id for the speaker"
+          value={speaker.twitterUsername}
+          onChange={onChange}
+        />
+      </div>
+      <div className="panel-block">
+        <TextField
+          label="Website"
+          name="website"
+          value={speaker.website}
+          onChange={onChange}
+        />
+      </div>
+      <div className="panel-block">
+        <TextField
+          label="Blog"
+          name="blog"
+          value={speaker.blog}
+          onChange={onChange}
+        />
+      </div>
+      <div className="panel-block">
+        <TextField
+          label="Github"
+          name="github"
+          value={speaker.github}
+          placeholder="Just the github Username, not URL"
           onChange={onChange}
         />
       </div>
@@ -78,42 +103,15 @@ const AddConfPanelTab = ({ conference, onChange, onSubmit }) => (
         <TextField
           label="Location"
           name="location"
-          value={conference.location}
-          placeholder="use format of City, ST, CO, 2 letter codes for State and Country"
-          onChange={onChange}
-        />
-      </div>
-      <div className="panel-block">
-        <TextField
-          label="Logo"
-          name="logo"
-          value={conference.logo}
-          placeholder="url of the logo"
-          onChange={onChange}
-        />
-      </div>
-      <div className="panel-block">
-        <TextField
-          label="Start Date"
-          name="startDate"
-          value={conference.startDate}
-          placeholder="use format of 20XX-MM-DD"
-          onChange={onChange}
-        />
-      </div>
-      <div className="panel-block">
-        <TextField
-          label="End Date"
-          name="endDate"
-          value={conference.endDate}
-          placeholder="use format of 20XX-MM-DD"
+          value={speaker.location}
+          placeholder="use format of City, ST, CO. 2 letter codes for State and Country"
           onChange={onChange}
         />
       </div>
       <div className="panel-block">
         <p className="control">
           <button type="submit" className="button is-info">
-            Save Conference
+            Save Speaker
           </button>
         </p>
       </div>
@@ -121,22 +119,22 @@ const AddConfPanelTab = ({ conference, onChange, onSubmit }) => (
   </div>
 )
 
-AddConfPanelTab.propTypes = {
-  conference: object,
+AddSpeakerPanelTab.propTypes = {
+  speaker: object,
   onChange: func,
   onSubmit: func
 }
 
 
-const ConferenceFormTab = ({
-  conference, term, onSearch, searchResults, onSelect,
-  newConference, onEditAddConferenceForm
+const SpeakerFormTab = ({
+  speaker, term, onSearch, searchResults, onSelect,
+  newSpeaker, onEditAddSpeakerForm
 }) => (
   <div>
     <div className="panel">
       <Styled.Selected className="panel-block is-active">
         <span> Currently Selected: </span>
-        <span> {` ${conference.name} - ${conference.year}`} </span>
+        <span> { speaker ? speaker.name : '-'} </span>
       </Styled.Selected>
     </div>
     <Tabs
@@ -147,9 +145,9 @@ const ConferenceFormTab = ({
           onSelect={onSelect}
           onSearch={onSearch}
         />,
-        Add: <AddConfPanelTab
-          conference={newConference}
-          onChange={onEditAddConferenceForm}
+        Add: <AddSpeakerPanelTab
+          speaker={newSpeaker}
+          onChange={onEditAddSpeakerForm}
           onSubmit={() => { console.log("submitted form") }}
         />
       }}
@@ -157,14 +155,14 @@ const ConferenceFormTab = ({
 
   </div>
 )
-ConferenceFormTab.propTypes = {
-  conference: object,
+SpeakerFormTab.propTypes = {
+  speaker: object,
   onSearch: func,
   searchResults: array,
   onSelect: func,
   term: string,
-  newConference: object,
-  onEditAddConferenceForm: func
+  newSpeaker: object,
+  onEditAddSpeakerForm: func
 }
 
-export default ConferenceFormTab
+export default SpeakerFormTab
