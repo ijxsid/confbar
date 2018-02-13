@@ -26,7 +26,7 @@ router.post('/',
       })
       .catch(err => {
         // Conference Already Exists. Conflict Error.
-        console.log(err, err.message);
+        console.log(err, err.message)
         if (err instanceof ConflictError) {
           res.status(409).json({
             info: err.message
@@ -63,8 +63,6 @@ router.get('/', (req, res) => {
 
 router.get('/:id/', (req, res) => {
   const { id } = req.params
-
-  // if (!isValidObjectID(id)) return res.status(404).json({info: `conference with id:${id} does not exist.`})
 
   const conferenceQuery = Conference.findById(id).exec()
   const videosQuery = Video.find({ conference: id }).populate('speaker').populate('tags').exec()
