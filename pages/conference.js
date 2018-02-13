@@ -32,7 +32,7 @@ class Conference extends React.Component {
             hideComponents={{ conference: true }}
           />
         </div>
-        <Dialog open={editing.type === 'video' && editing.id}>
+        <Dialog open={!!(editing.type === 'video' && editing.id)}>
           <EditVideo />
         </Dialog>
       </Layout>

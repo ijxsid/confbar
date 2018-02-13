@@ -15,7 +15,7 @@ const Styled = {
       font-weight: 600;
     }
   `,
-  ResultSpeaker: styled.div`
+  ResultTag: styled.div`
     cursor:pointer;
     :hover {
       background-color: #f1f1f1;
@@ -27,21 +27,21 @@ const SearchPanelTab = ({ term, searchResults, onSelect, onSearch }) => (
   <div className="panel">
     <div className="panel-block">
       <TextField
-        name="searchSpeaker"
-        placeholder="Search another Speaker to attach to this video"
+        name="searchTag"
+        placeholder="Search another Tag to add to this video"
         onChange={onSearch}
         value={term}
       />
     </div>
     {
-      searchResults.map(speaker => (
-        <Styled.ResultSpeaker
+      searchResults.map(tag => (
+        <Styled.ResultTag
           className="panel-block"
-          key={speaker._id}
-          onClick={() => { onSelect(speaker._id) }}
+          key={tag._id}
+          onClick={() => { onSelect(tag._id) }}
         >
-          {`${speaker.name}`}
-        </Styled.ResultSpeaker>
+          {`${tag.name}`}
+        </Styled.ResultTag>
       ))
     }
   </div>
@@ -54,23 +54,22 @@ SearchPanelTab.propTypes = {
   term: string
 }
 
-const AddSpeakerPanelTab = ({ speaker, onChange, onSubmit }) => (
+const AddTagPanelTab = ({ tag, onChange, onSubmit }) => (
   <div className="panel">
     <form onSubmit={(e) => { e.preventDefault(); onSubmit() }}>
       <div className="panel-block">
         <TextField
           label="Name"
           name="name"
-          value={speaker.name}
+          value={tag.name}
           onChange={onChange}
         />
       </div>
       <div className="panel-block">
         <TextField
-          label="Twitter Username"
-          name="twitterUsername"
-          placeholder="Twitter Id for the speaker"
-          value={speaker.twitterUsername}
+          label="Description"
+          name="description"
+          value={tag.description}
           onChange={onChange}
         />
       </div>
@@ -78,7 +77,15 @@ const AddSpeakerPanelTab = ({ speaker, onChange, onSubmit }) => (
         <TextField
           label="Website"
           name="website"
-          value={speaker.website}
+          value={tag.website}
+          onChange={onChange}
+        />
+      </div>
+      <div className="panel-block">
+        <TextField
+          label="logo"
+          name="logo"
+          value={tag.logo}
           onChange={onChange}
         />
       </div>
@@ -86,32 +93,23 @@ const AddSpeakerPanelTab = ({ speaker, onChange, onSubmit }) => (
         <TextField
           label="Blog"
           name="blog"
-          value={speaker.blog}
+          value={tag.blog}
           onChange={onChange}
         />
       </div>
       <div className="panel-block">
         <TextField
-          label="Github"
-          name="github"
-          value={speaker.github}
-          placeholder="Just the github Username, not URL"
-          onChange={onChange}
-        />
-      </div>
-      <div className="panel-block">
-        <TextField
-          label="Location"
-          name="location"
-          value={speaker.location}
-          placeholder="use format of City, ST, CO. 2 letter codes for State and Country"
+          label="Repo"
+          name="repo"
+          value={tag.repo}
+          placeholder="Full URL for the repo"
           onChange={onChange}
         />
       </div>
       <div className="panel-block">
         <p className="control">
           <button type="submit" className="button is-info">
-            Save Speaker
+            Save Tag
           </button>
         </p>
       </div>
@@ -119,22 +117,22 @@ const AddSpeakerPanelTab = ({ speaker, onChange, onSubmit }) => (
   </div>
 )
 
-AddSpeakerPanelTab.propTypes = {
-  speaker: object,
+AddTagPanelTab.propTypes = {
+  tag: object,
   onChange: func,
   onSubmit: func
 }
 
 
-const SpeakerFormTab = ({
-  speaker, term, onSearch, searchResults, onSelect,
-  newSpeaker, onEditAddSpeakerForm, onReset
+const TagsFormTab = ({
+  tags, term, onSearch, searchResults, onSelect,
+  newTag, onEditAddTagForm, onReset
 }) => (
   <div>
     <div className="panel">
       <Styled.Selected className="panel-block is-active">
         <span> Currently Selected: </span>
-        <span> { speaker ? speaker.name : '-'} </span>
+        <span> { tags.length > 0 ? tags.map(tag => tag.name).join(', ') : '-'} </span>
       </Styled.Selected>
       <div className="panel-block">
         <div className="control">
@@ -152,9 +150,9 @@ const SpeakerFormTab = ({
           onSelect={onSelect}
           onSearch={onSearch}
         />,
-        Add: <AddSpeakerPanelTab
-          speaker={newSpeaker}
-          onChange={onEditAddSpeakerForm}
+        Add: <AddTagPanelTab
+          tag={newTag}
+          onChange={onEditAddTagForm}
           onSubmit={() => { console.log("submitted form") }}
         />
       }}
@@ -162,15 +160,15 @@ const SpeakerFormTab = ({
 
   </div>
 )
-SpeakerFormTab.propTypes = {
-  speaker: object,
+TagsFormTab.propTypes = {
+  tags: array,
   onSearch: func,
   searchResults: array,
   onSelect: func,
   term: string,
-  newSpeaker: object,
-  onEditAddSpeakerForm: func,
+  newTag: object,
+  onEditAddTagForm: func,
   onReset: func
 }
 
-export default SpeakerFormTab
+export default TagsFormTab

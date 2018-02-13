@@ -130,14 +130,21 @@ AddConfPanelTab.propTypes = {
 
 const ConferenceFormTab = ({
   conference, term, onSearch, searchResults, onSelect,
-  newConference, onEditAddConferenceForm
+  newConference, onEditAddConferenceForm, onReset
 }) => (
   <div>
     <div className="panel">
       <Styled.Selected className="panel-block is-active">
         <span> Currently Selected: </span>
-        <span> {` ${conference.name} - ${conference.year}`} </span>
+        <span> { conference ? ` ${conference.name} - ${conference.year}` : '-'} </span>
       </Styled.Selected>
+      <div className="panel-block">
+        <div className="control">
+          <button type="submit" className="button is-danger is-small" onClick={onReset}>
+            Reset Selections
+          </button>
+        </div>
+      </div>
     </div>
     <Tabs
       comps={{
@@ -164,7 +171,8 @@ ConferenceFormTab.propTypes = {
   onSelect: func,
   term: string,
   newConference: object,
-  onEditAddConferenceForm: func
+  onEditAddConferenceForm: func,
+  onReset: func
 }
 
 export default ConferenceFormTab

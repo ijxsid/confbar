@@ -3,12 +3,12 @@ import styled from 'styled-components'
 import { func, object, array } from 'prop-types'
 import { connect } from 'react-redux'
 import Tabs from '../common/Tabs'
-import { adminActions, searchConferences, searchSpeakers } from '../../lib/actions'
-import { selectConferencesByTerm, selectSpeakersByTerm } from '../../lib/selectors'
+import { adminActions, searchConferences, searchSpeakers, searchTags } from '../../lib/actions'
+import { selectConferencesByTerm, selectSpeakersByTerm, selectTagsByTerm } from '../../lib/selectors'
 import ConferenceFormTab from './ConferenceFormTab'
 import VideoFormTab from './VideoFormTab'
 import SpeakerFormTab from './SpeakerFormTab'
-
+import TagsFormTab from './TagsFormTab'
 
 const Styled = {
   Container: styled.div`
@@ -37,11 +37,29 @@ class EditVideo extends React.Component {
   onSpeakerSearch = (e) => {
     this.props.onSpeakerSearch(e.target.name, e.target.value)
   }
+  onTagSearch = (e) => {
+    this.props.onTagSearch(e.target.name, e.target.value)
+  }
   onSelectConf = (conf) => {
     this.props.onChangeForm('conference', conf)
   }
+  onResetConf = (conf) => {
+    this.props.onChangeForm('conference', null)
+  }
   onSelectSpeaker = (speaker) => {
     this.props.onChangeForm('speaker', speaker)
+  }
+  onResetSpeaker = () => {
+    this.props.onChangeForm('speaker', null)
+  }
+  onSelectTag = (tag) => {
+    const tagIds = this.props.tags.map(tag => tag._id)
+    if (tagIds.indexOf(tag) < 0) {
+      this.props.onChangeForm('tags', tagIds.concat([tag]))
+    }
+  }
+  onResetTags = (tag) => {
+    this.props.onChangeForm('tags', [])
   }
   onEditAddConferenceForm = (e) => {
     this.props.onChangeAddForm('conference', e.target.name, e.target.value)
@@ -49,9 +67,12 @@ class EditVideo extends React.Component {
   onEditAddSpeakerForm = (e) => {
     this.props.onChangeAddForm('speaker', e.target.name, e.target.value)
   }
+  onEditAddTagForm = (e) => {
+    this.props.onChangeAddForm('tag', e.target.name, e.target.value)
+  }
   render () {
     const { video, conference, tags, speaker, search,
-      confSearchResults, addForm, speakerSearchResults } = this.props
+      confSearchResults, addForm, speakerSearchResults, tagSearchResults } = this.props
     const { searchConf, searchTag, searchSpeaker } = search
     return (
       <Styled.Container>
@@ -71,6 +92,7 @@ class EditVideo extends React.Component {
               onSelect={this.onSelectConf}
               newConference={addForm.conference}
               onEditAddConferenceForm={this.onEditAddConferenceForm}
+              onReset={this.onResetConf}
             />,
             Speaker: <SpeakerFormTab
               speaker={speaker}
@@ -80,6 +102,17 @@ class EditVideo extends React.Component {
               onSelect={this.onSelectSpeaker}
               newSpeaker={addForm.speaker}
               onEditAddSpeakerForm={this.onEditAddSpeakerForm}
+              onReset={this.onResetSpeaker}
+            />,
+            Tags: <TagsFormTab
+              tags={tags}
+              term={searchTag}
+              onSearch={this.onTagSearch}
+              searchResults={tagSearchResults}
+              onSelect={this.onSelectTag}
+              newTag={addForm.tag}
+              onEditAddTagForm={this.onEditAddTagForm}
+              onReset={this.onResetTags}
             />
           }}
         />
@@ -112,8 +145,10 @@ EditVideo.propTypes = {
   onChangeForm: func,
   onConfSearch: func,
   onSpeakerSearch: func,
+  onTagSearch: func,
   confSearchResults: array,
   speakerSearchResults: array,
+  tagSearchResults: array,
   addForm: object,
   onChangeAddForm: func
 }
@@ -135,7 +170,8 @@ export default connect(
       addForm: add,
       search: search,
       confSearchResults: selectConferencesByTerm(state, search.searchConf),
-      speakerSearchResults: selectSpeakersByTerm(state, search.searchSpeaker)
+      speakerSearchResults: selectSpeakersByTerm(state, search.searchSpeaker),
+      tagSearchResults: selectTagsByTerm(state, search.searchTag)
     }
   },
 
@@ -143,6 +179,7 @@ export default connect(
     onChangeForm: (field, value) => dispatch(adminActions.editForm(field, value)),
     onConfSearch: (field, value) => dispatch(searchConferences(field, value)),
     onSpeakerSearch: (field, value) => dispatch(searchSpeakers(field, value)),
+    onTagSearch: (field, value) => dispatch(searchTags(field, value)),
     onChangeAddForm: (type, field, value) => dispatch(adminActions.editAddForm(type, field, value))
   })
 )(EditVideo)
