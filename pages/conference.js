@@ -3,7 +3,7 @@ import makeStore from '../lib/makeStore'
 import withRedux from 'next-redux-wrapper'
 import { string, object, func, bool } from 'prop-types'
 import Layout from '../components/shared/Layout'
-import { fetchConfById } from '../lib/actions'
+import { fetchConfById, adminActions } from '../lib/actions'
 import { setupUser } from '../lib/utils'
 import VideoList from '../components/VideoList'
 import ConfInfo from '../components/ConfInfo'
@@ -19,7 +19,7 @@ class Conference extends React.Component {
     }
   }
   render () {
-    const { id, entities, editing } = this.props
+    const { id, entities, editing, cancelEditing } = this.props
     const conference = this.props.entities.conferences[id]
     const videoData = confNormalizer.denormalizeVideos(conference.videos, entities)
     const videos = videoData.videos
@@ -32,7 +32,10 @@ class Conference extends React.Component {
             hideComponents={{ conference: true }}
           />
         </div>
-        <Dialog open={!!(editing.type === 'video' && editing.id)}>
+        <Dialog
+          open={!!(editing.type === 'video' && editing.id)}
+          onOuterClick={cancelEditing}
+        >
           <EditVideo />
         </Dialog>
       </Layout>
@@ -46,7 +49,8 @@ Conference.propTypes = {
   id: string,
   fetchConf: func,
   onClient: bool,
-  editing: object
+  editing: object,
+  cancelEditing: func
 }
 
 Conference.getInitialProps = async ({ store, isServer, req, pathname, query }) => {
@@ -69,7 +73,8 @@ Conference = withRedux(makeStore,
     editing: state.data.editing
   }),
   (dispatch, ownProps) => ({
-    fetchConf: () => dispatch(fetchConfById(ownProps.id))
+    fetchConf: () => dispatch(fetchConfById(ownProps.id)),
+    cancelEditing: () => dispatch(adminActions.resetEditVideo())
   })
 )(Conference)
 

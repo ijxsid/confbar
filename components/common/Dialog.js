@@ -13,12 +13,13 @@ const Styled = {
     display: grid;
     align-content: center;
     justify-content: center;
+    cursor: pointer;
   `,
   Inner: styled.div`
     background-color: #fff;
     box-shadow: 0px 0px 5px 2px rgba(50, 50, 50, 0.25);
     transition: 0.2s all linear;
-
+    cursor: initial;
     :hover {
       box-shadow: 0px 0px 10px 5px rgba(80, 80, 80, 0.25);
     }
@@ -28,8 +29,8 @@ const Styled = {
 
 const Dialog = ({ open, onOuterClick, children }) => (
   open ?
-    <Styled.Outer onClick={onOuterClick}>
-      <Styled.Inner>
+    <Styled.Outer onClick={onOuterClick} >
+      <Styled.Inner onClick={e => { e.stopPropagation() }}>
         {children}
       </Styled.Inner>
     </Styled.Outer> :

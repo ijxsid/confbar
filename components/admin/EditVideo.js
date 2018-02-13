@@ -3,7 +3,7 @@ import styled from 'styled-components'
 import { func, object, array } from 'prop-types'
 import { connect } from 'react-redux'
 import Tabs from '../common/Tabs'
-import { adminActions, searchConferences, searchSpeakers, searchTags } from '../../lib/actions'
+import { adminActions, searchConferences, searchSpeakers, searchTags, updateVideo } from '../../lib/actions'
 import { selectConferencesByTerm, selectSpeakersByTerm, selectTagsByTerm } from '../../lib/selectors'
 import ConferenceFormTab from './ConferenceFormTab'
 import VideoFormTab from './VideoFormTab'
@@ -71,7 +71,7 @@ class EditVideo extends React.Component {
     this.props.onChangeAddForm('tag', e.target.name, e.target.value)
   }
   render () {
-    const { video, conference, tags, speaker, search,
+    const { video, conference, tags, speaker, search, onSaveVideo, cancelEditing,
       confSearchResults, addForm, speakerSearchResults, tagSearchResults } = this.props
     const { searchConf, searchTag, searchSpeaker } = search
     return (
@@ -120,12 +120,12 @@ class EditVideo extends React.Component {
         <Styled.ButtonGroup>
           <div className="field is-grouped">
             <p className="control">
-              <button className="button is-info">
-                Submit
+              <button className="button is-info" onClick={onSaveVideo}>
+                Save Video
               </button>
             </p>
             <p className="control">
-              <button className="button is-light">
+              <button className="button is-light" onClick={cancelEditing}>
                 Cancel
               </button>
             </p>
@@ -150,7 +150,9 @@ EditVideo.propTypes = {
   speakerSearchResults: array,
   tagSearchResults: array,
   addForm: object,
-  onChangeAddForm: func
+  onChangeAddForm: func,
+  onSaveVideo: func,
+  cancelEditing: func
 }
 
 export default connect(
@@ -180,6 +182,8 @@ export default connect(
     onConfSearch: (field, value) => dispatch(searchConferences(field, value)),
     onSpeakerSearch: (field, value) => dispatch(searchSpeakers(field, value)),
     onTagSearch: (field, value) => dispatch(searchTags(field, value)),
-    onChangeAddForm: (type, field, value) => dispatch(adminActions.editAddForm(type, field, value))
+    onChangeAddForm: (type, field, value) => dispatch(adminActions.editAddForm(type, field, value)),
+    onSaveVideo: () => dispatch(updateVideo()),
+    cancelEditing: () => dispatch(adminActions.resetEditVideo())
   })
 )(EditVideo)
