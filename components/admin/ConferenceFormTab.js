@@ -127,10 +127,9 @@ AddConfPanelTab.propTypes = {
   onSubmit: func
 }
 
-
 const ConferenceFormTab = ({
   conference, term, onSearch, searchResults, onSelect,
-  newConference, onEditAddConferenceForm, onReset
+  newConference, onEditAddConferenceForm, onReset, onSaveConference
 }) => (
   <div>
     <div className="panel">
@@ -157,7 +156,7 @@ const ConferenceFormTab = ({
         Add: <AddConfPanelTab
           conference={newConference}
           onChange={onEditAddConferenceForm}
-          onSubmit={() => { console.log("submitted form") }}
+          onSubmit={onSaveConference}
         />
       }}
     />
@@ -172,6 +171,7 @@ ConferenceFormTab.propTypes = {
   term: string,
   newConference: object,
   onEditAddConferenceForm: func,
+  onSaveConference: func,
   onReset: func
 }
 

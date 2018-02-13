@@ -3,12 +3,13 @@ import styled from 'styled-components'
 import { func, object, array } from 'prop-types'
 import { connect } from 'react-redux'
 import Tabs from '../common/Tabs'
-import { adminActions, searchConferences, searchSpeakers, searchTags, updateVideo } from '../../lib/actions'
 import { selectConferencesByTerm, selectSpeakersByTerm, selectTagsByTerm } from '../../lib/selectors'
 import ConferenceFormTab from './ConferenceFormTab'
 import VideoFormTab from './VideoFormTab'
 import SpeakerFormTab from './SpeakerFormTab'
 import TagsFormTab from './TagsFormTab'
+import { adminActions, searchConferences, searchSpeakers,
+  searchTags, updateVideo, addNewConference } from '../../lib/actions'
 
 const Styled = {
   Container: styled.div`
@@ -72,7 +73,8 @@ class EditVideo extends React.Component {
   }
   render () {
     const { video, conference, tags, speaker, search, onSaveVideo, cancelEditing,
-      confSearchResults, addForm, speakerSearchResults, tagSearchResults } = this.props
+      onSaveConference, confSearchResults, addForm, speakerSearchResults,
+      tagSearchResults } = this.props
     const { searchConf, searchTag, searchSpeaker } = search
     return (
       <Styled.Container>
@@ -93,6 +95,7 @@ class EditVideo extends React.Component {
               newConference={addForm.conference}
               onEditAddConferenceForm={this.onEditAddConferenceForm}
               onReset={this.onResetConf}
+              onSaveConference={onSaveConference}
             />,
             Speaker: <SpeakerFormTab
               speaker={speaker}
@@ -152,7 +155,8 @@ EditVideo.propTypes = {
   addForm: object,
   onChangeAddForm: func,
   onSaveVideo: func,
-  cancelEditing: func
+  cancelEditing: func,
+  onSaveConference: func
 }
 
 export default connect(
@@ -184,6 +188,7 @@ export default connect(
     onTagSearch: (field, value) => dispatch(searchTags(field, value)),
     onChangeAddForm: (type, field, value) => dispatch(adminActions.editAddForm(type, field, value)),
     onSaveVideo: () => dispatch(updateVideo()),
+    onSaveConference: () => dispatch(addNewConference()),
     cancelEditing: () => dispatch(adminActions.resetEditVideo())
   })
 )(EditVideo)
