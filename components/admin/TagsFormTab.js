@@ -126,7 +126,7 @@ AddTagPanelTab.propTypes = {
 
 const TagsFormTab = ({
   tags, term, onSearch, searchResults, onSelect,
-  newTag, onEditAddTagForm, onReset
+  newTag, onEditAddTagForm, onReset, onSaveTag
 }) => (
   <div>
     <div className="panel">
@@ -153,7 +153,7 @@ const TagsFormTab = ({
         Add: <AddTagPanelTab
           tag={newTag}
           onChange={onEditAddTagForm}
-          onSubmit={() => { console.log("submitted form") }}
+          onSubmit={onSaveTag}
         />
       }}
     />
@@ -168,7 +168,8 @@ TagsFormTab.propTypes = {
   term: string,
   newTag: object,
   onEditAddTagForm: func,
-  onReset: func
+  onReset: func,
+  onSaveTag: func
 }
 
 export default TagsFormTab

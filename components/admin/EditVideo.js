@@ -9,7 +9,7 @@ import VideoFormTab from './VideoFormTab'
 import SpeakerFormTab from './SpeakerFormTab'
 import TagsFormTab from './TagsFormTab'
 import { adminActions, searchConferences, searchSpeakers,
-  searchTags, updateVideo, addNewConference } from '../../lib/actions'
+  searchTags, updateVideo, addNewConference, addNewSpeaker, addNewTag } from '../../lib/actions'
 
 const Styled = {
   Container: styled.div`
@@ -54,10 +54,7 @@ class EditVideo extends React.Component {
     this.props.onChangeForm('speaker', null)
   }
   onSelectTag = (tag) => {
-    const tagIds = this.props.tags.map(tag => tag._id)
-    if (tagIds.indexOf(tag) < 0) {
-      this.props.onChangeForm('tags', tagIds.concat([tag]))
-    }
+    this.props.onChangeForm('tags', tag)
   }
   onResetTags = (tag) => {
     this.props.onChangeForm('tags', [])
@@ -73,8 +70,8 @@ class EditVideo extends React.Component {
   }
   render () {
     const { video, conference, tags, speaker, search, onSaveVideo, cancelEditing,
-      onSaveConference, confSearchResults, addForm, speakerSearchResults,
-      tagSearchResults } = this.props
+      confSearchResults, addForm, speakerSearchResults, tagSearchResults,
+      onSaveConference, onSaveSpeaker, onSaveTag } = this.props
     const { searchConf, searchTag, searchSpeaker } = search
     return (
       <Styled.Container>
@@ -106,6 +103,7 @@ class EditVideo extends React.Component {
               newSpeaker={addForm.speaker}
               onEditAddSpeakerForm={this.onEditAddSpeakerForm}
               onReset={this.onResetSpeaker}
+              onSaveSpeaker={onSaveSpeaker}
             />,
             Tags: <TagsFormTab
               tags={tags}
@@ -116,6 +114,7 @@ class EditVideo extends React.Component {
               newTag={addForm.tag}
               onEditAddTagForm={this.onEditAddTagForm}
               onReset={this.onResetTags}
+              onSaveTag={onSaveTag}
             />
           }}
         />
@@ -156,7 +155,9 @@ EditVideo.propTypes = {
   onChangeAddForm: func,
   onSaveVideo: func,
   cancelEditing: func,
-  onSaveConference: func
+  onSaveConference: func,
+  onSaveSpeaker: func,
+  onSaveTag: func
 }
 
 export default connect(
@@ -189,6 +190,8 @@ export default connect(
     onChangeAddForm: (type, field, value) => dispatch(adminActions.editAddForm(type, field, value)),
     onSaveVideo: () => dispatch(updateVideo()),
     onSaveConference: () => dispatch(addNewConference()),
+    onSaveSpeaker: () => dispatch(addNewSpeaker()),
+    onSaveTag: () => dispatch(addNewTag()),
     cancelEditing: () => dispatch(adminActions.resetEditVideo())
   })
 )(EditVideo)

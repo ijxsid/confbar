@@ -128,7 +128,7 @@ AddSpeakerPanelTab.propTypes = {
 
 const SpeakerFormTab = ({
   speaker, term, onSearch, searchResults, onSelect,
-  newSpeaker, onEditAddSpeakerForm, onReset
+  newSpeaker, onEditAddSpeakerForm, onReset, onSaveSpeaker
 }) => (
   <div>
     <div className="panel">
@@ -155,7 +155,7 @@ const SpeakerFormTab = ({
         Add: <AddSpeakerPanelTab
           speaker={newSpeaker}
           onChange={onEditAddSpeakerForm}
-          onSubmit={() => { console.log("submitted form") }}
+          onSubmit={onSaveSpeaker}
         />
       }}
     />
@@ -170,7 +170,8 @@ SpeakerFormTab.propTypes = {
   term: string,
   newSpeaker: object,
   onEditAddSpeakerForm: func,
-  onReset: func
+  onReset: func,
+  onSaveSpeaker: func
 }
 
 export default SpeakerFormTab
