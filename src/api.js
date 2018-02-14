@@ -7,6 +7,7 @@ const videosAPI = `${apiBase}/api/videos`
 
 const speakersAPI = `${apiBase}/api/speakers`
 const techAPI = `${apiBase}/api/technologies`
+const channelsAPI = `${apiBase}/api/channels`
 
 export async function addVideo (videoData) {
   const res = await fetch(videosAPI, {
@@ -61,5 +62,19 @@ export async function addTech (techData) {
     body: JSON.stringify(techData)
   })
   const data = await res.json()
+  return data
+}
+
+export async function addChannel (channelData) {
+  const res = await fetch(channelsAPI, {
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': `JWT ${TOKEN}`
+    },
+    method: 'POST',
+    body: JSON.stringify(channelData)
+  })
+  const data = await res.json()
+
   return data
 }

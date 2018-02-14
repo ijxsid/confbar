@@ -26,8 +26,7 @@ function makeVideoData (video) {
     name: video.snippet.title,
     link: `https://www.youtube.com/watch?v=${video.contentDetails.videoId}`,
     description: video.snippet.description,
-    youtubeChannelId: video.snippet.channelId,
-    youtubeChannelTitle: video.snippet.channelTitle,
+    channel: video.snippet.channelId,
     conference: conferenceId,
     youtubePrivate: video.status.privacyStatus === 'private'
   }

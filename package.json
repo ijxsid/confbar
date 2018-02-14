@@ -6,8 +6,8 @@
   "scripts": {
     "add:playlist": "babel-node src/youtubePlaylistWorker.js --presets env",
     "add:speaker": "babel-node src/addSpeaker.js --presets env",
-    "add:tag": "babel-node src/addTag.js --presets env"
-    
+    "add:tag": "babel-node src/addTag.js --presets env",
+    "add:channel": "babel-node src/addChannel.js --presets env"
   },
   "devDependencies": {
     "babel-cli": "^6.26.0",
