@@ -1,7 +1,7 @@
 import passport from 'passport'
 import express from 'express'
-import { ConflictError, addModel } from './utils'
-import Technology from '../../models/Technology'
+import { ConflictError } from './utils'
+import Channel from '../../models/Channel'
 import Video from '../../models/Video'
 
 const router = express.Router()
@@ -10,22 +10,29 @@ router.post('/',
   passport.authenticate('jwt', { session: false }),
   (req, res) => {
     const currentTime = (new Date()).getTime()
+
+    if (!req.body.type || !req.body.channelId) {
+      return res.status(400).json({info: `type and channelId are required.`})
+    }
+
     const data = Object.assign({}, req.body, {
       addedBy: req.user._id,
-      createdAt: currentTime
+      createdAt: currentTime,
+      _id: `${req.body.type}-${req.body.channelId}`
     })
-
-    Technology
-      .find({'name': data.name})
+    Channel
+      .findById(data._id)
       .exec()
-      .then((techs) => {
-        if (techs.length > 0) {
-          throw new ConflictError(`Technology ${data.name} already exists.`)
+      .then((ch) => {
+        if (ch) {
+          throw new ConflictError(`Channel ${data._id} already exists`)
         }
-        return addModel(Technology, data)
+        const channel = new Channel(data)
+        return channel.save()
       })
       .catch(err => {
-        // Technology Already Exists. Conflict Error.
+        // Conference Already Exists. Conflict Error.
+        console.log(err, err.message)
         if (err instanceof ConflictError) {
           res.status(409).json({
             info: err.message
@@ -34,8 +41,8 @@ router.post('/',
           throw err
         }
       })
-      .then((savedtech) => {
-        return res.json(savedtech)
+      .then((savedchannel) => {
+        return res.json(savedchannel)
       })
       .catch((err) => {
         return res.status(400).json({err})
@@ -46,63 +53,64 @@ router.post('/',
 router.get('/', (req, res) => {
   const { page, search } = req.query
 
-  Technology
+  Channel
     .find({name: {'$regex': search || '', '$options': 'i'}})
     .skip((page || 0) * 20)
     .limit(20)
     .exec()
-    .then((techs) => {
-      return res.status(200).send(techs)
+    .then((channels) => {
+      return res.status(200).json(channels)
     })
     .catch((err) => {
       return res.status(400).json({err})
     })
 })
 
+
 router.get('/:id/', (req, res) => {
   const { id } = req.params
 
-  const techQuery = Technology.findById(id).exec()
-  const videosQuery = Video.find({tags: id}).populate('channel').populate('conference').populate('speaker').populate('tags').exec()
+  const channelQuery = Channel.findById(id).exec()
+  const videosQuery = Video.find({ channel: id }).populate('speaker').populate('tags').populate('conference').exec()
 
-  Promise.all([techQuery, videosQuery])
-    .then(([tag, videos]) => {
-      return res.status(200).send({tag, videos})
+  Promise.all([channelQuery, videosQuery])
+    .then(([channel, videos]) => {
+      return res.status(200).send({channel, videos})
     })
     .catch(err => {
       return res.status(400).json({err})
     })
 })
 
-router.put('/:id/',
+router.put('/:id',
   passport.authenticate('jwt', { session: false }),
   (req, res) => {
     const { id } = req.params
 
     if (!req.user.isAdmin) return res.status(401).json({info: `Not Authorized to make this request.`})
 
-    Technology
+    Channel
       .findById(id)
       .exec()
-      .then((tech) => {
-        if (tech) {
+      .then((channel) => {
+        if (channel) {
           if (Object.keys(req.body).length > 0) {
             const data = Object.assign({}, req.body, {
               lastModifiedAt: Date.now(),
               lastModifiedBy: req.user._id
             })
-            tech.updateData(data)
-            return tech.save()
+            channel.updateData(data)
+            return channel.save()
           } else {
-            return tech
+            return channel
           }
         } else {
-          res.status(404).json({info: `Tag with id:${id} does not exist.`})
+          res.status(404).json({info: `conference with id:${id} does not exist.`})
         }
       })
-      .then(tech => {
-        console.log('Tag Updated.')
-        return res.status(200).json(tech)
+      .then(channel => {
+        console.log('Channel Updated.')
+        return res.status(200).json(channel)
       })
       .catch(err => {
         return res.status(400).json({err})

@@ -64,7 +64,7 @@ router.get('/', (req, res) => {
 router.get('/:id/', (req, res) => {
   const { id } = req.params
 
-  const conferenceQuery = Conference.findById(id).exec()
+  const conferenceQuery = Conference.findById(id).populate('channel').exec()
   const videosQuery = Video.find({ conference: id }).populate('speaker').populate('tags').exec()
 
   Promise.all([conferenceQuery, videosQuery])

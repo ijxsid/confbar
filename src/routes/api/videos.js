@@ -69,6 +69,7 @@ router.get('/:id/', (req, res) => {
     .populate('conference')
     .populate('speaker')
     .populate('tags')
+    .populate('channel')
     .exec()
     .then((video) => {
       if (video) {
