@@ -20,7 +20,7 @@ router.post('/',
       .exec()
       .then((techs) => {
         if (techs.length > 0) {
-          throw new Error(`Technology ${data.name} already exists.`)
+          throw new ConflictError(`Technology ${data.name} already exists.`)
         }
         return addModel(Technology, data)
       })
