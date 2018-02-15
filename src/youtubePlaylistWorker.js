@@ -1,7 +1,7 @@
 import google from 'googleapis'
 import cliArgs from 'command-line-args'
 import config from '../config'
-import { collectData } from './utils'
+import { collectData, makeVideoData } from './utils'
 import { addVideo } from './api'
 
 const cliOptionDefinitions = [
@@ -21,16 +21,6 @@ const conferenceId = cliOptions.conf
 
 const playlistId = cliOptions.playlist
 
-function makeVideoData (video) {
-  return {
-    name: video.snippet.title,
-    link: `https://www.youtube.com/watch?v=${video.contentDetails.videoId}`,
-    description: video.snippet.description,
-    channel: video.snippet.channelId,
-    conference: conferenceId,
-    youtubePrivate: video.status.privacyStatus === 'private'
-  }
-}
 
 async function main () {
   const items = await collectData(youtube.playlistItems.list, {
@@ -41,7 +31,7 @@ async function main () {
   })
 
   items.forEach(async function (video) {
-    const data = await addVideo(makeVideoData(video))
+    const data = await addVideo(makeVideoData(video, conferenceId))
     console.log(data)
   })
 }

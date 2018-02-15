@@ -78,3 +78,22 @@ export async function addChannel (channelData) {
 
   return data
 }
+
+export async function updateChannel (id, channelData) {
+  const res = await fetch(`${channelsAPI}/${id}`, {
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': `JWT ${TOKEN}`
+    },
+    method: 'PUT',
+    body: JSON.stringify(channelData)
+  })
+  const data = await res.json()
+
+  return data
+}
+export async function getChannels () {
+  const res = await fetch(channelsAPI)
+  const data = await res.json()
+  return data
+}
