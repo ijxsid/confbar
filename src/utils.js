@@ -24,7 +24,6 @@ export async function collectVideos (fn, lastFetched, options) {
   let { items, nextPageToken } = resp.data
 
   while (nextPageToken) {
-    console.log(items.map(item => Date.parse(item.snippet.publishedAt)))
     let notFetched = items.map(item => Date.parse(item.snippet.publishedAt) > lastFetched ? 1 : 0)
     notFetched = notFetched.reduce((acc, v) => acc + v, 0) // How many remaining?
 
@@ -39,12 +38,25 @@ export async function collectVideos (fn, lastFetched, options) {
   return items
 }
 
+export async function collectDataAPI (fn, options) {
+  let page = 0
+  let items = []
+  let resp = await fn(page)
+
+  while (Array.isArray(resp) && resp.length > 0) {
+    items = items.concat(resp)
+    page = page + 1
+    resp = await fn(page)
+  }
+  return items
+}
+
 export function makeVideoData (video, conferenceId) {
   return {
     name: video.snippet.title,
     link: `https://www.youtube.com/watch?v=${video.contentDetails.videoId}`,
     description: video.snippet.description,
-    channel: video.snippet.channelId,
+    channel: `youtube-${video.snippet.channelId}`,
     conference: conferenceId,
     youtubePrivate: video.status.privacyStatus === 'private'
   }

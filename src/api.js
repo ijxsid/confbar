@@ -92,8 +92,8 @@ export async function updateChannel (id, channelData) {
 
   return data
 }
-export async function getChannels () {
-  const res = await fetch(channelsAPI)
+export async function getChannels (page) {
+  const res = await fetch(`${channelsAPI}?page=${page}`)
   const data = await res.json()
   return data
 }
