@@ -3,10 +3,9 @@ import styled from 'styled-components'
 import simpleDate from '../lib/simpleDate'
 import Link from 'next/link'
 import { object, array } from 'prop-types'
-import { getFullLink } from '../lib/utils'
+import { getFullLink, textToSlug } from '../lib/utils'
 import StyledIcon from './styled/Icon'
 import StyledFooter from './styled/Footer'
-import { textToSlug } from '../lib/utils'
 
 
 const Styled = {
@@ -19,7 +18,7 @@ const Styled = {
 
     @media (min-width: 1720px) {
       max-width: unset;
-      width: 75%;
+      width: 80%;
       margin: 0 auto;
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(440px, 1fr));

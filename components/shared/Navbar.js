@@ -93,7 +93,7 @@ class Navbar extends React.Component {
         <div id="navMenuExample" className={`navbar-menu ${hamburgerClicked ? 'is-active' : ''}`}>
           <div className="navbar-start">
             <div className="navbar-item is-tab">
-              <a href="/confs">
+              <a href="/conferences">
                 Conferences
               </a>
 

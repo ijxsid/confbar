@@ -3,14 +3,15 @@ import makeStore from '../lib/makeStore'
 import withRedux from 'next-redux-wrapper'
 import { object, func, array, bool } from 'prop-types'
 import Layout from '../components/shared/Layout'
-import { fetchFeatured } from '../lib/actions'
+import { doFetchConferences } from '../lib/actions'
+import ConfList from '../components/ConfList'
 import { setupUser } from '../lib/utils'
 
 
-class Index extends Component {
+class Conferences extends Component {
   componentWillMount () {
     if (this.props.onClient) {
-      this.props.fetchFeatured()
+      this.props.fetchConferences()
     }
   }
   render () {
@@ -18,42 +19,40 @@ class Index extends Component {
     return (
       <Layout user={user}>
         <div>
-          Index Page
-          <pre><code>
-            {JSON.stringify(this.props.featured, 2, 4)}
-          </code></pre>
+          <ConfList conferences={this.props.conferences} />
         </div>
       </Layout>
     )
   }
 }
 
-Index.propTypes = {
+Conferences.propTypes = {
   user: object,
-  fetchFeatured: func,
-  featured: array,
+  fetchConferences: func,
+  conferences: array,
   onClient: bool
 }
 
 
-Index.getInitialProps = async ({ store, isServer, req, pathname, query }) => {
+Conferences.getInitialProps = async ({ store, isServer, req, pathname, query }) => {
+
   if (!isServer) {
     return { onClient: true }
   }
 
   await setupUser(req, store)
 
-  await store.dispatch(fetchFeatured())
+  await store.dispatch(doFetchConferences())
 }
 
-Index = withRedux(makeStore,
+Conferences = withRedux(makeStore,
   (state) => ({
-    featured: state.data.featured,
+    conferences: Object.values(state.data.conferences),
     user: state.auth.user
   }),
   (dispatch) => ({
-    fetchFeatured: () => (dispatch(fetchFeatured()))
+    fetchConferences: () => (dispatch(doFetchConferences()))
   })
-)(Index)
+)(Conferences)
 
-export default Index
+export default Conferences
