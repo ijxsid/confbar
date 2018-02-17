@@ -47,7 +47,7 @@ const Styled = {
       color: #3498DB;
     }
   `,
-  VideoNameBg: styled.div`
+  VideoName: styled.div`
     background-color: rgba(20, 20, 20, 0.65);
     justify-self: start;
     align-self: start;
@@ -86,11 +86,11 @@ const Styled = {
 const VideoSection = ({ videos }) => (
   <Styled.VideoSection>
     {
-      videos.map(video => (
+      videos.slice(0, Math.floor(videos.length / 2) * 2).map(video => (
         <Styled.Video background={getThumbnail(video.link)}>
-          <Styled.VideoNameBg>
-            <div>{video.name}</div>
-          </Styled.VideoNameBg>
+          <Styled.VideoName>
+            {video.name}
+          </Styled.VideoName>
           <Styled.PlayIcon><i className="icon-play" /></Styled.PlayIcon>
           <Styled.VideoInfo>
             <div><Styled.Icon className="icon-microphone" /> {video.speaker.name}</div>
@@ -101,6 +101,12 @@ const VideoSection = ({ videos }) => (
     }
   </Styled.VideoSection>
 )
+
+
+VideoSection.propTypes = {
+  videos: array
+}
+
 const Section = ({ section }) => (
   <div>
     <Styled.SectionHeading>
