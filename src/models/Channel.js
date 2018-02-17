@@ -12,6 +12,7 @@ const channelSchema = new Schema({
   videoCount: Number,
   subscriberCount: Number,
   viewCount: Number,
+  lastFetched: Number,
   addedBy: { type: String, ref: 'User', required: true },
   createdAt: { type: Number, required: true },
   lastModifiedAt: { type: Number },
@@ -25,6 +26,7 @@ channelSchema.methods.updateData = function (data) {
   this.logo = data.logo || this.logo
   this.uploadsPlayListId = data.uploadsPlayListId || this.uploadsPlayListId
   this.lastFetchedVideo = data.lastFetchedVideo || this.lastFetchedVideo
+  this.lastFetched = data.lastFetched || this.lastFetched
   this.videoCount = data.videoCount || this.videoCount
   this.subscriberCount = data.subscriberCount || this.subscriberCount
   this.viewCount = data.viewCount || this.viewCount
