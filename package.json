@@ -23,10 +23,9 @@
     "dev": "PORT=8088 babel-node server.js --presets env",
     "build": "next build",
     "build:styles": "./node_modules/.bin/gulp sass",
-    "test": "babel-node test_normalizer.js --presets env",
+    "test": "ava --color --verbose --tap | tap-nyan",
     "start": "NODE_ENV=production PORT=8088 babel-node server.js --presets env",
     "postinstall": "npm run build:styles",
-    "ava": "ava",
     "help": "babel-node help.js --presets env"
   },
   "dependencies": {
@@ -52,6 +51,7 @@
     "redux-logger": "^3.0.6",
     "redux-thunk": "^2.2.0",
     "styled-components": "^3.1.4",
+    "tap-nyan": "^1.1.0",
     "universal-cookie": "^2.1.2"
   },
   "devDependencies": {

@@ -5,6 +5,7 @@ import { object, func, array, bool } from 'prop-types'
 import Layout from '../components/shared/Layout'
 import { fetchFeatured } from '../lib/actions'
 import { setupUser } from '../lib/utils'
+import HomeSections from '../components/HomeSections'
 
 
 class Index extends Component {
@@ -14,14 +15,11 @@ class Index extends Component {
     }
   }
   render () {
-    const { user } = this.props
+    const { user, sections } = this.props
     return (
       <Layout user={user}>
         <div>
-          Index Page
-          <pre><code>
-            {JSON.stringify(this.props.featured, 2, 4)}
-          </code></pre>
+          <HomeSections sections={sections} />
         </div>
       </Layout>
     )
@@ -31,7 +29,7 @@ class Index extends Component {
 Index.propTypes = {
   user: object,
   fetchFeatured: func,
-  featured: array,
+  sections: array,
   onClient: bool
 }
 
@@ -48,7 +46,7 @@ Index.getInitialProps = async ({ store, isServer, req, pathname, query }) => {
 
 Index = withRedux(makeStore,
   (state) => ({
-    featured: state.data.featured,
+    sections: state.data.featured,
     user: state.auth.user
   }),
   (dispatch) => ({
