@@ -33,6 +33,7 @@ router.post('/',
 router.get('/', (req, res) => {
   Feature
     .find({})
+    .sort('index')
     .populate({
       path: 'items',
       populate: [{ path: 'conference' }, {path: 'speaker'}, {path: 'tags'}]
