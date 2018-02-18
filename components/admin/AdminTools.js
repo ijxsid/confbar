@@ -20,7 +20,7 @@ const Styled = {
     font-weight: 500;
     color:#C02727;
   }
-`,
+`
 }
 
 const AdminTools = ({ isAdmin, render }) => (

@@ -3,14 +3,13 @@ import styled from 'styled-components'
 import Link from 'next/link'
 import { getThumbnail, getEmbed } from '../lib/youtubeUtils'
 import { ConferenceSticky, SpeakerSticky, TagSticky } from './common/Sticky'
-import AdminTools from './common/AdminTools'
-import { object, array, func, string } from 'prop-types'
+import { object, array } from 'prop-types'
+import VideoAdminTools from './admin/VideoAdminTools'
 import config from '../config'
 import StyledIcon from './styled/Icon'
 import StyledFooter from './styled/Footer'
 import { textToSlug } from '../lib/utils'
-import { connect } from 'react-redux'
-import { adminActions } from '../lib/actions'
+import VideoState from './common/VideoState'
 
 
 const Styled = {
@@ -139,95 +138,57 @@ const Styled = {
   `
 }
 
-let VideoAdminTools = ({ id, startEditingVideo }) => (
-  <AdminTools
-    render={
-      [
-        <div key={0}>
-          <button className="button is-info is-small" onClick={() => { startEditingVideo(id) }}>
-            <Styled.Icon className="icon-edit"/> Edit
-          </button>
-        </div>,
-        <div key={1}>
-          <button className="button is-danger is-small">
-            <Styled.Icon className="icon-delete"/> Delete
-          </button>
-        </div>
-      ]
-    }
-  />
-)
 
-VideoAdminTools.propTypes = {
-  id: string,
-  startEditingVideo: func
-}
-
-VideoAdminTools = connect(null, dispatch => ({
-  startEditingVideo: id => dispatch(adminActions.startEditVideo(id))
-}))(VideoAdminTools)
-
-
-class VideoInfo extends React.Component {
-  state = {
-    vidoeClicked: false
-  };
-
-  onThumbnailClick = () => {
-    this.setState(() => ({
-      videoClicked: true
-    }))
-  }
-  render () {
-    const { video, hideComponents } = this.props
-    const { videoClicked } = this.state
-    const fullLink = `${config.frontend.base}/video/${video._id}`
-    return (
-      <Styled.Video>
-        <Styled.Title style={{ marginBottom: '0.15rem' }}>
-          <Link
-            href={`/video?id=${video._id}`}
-            as={`/video/${video._id}/${textToSlug(video.name)}`} >
-            <a>{video.name}</a>
-          </Link>
-          <VideoAdminTools id={video._id}/>
-        </Styled.Title>
-        { videoClicked ?
-          <Styled.Embed src={getEmbed(video.link)} frameBorder="0" allowFullScreen /> :
-          <Styled.Thumbnail background={getThumbnail(video.link)} onClick={this.onThumbnailClick}>
-            <div><i className="icon-play" /></div>
-          </Styled.Thumbnail>
+const VideoInfo = ({ video, hideComponents }) => {
+  const fullLink = `${config.frontend.base}/video/${video._id}`
+  return (
+    <Styled.Video>
+      <Styled.Title style={{ marginBottom: '0.15rem' }}>
+        <Link
+          href={`/video?id=${video._id}`}
+          as={`/video/${video._id}/${textToSlug(video.name)}`} >
+          <a>{video.name}</a>
+        </Link>
+        <VideoAdminTools id={video._id}/>
+      </Styled.Title>
+      <VideoState
+        render={({ clicked, onClick }) =>
+          clicked ?
+            <Styled.Embed src={getEmbed(video.link)} frameBorder="0" allowFullScreen /> :
+            <Styled.Thumbnail background={getThumbnail(video.link)} onClick={onClick}>
+              <div><i className="icon-play" /></div>
+            </Styled.Thumbnail>
         }
-        <Styled.Info>
-          {
-            !hideComponents.conference && video.conference &&
-            <ConferenceSticky conference={video.conference} />
-          }
+      />
+      <Styled.Info>
+        {
+          !hideComponents.conference && video.conference &&
+          <ConferenceSticky conference={video.conference} />
+        }
 
-          {
-            !hideComponents.speaker && video.speaker &&
-            <SpeakerSticky speaker={video.speaker}/>
-          }
+        {
+          !hideComponents.speaker && video.speaker &&
+          <SpeakerSticky speaker={video.speaker}/>
+        }
 
-          {
-            !hideComponents.tag && video.tags.length > 0 &&
-            <TagSticky tags={video.tags}/>
-          }
-        </Styled.Info>
-        <Styled.Footer>
-          <div>
-            <span>Share on: </span>
-            <a href={`https://www.facebook.com/sharer/sharer.php?u=${fullLink}`}>
-              <Styled.Icon className="icon-facebook"/>
-            </a>
-            <a href={`https://twitter.com/home?status=Watch '${video.name}' on Confbar: ${fullLink}`}>
-              <Styled.Icon className="icon-twitter"/>
-            </a>
-          </div>
-        </Styled.Footer>
-      </Styled.Video>
-    )
-  }
+        {
+          !hideComponents.tag && video.tags.length > 0 &&
+          <TagSticky tags={video.tags}/>
+        }
+      </Styled.Info>
+      <Styled.Footer>
+        <div>
+          <span>Share on: </span>
+          <a href={`https://www.facebook.com/sharer/sharer.php?u=${fullLink}`}>
+            <Styled.Icon className="icon-facebook"/>
+          </a>
+          <a href={`https://twitter.com/home?status=Watch '${video.name}' on Confbar: ${fullLink}`}>
+            <Styled.Icon className="icon-twitter"/>
+          </a>
+        </div>
+      </Styled.Footer>
+    </Styled.Video>
+  )
 }
 
 VideoInfo.propTypes = {
