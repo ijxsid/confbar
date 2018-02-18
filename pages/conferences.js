@@ -35,7 +35,6 @@ Conferences.propTypes = {
 
 
 Conferences.getInitialProps = async ({ store, isServer, req, pathname, query }) => {
-
   if (!isServer) {
     return { onClient: true }
   }

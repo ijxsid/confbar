@@ -5,12 +5,14 @@ import styled from 'styled-components'
 import VideoSection from './sections/VideoSection'
 import ConferenceSection from './sections/ConferenceSection'
 import SpeakerSection from './sections/SpeakerSection'
+import TagSection from './sections/TagSection'
 
 
 const Styled = {
   Container: styled.div`
     width: 80%;
-    margin: 2rem auto;
+    margin: 2rem auto 0px;
+    padding-bottom: 2rem;
   `,
   SectionContainer: styled.div`
     margin: 3rem 0 4rem;
@@ -58,9 +60,12 @@ const Section = ({ section }) => (
     <Styled.Header>
       <Styled.Heading> {section.heading} </Styled.Heading>
       <Styled.BrowseButton>
-        <BrowseAllLink type={section.type}>
-          <button className="button is-link"> Browse All  &gt; </button>
-        </BrowseAllLink>
+        {
+          section.showBrowseAll &&
+            <BrowseAllLink type={section.type}>
+              <button className="button is-link"> Browse All  &gt; </button>
+            </BrowseAllLink>
+        }
       </Styled.BrowseButton>
     </Styled.Header>
     {
@@ -74,6 +79,10 @@ const Section = ({ section }) => (
     {
       section.type === 'Speaker' &&
       <SpeakerSection speakers={section.items} />
+    }
+    {
+      section.type === 'Technology' &&
+      <TagSection tags={section.items} />
     }
   </Styled.SectionContainer>
 )
