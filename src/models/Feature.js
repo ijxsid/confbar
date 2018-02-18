@@ -7,6 +7,7 @@ const featureSchema = new Schema({
   heading: { type: String, required: true },
   type: { type: String, required: true },
   index: Number,
+  showBrowseAll: { type: Boolean, default: false },
   items: [{ type: String, refPath: 'type' }],
   addedBy: { type: String, ref: 'User', required: true },
   createdAt: { type: Number, required: true },
@@ -33,6 +34,7 @@ featureSchema.methods.updateData = function (data) {
   this.index = data.index || this.index
   this.items = data.items || this.items
   this.type = data.type || this.type
+  this.showBrowseAll = typeof data.showBrowseAll !== 'undefined' ? data.showBrowseAll : this.showBrowseAll
 }
 
 
