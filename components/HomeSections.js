@@ -4,6 +4,7 @@ import Link from 'next/link'
 import styled from 'styled-components'
 import VideoSection from './sections/VideoSection'
 import ConferenceSection from './sections/ConferenceSection'
+import SpeakerSection from './sections/SpeakerSection'
 
 
 const Styled = {
@@ -58,7 +59,7 @@ const Section = ({ section }) => (
       <Styled.Heading> {section.heading} </Styled.Heading>
       <Styled.BrowseButton>
         <BrowseAllLink type={section.type}>
-          <button className="button is-link"> Browse All &gt; </button>
+          <button className="button is-link"> Browse All  &gt; </button>
         </BrowseAllLink>
       </Styled.BrowseButton>
     </Styled.Header>
@@ -69,6 +70,10 @@ const Section = ({ section }) => (
     {
       section.type === 'Conference' &&
       <ConferenceSection confs={section.items} />
+    }
+    {
+      section.type === 'Speaker' &&
+      <SpeakerSection speakers={section.items} />
     }
   </Styled.SectionContainer>
 )
