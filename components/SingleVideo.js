@@ -3,11 +3,10 @@ import styled from 'styled-components'
 import Link from 'next/link'
 import { object } from 'prop-types'
 import { getEmbed } from '../lib/youtubeUtils'
-import { getFullLink, getFBShareLink, getTwitterShareLink } from '../lib/utils'
+import { getFullLink, getFBShareLink, getTwitterShareLink, textToSlug } from '../lib/utils'
 import { ConferenceSticky, TagSticky, SpeakerSticky } from './common/Sticky'
 import StyledIcon from './styled/Icon'
 import StyledFooter from './styled/Footer'
-import { textToSlug } from '../lib/utils'
 
 
 const Styled = {
