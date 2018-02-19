@@ -30,7 +30,7 @@ app.prepare()
     })
 
     server.get('/tag/:id/:slug?', (req, res) => {
-      return app.render(req, res, '/technology', { id: req.params.id })
+      return res.redirect(`/technology/${req.params.id}/${req.params.slug}`)
     })
 
     server.get('/technology/:id/:slug?', (req, res) => {

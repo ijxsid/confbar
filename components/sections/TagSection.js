@@ -6,8 +6,8 @@ import Styled from './StyledSection'
 
 const Tag = ({ _id, name, logo, description }) => (
   <Link
-    href={`/tag?id=${_id}`}
-    as={`/tag/${_id}/${textToSlug(`${name}`)}`}>
+    href={`/technology?id=${_id}`}
+    as={`/technology/${_id}/${textToSlug(`${name}`)}`}>
     <Styled.Item title={`Watch ${name} talks`}>
       <Styled.Image src={logo}/>
       <Styled.Name>{name}</Styled.Name>
