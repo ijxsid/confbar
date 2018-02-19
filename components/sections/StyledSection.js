@@ -149,12 +149,12 @@ export default {
       font-size: 1rem;
     }
     @media(max-width: 480px) {
-      font-size: 1.10rem;
+      font-size: 0.95rem;
       align-self: start;
       padding: 0 1rem 3.5rem;
+      font-weight: 400;      
     }
     @media(max-width: 420px) {
-      font-size: 1rem;
       padding: 0 1rem 2rem;
     }
   `,

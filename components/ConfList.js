@@ -15,14 +15,36 @@ const Styled = {
   Header: styled.div`
     width: 100%;
     background-image: url('/static/images/bg-memphis-colorful.png');
-    padding: 3rem 10%;
+    padding: 3rem 12.5%;
     font-size: 5rem;
-    font-weight: 700; 
+    font-weight: 700;
+    @media (max-width: 800px) {
+      padding: 3rem 2.5%;
+      font-size: 3rem;    
+    }
+    @media (max-width: 560px) {
+      padding: 2rem 2.5%;
+      font-size: 2.4rem;
+    }
+    @media (max-width: 420px) {
+      padding: 1.75rem 2.5%;
+      font-size: 2rem
+    }
+
   `,
   Sub: styled.div`
     font-size: 1.5rem;
     font-weight: 700;
     color: #666;
+    @media (max-width: 800px) {
+      font-size: 1.25rem;    
+    }
+    @media (max-width: 560px) {
+      font-size: 1.10rem;
+    }
+    @media (max-width: 420px) {
+      font-size: 1rem
+    }
   `,
   ListContainer: styled.div` 
     width: 75%;
