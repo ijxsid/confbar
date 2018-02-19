@@ -10,6 +10,12 @@ const Styled = {
     display: grid;
     grid-template-columns: repeat(2, calc(50% - 17.5px));
     grid-gap: 35px;
+    @media(max-width: 920px) {
+      grid-template-columns: repeat(1, 100%);
+    }
+    @media(max-width: 480px) {
+      grid-gap: 20px;
+    }
   `,
   Video: styled.div`
     background-image: url(${props => props.background});
@@ -18,7 +24,6 @@ const Styled = {
     min-height: 320px;
     display: grid;
     grid-template-rows: 1fr 1fr 1fr;
-    font-size: 1.20em;
     position: relative;
     border-radius: 2.4px;
     box-shadow: 5px 10px 20px rgba(0,0,0,0.15), 2px 6px 6px rgba(0,0,0,0.18);
@@ -29,15 +34,24 @@ const Styled = {
       transition: 0.16s linear;      
     }
     :hover {
-      box-shadow: 7px 14px 28px rgba(0,0,0,0.18), 5px 10px 10px rgba(0,0,0,0.20);
-      
+      box-shadow: 7px 14px 28px rgba(0,0,0,0.18), 5px 10px 10px rgba(0,0,0,0.20); 
     }
 
     :hover > div:nth-child(2) {
       color: #3498DB;
     }
+    @media(max-width: 480px) {
+      min-height: 270px;
+    }
+    @media(max-width: 420px) {
+      min-height: 236px;
+    }
+    @media(max-width: 360px) {
+      min-height: 200px;
+    }
   `,
   VideoName: styled.div`
+    font-size: 1.20em;  
     background-color: rgba(20, 20, 20, 0.65);
     justify-self: start;
     align-self: start;
@@ -48,6 +62,10 @@ const Styled = {
     padding: 4px 1rem;
     border-radius: 2.5px;
     box-shadow: 0px 0px 8px 2px rgba(20, 20, 20, 0.2);
+    @media(max-width: 480px) {
+      font-size: 1rem;
+      padding: 2px 0.5rem;
+    }
   `,
   PlayIcon: styled.div`
     align-self: center;
@@ -62,7 +80,11 @@ const Styled = {
     justify-self: start;
     align-self: end;
     background-color: rgba(20, 20, 20, 0.65);
-    box-shadow: 0px 0px 8px 2px rgba(20, 20, 20, 0.2);    
+    box-shadow: 0px 0px 8px 2px rgba(20, 20, 20, 0.2);
+    @media(max-width: 480px) {
+      font-size: 0.75rem;
+      padding: 2px 0.5rem;
+    }
   `,
   Icon: styled.i`
     ${StyledIcon}
@@ -79,6 +101,16 @@ const Styled = {
     grid-row: span 3;
     width: 100%;
     min-height: 320px;
+
+    @media(max-width: 480px) {
+      min-height: 270px;
+    }
+    @media(max-width: 420px) {
+      min-height: 236px;
+    }
+    @media(max-width: 360px) {
+      min-height: 200px;
+    }
   `
 }
 
