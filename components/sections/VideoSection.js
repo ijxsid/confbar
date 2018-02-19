@@ -40,6 +40,16 @@ const Styled = {
     :hover > div:nth-child(2) {
       color: #3498DB;
     }
+
+    @media(min-width: 1440px) {
+      min-height: 350px; 
+    }
+    @media(min-width: 1720px) {
+      min-height: 400px; 
+    }
+    @media(min-width: 1920px) {
+      min-height: 500px; 
+    }
     @media(max-width: 480px) {
       min-height: 270px;
     }
@@ -66,6 +76,9 @@ const Styled = {
       font-size: 1rem;
       padding: 2px 0.5rem;
     }
+    @media(min-width: 1720px) {
+      font-size: 1.75rem; 
+    }
   `,
   PlayIcon: styled.div`
     align-self: center;
@@ -85,6 +98,9 @@ const Styled = {
       font-size: 0.75rem;
       padding: 2px 0.5rem;
     }
+    @media(min-width: 1720px) {
+      font-size: 1.25rem; 
+    }
   `,
   Icon: styled.i`
     ${StyledIcon}
@@ -101,6 +117,16 @@ const Styled = {
     grid-row: span 3;
     width: 100%;
     min-height: 320px;
+
+    @media(min-width: 1440px) {
+      min-height: 350px; 
+    }
+    @media(min-width: 1720px) {
+      min-height: 400px; 
+    }
+    @media(min-width: 1920px) {
+      min-height: 500px; 
+    }
 
     @media(max-width: 480px) {
       min-height: 270px;
