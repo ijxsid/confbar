@@ -32,7 +32,7 @@ const Styled = {
     margin: 2.5rem auto 1rem;
     display:grid;
     grid-template-columns: 1fr 3fr;
-    grid-template-rows: 2fr repeat(2, 1fr);
+    grid-template-rows: 2fr auto auto;
     grid-gap: 5px;
     justify-content: center;
     grid-template-areas: ${tagInfoAreas};
