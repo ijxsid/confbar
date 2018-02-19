@@ -1,5 +1,5 @@
 import React from 'react'
-import { array, string } from 'prop-types'
+import { array, string, number } from 'prop-types'
 import Link from 'next/link'
 import { textToSlug } from '../../lib/utils'
 import Styled from './StyledSection'
@@ -23,21 +23,26 @@ Speaker.propTypes = {
   twitterUsername: string.isRequired
 }
 
-const SpeakerSection = ({ speakers }) => (
-  <Styled.Section>
-    {
-      speakers.slice(0, Math.floor(speakers.length / 4) * 4).map(speaker => (
-        <Speaker {...speaker} key={speaker._id}/>
-      ))
-    }
-  </Styled.Section>
-)
+const SpeakerSection = ({ speakers }) => {
+  const visibleSpeaker = speakers.slice(0, Math.floor(speakers.length / 4) * 4)
+  return (
+    <Styled.Section>
+      {
+        visibleSpeaker.map(speaker => (
+          <Speaker {...speaker} key={speaker._id}/>
+        ))
+      }
+    </Styled.Section>
+  )
+}
 
 SpeakerSection.propTypes = {
-  speakers: array
+  speakers: array,
+  multiple: number
 }
 
 SpeakerSection.defaultProps = {
-  speakers: []
+  speakers: [],
+  multiple: 4
 }
 export default SpeakerSection

@@ -1,5 +1,5 @@
 import React from 'react'
-import { array, string } from 'prop-types'
+import { array, string, number } from 'prop-types'
 import Link from 'next/link'
 import { textToSlug } from '../../lib/utils'
 import Styled from './StyledSection'
@@ -23,21 +23,26 @@ Tag.propTypes = {
   description: string
 }
 
-const TagSection = ({ tags }) => (
-  <Styled.Section>
-    {
-      tags.slice(0, Math.floor(tags.length / 4) * 4).map(tag => (
-        <Tag {...tag} key={tag._id}/>
-      ))
-    }
-  </Styled.Section>
-)
+const TagSection = ({ tags, multiple }) => {
+  const visibleTags = tags.slice(0, Math.floor(tags.length / multiple) * multiple)
+  return (
+    <Styled.Section>
+      {
+        visibleTags.map(tag => (
+          <Tag {...tag} key={tag._id}/>
+        ))
+      }
+    </Styled.Section>
+  )
+}
 
 TagSection.propTypes = {
-  tags: array
+  tags: array,
+  multiple: number
 }
 
 TagSection.defaultProps = {
-  tags: []
+  tags: [],
+  multiple: 4
 }
 export default TagSection

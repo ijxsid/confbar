@@ -172,17 +172,26 @@ Video.propTypes = {
   })
 }
 
-const VideoSection = ({ videos }) => (
-  <Styled.VideoSection>
-    {
-      videos.slice(0, Math.floor(videos.length / 2) * 2).map(video => (
-        <Video {...video} key={video._id}/>
-      ))
-    }
-  </Styled.VideoSection>
-)
+const VideoSection = ({ videos, multiple }) => {
+  const visibleVideos = videos.slice(0, Math.floor(videos.length / multiple) * multiple)
+  return (
+    <Styled.VideoSection>
+      {
+        visibleVideos.map(video => (
+          <Video {...video} key={video._id}/>
+        ))
+      }
+    </Styled.VideoSection>
 
+  )
+}
 VideoSection.propTypes = {
-  videos: array
+  videos: array,
+  multiple: number
+}
+
+VideoSection.defaultProps = {
+  videos: [],
+  multiple: 2
 }
 export default VideoSection

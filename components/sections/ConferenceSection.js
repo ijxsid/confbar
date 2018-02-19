@@ -23,17 +23,25 @@ Conference.propTypes = {
   year: number.isRequired
 }
 
-const ConferenceSection = ({ confs }) => (
-  <Styled.Section>
-    {
-      confs.slice(0, Math.floor(confs.length / 4) * 4).map(conf => (
-        <Conference {...conf} key={conf._id}/>
-      ))
-    }
-  </Styled.Section>
-)
+const ConferenceSection = ({ confs, multiple }) => {
+  const visibleConfs = confs.slice(0, Math.floor(confs.length / 4) * 4)
+  return (
+    <Styled.Section>
+      {
+        visibleConfs.map(conf => (
+          <Conference {...conf} key={conf._id}/>
+        ))
+      }
+    </Styled.Section>
+  )
+}
 
 ConferenceSection.propTypes = {
-  confs: array
+  confs: array,
+  multiple: number
+}
+ConferenceSection.defaultProps = {
+  confs: [],
+  multiple: 4
 }
 export default ConferenceSection
