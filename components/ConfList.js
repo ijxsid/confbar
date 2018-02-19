@@ -9,7 +9,22 @@ import StyledFooter from './styled/Footer'
 
 
 const Styled = {
-  Container: styled.div` 
+  Container: styled.div`
+    width: 100%;
+  `,
+  Header: styled.div`
+    width: 100%;
+    background-image: url('/static/images/bg-memphis-colorful.png');
+    padding: 3rem 10%;
+    font-size: 5rem;
+    font-weight: 700; 
+  `,
+  Sub: styled.div`
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #666;
+  `,
+  ListContainer: styled.div` 
     width: 75%;
     max-width: 960px;
     min-width: 200px;
@@ -210,7 +225,15 @@ Conference.propTypes = {
 
 const ConfList = ({ conferences }) => (
   <Styled.Container>
-    {conferences.map(c => <Conference conf={c} key={c._id} />) }
+    <Styled.Header>
+      Conferences
+      <Styled.Sub>
+        At Confbar
+      </Styled.Sub>
+    </Styled.Header>
+    <Styled.ListContainer>
+      {conferences.map(c => <Conference conf={c} key={c._id} />) }
+    </Styled.ListContainer>
   </Styled.Container>
 )
 

@@ -5,18 +5,42 @@ import SpeakerSection from './sections/SpeakerSection'
 
 const Styled = {
   Container: styled.div`
+    width: 100%;
+  `,
+  ListContainer: styled.div`
     width: 80%;
     margin: 2rem auto 0px;
     padding-bottom: 2rem;
+    padding-top: 2rem;
 
     @media(max-width: 640px) {
       width: 95%;
     }
+  `,
+  Header: styled.div`
+    width: 100%;
+    background-image: url('/static/images/bg-memphis-colorful.png');
+    padding: 3rem 10%;
+    font-size: 5rem;
+    font-weight: 700; 
+  `,
+  Sub: styled.div`
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #666;
   `
 }
 const SpeakersList = ({ speakers }) => (
   <Styled.Container>
-    <SpeakerSection speakers={speakers} multiple={1}/>
+    <Styled.Header>
+      Speakers
+      <Styled.Sub>
+        At Confbar
+      </Styled.Sub>
+    </Styled.Header>
+    <Styled.ListContainer>
+      <SpeakerSection speakers={speakers} multiple={1}/>
+    </Styled.ListContainer>
   </Styled.Container>
 )
 
