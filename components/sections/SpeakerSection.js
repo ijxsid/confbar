@@ -23,8 +23,8 @@ Speaker.propTypes = {
   twitterUsername: string.isRequired
 }
 
-const SpeakerSection = ({ speakers }) => {
-  const visibleSpeaker = speakers.slice(0, Math.floor(speakers.length / 4) * 4)
+const SpeakerSection = ({ speakers, multiple }) => {
+  const visibleSpeaker = speakers.slice(0, Math.floor(speakers.length / multiple) * multiple)
   return (
     <Styled.Section>
       {
