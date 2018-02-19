@@ -35,6 +35,18 @@ const Styled = {
     color: #555;
     margin: 1rem 0;
     text-transform: uppercase;
+    @media(min-width: 1440px) {
+      font-size: 1.30rem;
+    }
+    @media(min-width: 1720px) {
+      font-size: 1.45rem;
+    }
+    @media(min-width: 1920px) {
+      font-size: 1.50rem;
+    }
+    @media(min-width: 2200px) {
+      font-size: 1.75rem;
+    }
     @media(max-width: 480px) {
       font-size: 1rem;
     }

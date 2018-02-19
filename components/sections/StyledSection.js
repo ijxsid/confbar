@@ -142,9 +142,6 @@ export default {
     @media(min-width: 1720px) {
       font-size: 1.2rem;
     }
-    @media(min-width: 1920px) {
-      font-size: 1.35rem;
-    }
     @media(min-width: 2560px) {
       font-size: 1.5rem;
     }
