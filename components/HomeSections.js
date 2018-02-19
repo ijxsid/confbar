@@ -13,6 +13,10 @@ const Styled = {
     width: 80%;
     margin: 2rem auto 0px;
     padding-bottom: 2rem;
+
+    @media(max-width: 640px) {
+      width: 95%;
+    }
   `,
   SectionContainer: styled.div`
     margin: 3rem 0 4rem;
@@ -21,6 +25,8 @@ const Styled = {
     display: grid;
     grid-template-columns: auto auto;
     align-items: center;
+    grid-gap: 10px;
+
   `,
   Heading: styled.div`
     justify-self: start;
@@ -29,6 +35,9 @@ const Styled = {
     color: #555;
     margin: 1rem 0;
     text-transform: uppercase;
+    @media(max-width: 480px) {
+      font-size: 1rem;
+    }
   `,
   BrowseButton: styled.div`
     justify-self: end;
@@ -36,6 +45,11 @@ const Styled = {
     button.button {
       text-transform: uppercase;
       font-weight: 700;
+    }
+    @media(max-width: 480px) {
+      button.button {
+        font-size: 0.80rem;
+      }
     }
   `
 }
