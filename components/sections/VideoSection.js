@@ -77,7 +77,7 @@ const Styled = {
       padding: 2px 0.5rem;
     }
     @media(min-width: 1720px) {
-      font-size: 1.75rem; 
+      font-size: 1.35rem; 
     }
   `,
   PlayIcon: styled.div`
@@ -127,7 +127,6 @@ const Styled = {
     @media(min-width: 1920px) {
       min-height: 500px; 
     }
-
     @media(max-width: 480px) {
       min-height: 270px;
     }

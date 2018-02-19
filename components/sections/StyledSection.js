@@ -43,6 +43,18 @@ export default {
     :hover {
       box-shadow: 2px 8px 14px rgba(50,50,50,0.18), 1px 5px 9px rgba(50,50,50,0.20);  
     }
+    @media(min-width: 1440px) {
+      grid-template-rows: 220px auto auto;
+    }
+    @media(min-width: 1720px) {
+      grid-template-rows: 260px auto auto;
+    }
+    @media(min-width: 1920px) {
+      grid-template-rows: 300px auto auto;
+    }
+    @media(min-width: 1920px) {
+      grid-template-rows: 350px auto auto;
+    }
     @media(max-width: 1080px) {
       grid-template-rows: 140px auto auto;
     }
@@ -71,6 +83,19 @@ export default {
     padding: ${props => `${typeof props.padding === 'undefined' ? 5 : props.padding}px`};
     height: 180px;
     margin: 0 auto;
+
+    @media(min-width: 1440px) {
+      height: 220px;
+    }
+    @media(min-width: 1720px) {
+      height: 260px;
+    }
+    @media(min-width: 1920px) {
+      height: 300px;
+    }
+    @media(min-width: 2560px) {
+      height: 350px;
+    }
     @media(max-width: 1080px) {
       height: 140px;
     }
@@ -87,6 +112,15 @@ export default {
     grid-area: name;
     font-weight: 700;
     color: #666;
+    @media(min-width: 1720px) {
+      font-size: 1.55rem;
+    }
+    @media(min-width: 1920px) {
+      font-size: 1.75rem;
+    }
+    @media(min-width: 2560px) {
+      font-size: 2rem;
+    }
     @media(max-width: 1080px) {
       font-size: 1.15rem;
     }
@@ -105,6 +139,15 @@ export default {
     font-weight: 700;
     font-size: 1.05rem;
     color: #878787;
+    @media(min-width: 1720px) {
+      font-size: 1.2rem;
+    }
+    @media(min-width: 1920px) {
+      font-size: 1.35rem;
+    }
+    @media(min-width: 2560px) {
+      font-size: 1.5rem;
+    }
     @media(max-width: 1080px) {
       font-size: 1rem;
     }
