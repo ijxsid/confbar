@@ -3,6 +3,7 @@ import { injectGlobal } from 'styled-components'
 import { object, array, oneOfType, string } from 'prop-types'
 import Navbar from './Navbar'
 import AppHead from './AppHead'
+import MetaKeys from './MetaTags'
 
 
 injectGlobal`
@@ -11,10 +12,10 @@ injectGlobal`
   }
 `
 
-const Layout = ({ user, pageTitle, headChildren, children }) => (
+const Layout = ({ user, pageTitle, meta, children }) => (
   <div>
     <AppHead title={pageTitle}>
-      {headChildren}
+      <MetaKeys meta={meta} />
     </AppHead>
     <Navbar user={user}/>
     {children}
@@ -24,8 +25,12 @@ const Layout = ({ user, pageTitle, headChildren, children }) => (
 Layout.propTypes = {
   user: object,
   children: oneOfType([array, object]),
-  headChildren: object,
+  meta: object,
   pageTitle: string
+}
+
+Layout.defaultProps = {
+  meta: {}
 }
 
 export default Layout

@@ -17,7 +17,13 @@ class Index extends Component {
   render () {
     const { user, sections } = this.props
     return (
-      <Layout user={user}>
+      <Layout
+        user={user}
+        pageTitle={'Confbar: Watch and Follow Top Tech Conferences'}
+        meta={{
+          description: 'Watch & follow best the Technology Conferences from around the world. Learn from the best doing their best.'
+        }}
+      >
         <div>
           <HomeSections sections={sections} />
         </div>

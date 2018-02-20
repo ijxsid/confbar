@@ -14,7 +14,6 @@ export default class MyDocument extends Document {
     return (
       <html>
         <Head>
-          <title>Confbar v0.1</title>
           {this.props.styleTags}
         </Head>
         <body>
