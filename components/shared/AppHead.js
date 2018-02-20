@@ -1,14 +1,14 @@
 import React from 'react'
 import Head from 'next/head'
-import { object } from 'prop-types'
+import { object, string } from 'prop-types'
 
-const AppHead = ({ children }) => (
+const AppHead = ({ children, title }) => (
   <Head>
     <meta charSet="UTF-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <link rel="shortcut icon" href="/static/images/icon.ico" />
     <meta httpEquiv="X-UA-Compatible" content="ie=edge"/>
-    <title>Confbar</title>
+    <title>{ title } </title>
     <link rel="stylesheet" href="/static/css/index.css"/>
     <link rel="stylesheet" href="/static/icons/styles.css"/>
     {children}
@@ -17,6 +17,11 @@ const AppHead = ({ children }) => (
 
 
 AppHead.propTypes = {
-  children: object
+  children: object,
+  title: string
+}
+
+AppHead.defaultProps = {
+  title: 'Confbar'
 }
 export default AppHead

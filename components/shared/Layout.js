@@ -1,6 +1,6 @@
 import React from 'react'
 import { injectGlobal } from 'styled-components'
-import { object, array, oneOfType } from 'prop-types'
+import { object, array, oneOfType, string } from 'prop-types'
 import Navbar from './Navbar'
 import AppHead from './AppHead'
 
@@ -11,9 +11,11 @@ injectGlobal`
   }
 `
 
-const Layout = ({ user, headChildren, children }) => (
+const Layout = ({ user, pageTitle, headChildren, children }) => (
   <div>
-    <AppHead />
+    <AppHead title={pageTitle}>
+      {headChildren}
+    </AppHead>
     <Navbar user={user}/>
     {children}
   </div>
@@ -22,7 +24,8 @@ const Layout = ({ user, headChildren, children }) => (
 Layout.propTypes = {
   user: object,
   children: oneOfType([array, object]),
-  headChildren: object
+  headChildren: object,
+  pageTitle: string
 }
 
 export default Layout
