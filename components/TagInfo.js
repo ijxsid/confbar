@@ -54,7 +54,7 @@ const Styled = {
     grid-area: icon;
     border-radius: 20px;
     @media (max-width: 640px) {
-      align-self: center;
+      aligng-self: center;
     }
   `,
   Name: styled.div`
