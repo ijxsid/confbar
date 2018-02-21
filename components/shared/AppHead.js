@@ -22,6 +22,6 @@ AppHead.propTypes = {
 }
 
 AppHead.defaultProps = {
-  title: 'Confbar'
+  title: 'Confbar: Watch and Follow Top Tech Conferences'
 }
 export default AppHead
