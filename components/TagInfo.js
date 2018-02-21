@@ -36,11 +36,26 @@ const Styled = {
     grid-gap: 5px;
     justify-content: center;
     grid-template-areas: ${tagInfoAreas};
+    
+    @media (max-width: 640px) {
+      width: 95%;
+      max-width: 480px;
+      min-width: unset;
+      grid-template-columns: 80px 1fr;
+      grid-template-rows: 2fr auto auto auto;
+    }
+    
+    @media (max-width: 500px) {
+      grid-gap: 5px;
+    }
   `,
   Logo: styled.img`
     width: 100%;
     grid-area: icon;
     border-radius: 20px;
+    @media (max-width: 640px) {
+      align-self: center;
+    }
   `,
   Name: styled.div`
     grid-area: name;
@@ -48,11 +63,35 @@ const Styled = {
     font-size: 4rem;
     padding-left: 2rem;
     align-self: end;
+    @media (max-width: 1024px) {
+      font-size: 3.0rem;
+    }
+
+    @media (max-width: 640px) {
+      padding-left: 1rem;
+      font-size: 2rem;
+      font-weight: 600;
+    }
+
+    @media (max-width: 500px) {
+      font-size: 1.75rem;
+      font-weight: 400;
+    }
   `,
   Description: styled.div`
     grid-area: description;
     padding-left: 2rem;
     font-size: 0.90rem;
+    @media (min-width: 1720px) {
+      font-size: 1.5rem;
+    }
+    @media (max-width: 640px) {
+      padding-left: 1rem;
+      font-size: 0.95rem;
+    }
+    @media (max-width: 500px) {
+      font-size: 0.8rem;
+    }
   `,
   Links: styled.div`
     grid-area: links;
@@ -64,6 +103,15 @@ const Styled = {
     grid-template-columns: repeat(3, 1fr);
     justify-items: start;
     grid-gap: 5px;
+    @media (max-width: 800px) {
+      font-size: 1.25rem;
+    } 
+    @media (max-width: 640px) {
+      padding-left: 1rem;
+    }
+    @media (max-width: 540px) {
+      font-size: 1rem;
+    }
   `,
   Link: styled.div`
     transition: all 0.4s ease;
