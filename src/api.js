@@ -103,7 +103,17 @@ export async function getConferences (page) {
   const data = await res.json()
   return data
 }
+export async function getSpeakers (page) {
+  const res = await fetch(`${speakersAPI}?page=${page}`)
+  const data = await res.json()
+  return data
+}
 
+export async function getTechnologies (page) {
+  const res = await fetch(`${techAPI}?page=${page}`)
+  const data = await res.json()
+  return data
+}
 export async function updateConf (id, confData) {
   const res = await fetch(`${confsAPI}/${id}/`, {
     headers: {
@@ -112,6 +122,33 @@ export async function updateConf (id, confData) {
     },
     method: 'PUT',
     body: JSON.stringify(confData)
+  })
+  const data = await res.json()
+
+  return data
+}
+
+export async function updateSpeaker (id, speakerData) {
+  const res = await fetch(`${speakersAPI}/${id}/`, {
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': `JWT ${TOKEN}`
+    },
+    method: 'PUT',
+    body: JSON.stringify(speakerData)
+  })
+  const data = await res.json()
+
+  return data
+}
+export async function updateTechnology (id, techData) {
+  const res = await fetch(`${techAPI}/${id}/`, {
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': `JWT ${TOKEN}`
+    },
+    method: 'PUT',
+    body: JSON.stringify(techData)
   })
   const data = await res.json()
 

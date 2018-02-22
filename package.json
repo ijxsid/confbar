@@ -9,7 +9,10 @@
     "add:tag": "babel-node src/addTag.js --presets env",
     "add:channel": "babel-node src/addChannel.js --presets env",
     "update:channels": "babel-node src/addChannelVideos.js --presets env",
-    "update:images": "babel-node src/downloadLogos.js --presets env"
+    "update:conf:images": "babel-node src/updateConfLogos.js --presets env",
+    "update:speaker:images": "babel-node src/updateSpeakerAvatars.js --presets env",
+    "update:tag:images": "babel-node src/updateTagLogos.js --presets env",
+    "update:images": "npm run update:conf:images; npm run update:speaker:images; npm run update:tag:images"
   },
   "devDependencies": {
     "babel-cli": "^6.26.0",
