@@ -1,6 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
 import { shape, string } from 'prop-types'
+import { getSpeakerAvatar } from '../lib/utils'
 
 const Styled = {
   SpeakerInfo: styled.div`
@@ -99,7 +100,7 @@ const Styled = {
 const SpeakerInfo = ({ speaker }) => (
   <Styled.SpeakerInfo>
     <Styled.SpeakerAvatar
-      src={`https://avatars.io/twitter/${speaker.twitterUsername}`}
+      src={getSpeakerAvatar(speaker)}
       alt={`Twitter Avatar of ${speaker.name}`} />
     <Styled.SpeakerName>
       {speaker.name}

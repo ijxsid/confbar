@@ -1,6 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
 import { shape, string } from 'prop-types'
+import { getImage } from '../lib/utils'
 
 const tagInfoAreas = props => {
   if (props.simpleLayout && props.noDescription) {
@@ -142,7 +143,7 @@ const TagInfo = ({ tag }) => (
     {
       tag.logo &&
       <Styled.Logo
-        src={`${tag.logo}`}
+        src={getImage(tag.logo)}
         alt={`Logo for ${tag.name}`} />
     }
 
