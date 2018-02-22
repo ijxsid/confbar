@@ -6,6 +6,7 @@ const conferenceSchema = new Schema({
   _id: { type: String, required: true },
   name: { type: String, required: true },
   logo: String,
+  originalLogoURL: String,
   year: Number,
   startDate: Date,
   endDate: Date,
@@ -22,6 +23,7 @@ const conferenceSchema = new Schema({
 conferenceSchema.methods.updateData = function (data) {
   this.name = data.name || this.name
   this.logo = data.logo || this.logo
+  this.originalLogoURL = data.originalLogoURL || this.originalLogoURL
   this.year = data.year || this.year
   this.startDate = data.startDate || this.startDate
   this.endDate = data.endDate || this.endDate
