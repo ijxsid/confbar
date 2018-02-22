@@ -4,6 +4,8 @@ const speakerSchema = new mongoose.Schema({
   _id: { type: String, required: true },
   name: { type: String, required: true },
   twitterUsername: String,
+  avatar: String,
+  originalAvatarURL: String,
   website: String,
   blog: String,
   github: String,
@@ -18,6 +20,8 @@ const speakerSchema = new mongoose.Schema({
 speakerSchema.methods.updateData = function (data) {
   this.name = data.name || this.name
   this.twitterUsername = data.twitterUsername || this.twitterUsername
+  this.avatar = data.avatar || this.avatar
+  this.originalAvatarURL = data.originalAvatarURL || this.originalAvatarURL
   this.website = data.website || this.website
   this.blog = data.blog || this.blog
   this.location = data.location || this.location

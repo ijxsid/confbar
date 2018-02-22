@@ -8,6 +8,7 @@ const technologySchema = new mongoose.Schema({
   blog: String,
   repo: String,
   logo: String,
+  originalLogoURL: String,
   description: String,
   twitter: String,
   addedBy: { type: String, ref: 'User', required: true },
@@ -21,6 +22,7 @@ technologySchema.methods.updateData = function (data) {
   this.website = data.website || this.website
   this.blog = data.blog || this.blog
   this.logo = data.logo || this.logo
+  this.originalLogoURL = data.originalLogoURL || this.originalLogoURL
   this.repo = data.repo || this.repo
   this.description = data.description || this.description
   this.twitter = data.twitter || this.twitter
