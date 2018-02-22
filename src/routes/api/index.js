@@ -6,6 +6,7 @@ import technologies from './technologies'
 import videos from './videos'
 import channels from './channels'
 import featured from './featured'
+import search from './search'
 
 
 const router = express.Router()
@@ -17,6 +18,6 @@ router.use('/technologies', technologies)
 router.use('/videos', videos)
 router.use('/channels', channels)
 router.use('/featured', featured)
-
+router.use('/search', search)
 
 export default router
