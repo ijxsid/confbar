@@ -4,7 +4,7 @@ import fetch from 'isomorphic-unfetch'
 const TOKEN = config.confbar.token
 const apiBase = config.confbar.api.base
 const videosAPI = `${apiBase}/api/videos`
-
+const confsAPI = `${apiBase}/api/conferences`
 const speakersAPI = `${apiBase}/api/speakers`
 const techAPI = `${apiBase}/api/technologies`
 const channelsAPI = `${apiBase}/api/channels`
@@ -95,5 +95,25 @@ export async function updateChannel (id, channelData) {
 export async function getChannels (page) {
   const res = await fetch(`${channelsAPI}?page=${page}`)
   const data = await res.json()
+  return data
+}
+
+export async function getConferences (page) {
+  const res = await fetch(`${confsAPI}?page=${page}`)
+  const data = await res.json()
+  return data
+}
+
+export async function updateConf (id, confData) {
+  const res = await fetch(`${confsAPI}/${id}/`, {
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': `JWT ${TOKEN}`
+    },
+    method: 'PUT',
+    body: JSON.stringify(confData)
+  })
+  const data = await res.json()
+
   return data
 }

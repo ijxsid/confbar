@@ -1,6 +1,6 @@
 {
   "name": "confbar-workers",
-  "version": "0.3.0",
+  "version": "0.5.0",
   "main": "index.js",
   "license": "NO LICENSE",
   "scripts": {
@@ -8,7 +8,8 @@
     "add:speaker": "babel-node src/addSpeaker.js --presets env",
     "add:tag": "babel-node src/addTag.js --presets env",
     "add:channel": "babel-node src/addChannel.js --presets env",
-    "update:channels": "babel-node src/addChannelVideos.js --presets env"
+    "update:channels": "babel-node src/addChannelVideos.js --presets env",
+    "update:images": "babel-node src/downloadLogos.js --presets env"
   },
   "devDependencies": {
     "babel-cli": "^6.26.0",
