@@ -1,7 +1,7 @@
 import React from 'react'
 import { array, string, number } from 'prop-types'
 import Link from 'next/link'
-import { textToSlug } from '../../lib/utils'
+import { textToSlug, getImage } from '../../lib/utils'
 import Styled from './StyledSection'
 
 const Conference = ({ _id, name, logo, year }) => (
@@ -9,7 +9,7 @@ const Conference = ({ _id, name, logo, year }) => (
     href={`/conference?id=${_id}`}
     as={`/conference/${_id}/${textToSlug(`${name} ${year}`)}`}>
     <Styled.Item title={`Watch ${name} - ${year}`}>
-      <Styled.Image src={logo}/>
+      <Styled.Image src={getImage(logo)}/>
       <Styled.Name>{name}</Styled.Name>
       <Styled.Sub>{year}</Styled.Sub>
     </Styled.Item>

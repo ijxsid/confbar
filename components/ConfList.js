@@ -3,7 +3,7 @@ import styled from 'styled-components'
 import simpleDate from '../lib/simpleDate'
 import Link from 'next/link'
 import { object, array } from 'prop-types'
-import { getFullLink, textToSlug } from '../lib/utils'
+import { getFullLink, textToSlug, getImage } from '../lib/utils'
 import StyledIcon from './styled/Icon'
 import StyledFooter from './styled/Footer'
 
@@ -208,7 +208,7 @@ const Styled = {
 
 const Conference = ({ conf }) => (
   <Styled.Item>
-    <Styled.Logo src={conf.logo} />
+    <Styled.Logo src={getImage(conf.logo)} />
     <Styled.Title>
       <Link
         href={`/conference?id=${conf._id}`}

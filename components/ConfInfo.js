@@ -1,6 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
 import simpleDate from '../lib/simpleDate'
+import { getImage } from '../lib/utils'
 import { shape, string, number } from 'prop-types'
 
 const Styled = {
@@ -137,7 +138,7 @@ const Styled = {
 
 const ConfInfo = ({ conference }) => (
   <Styled.ConfInfo>
-    <Styled.ConfImage src={conference.logo} alt={`logo of ${conference.name}`} />
+    <Styled.ConfImage src={getImage(conference.logo)} alt={`logo of ${conference.name}`} />
     <Styled.ConfName>
       {conference.name}
     </Styled.ConfName>
