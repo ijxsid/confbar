@@ -5,6 +5,7 @@ import Link from 'next/link'
 import Cookies from 'js-cookie'
 import { connect } from 'react-redux'
 import { authActions } from '../../lib/actions'
+import Search from './Search'
 
 const LoginWithTwitter = () => (
   <div className="navbar-item">
@@ -80,7 +81,7 @@ class Navbar extends React.Component {
             </a>
           </Link>
 
-
+          <Search mobile />
           <div className={`navbar-burger burger ${hamburgerClicked ? 'is-active' : ''}`}
             data-target="navMenuExample"
             onClick={this.onHamburgerClicked}>
@@ -118,6 +119,7 @@ class Navbar extends React.Component {
           </div>
 
           <div className="navbar-end">
+            <Search />
             { !this.props.user.displayName ?
               <LoginWithTwitter /> :
               <UserInfoDropdown user={this.props.user} performLogout={this.props.performLogout} />

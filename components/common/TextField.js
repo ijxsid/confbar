@@ -7,7 +7,7 @@ const Styled = {
     display: flex;
     align-items: center;
     width: 100%;
-
+    
     .label:not(:last-child) {
       margin-bottom: 0px;
     }

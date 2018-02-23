@@ -1,6 +1,6 @@
 import React from 'react'
 import { func, object } from 'prop-types'
-import TextField from './TextField'
+import TextField from '../common/TextField'
 
 const VideoFormTab = ({ video, onChange }) => (
   <div>

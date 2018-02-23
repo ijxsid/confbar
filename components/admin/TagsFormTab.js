@@ -1,7 +1,7 @@
 import React from 'react'
 import { func, object, array, string } from 'prop-types'
 import styled from 'styled-components'
-import TextField from './TextField'
+import TextField from '../common/TextField'
 import Tabs from '../common/Tabs'
 
 const Styled = {
