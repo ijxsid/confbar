@@ -9,22 +9,22 @@ const router = express.Router()
 router.get('/', (req, res) => {
   const { search, page } = req.query
   const conferencesQuery = Conference
-    .find({name: {'$regex': search || '', '$options': 'i'}})
+    .find({'$text': { '$search': search || '', '$caseSensitive': false }})
     .skip((page || 0) * 10)
     .limit(10)
     .exec()
   const videosQuery = Video
-    .find({name: {'$regex': search || '', '$options': 'i'}})
+    .find({'$text': { '$search': search || '', '$caseSensitive': false }})
     .skip((page || 0) * 10)
     .limit(10)
     .exec()
   const speakersQuery = Speaker
-    .find({name: {'$regex': search || '', '$options': 'i'}})
+    .find({'$text': { '$search': search || '', '$caseSensitive': false }})
     .skip((page || 0) * 10)
     .limit(10)
     .exec()
   const techsQuery = Technology
-    .find({name: {'$regex': search || '', '$options': 'i'}})
+    .find({'$text': { '$search': search || '', '$caseSensitive': false }})
     .skip((page || 0) * 10)
     .limit(10)
     .exec()
@@ -34,6 +34,7 @@ router.get('/', (req, res) => {
       res.status(200).json({ conferences, videos, speakers, tags })
     })
     .catch(err => {
+      console.log(err)
       res.status(400).json({err})
     })
 })
