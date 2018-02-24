@@ -3,6 +3,9 @@ import styled from 'styled-components'
 import { func, string, bool } from 'prop-types'
 import SearchInput from '../common/SearchInput'
 import animations from '../styled/animations'
+import { connect } from 'react-redux'
+import { performSearch } from '../../lib/actions'
+
 
 const Styled = {
   Search: styled.div`
@@ -31,19 +34,14 @@ const Styled = {
     animation: ${animations.flipInX} 0.5s linear;
   `
 }
-class Search extends React.Component {
-  state = { search: '' }
 
+
+class Search extends React.Component {
   handleSearch = (event) => {
-    const key = event.target.name
-    const value = event.target.value
-    this.setState(() => ({
-      [key]: value
-    }))
+    this.props.onChangeSearch(event.target.value)
   }
   render () {
-    const { mobile } = this.props
-    const { search } = this.state
+    const { mobile, term } = this.props
 
     return (
       <Styled.Search mobile={mobile}>
@@ -51,10 +49,10 @@ class Search extends React.Component {
           name="search"
           onChange={this.handleSearch}
           placeholder="Search"
-          value={search}
+          value={term}
         />
         {
-          search &&
+          term &&
           <Styled.Results>
             Results
           </Styled.Results>
@@ -69,7 +67,18 @@ Search.propTypes = {
   onChange: func,
   placeholder: string,
   value: string,
-  mobile: bool
+  mobile: bool,
+  term: string,
+  onChangeSearch: func
 }
+
+Search = connect(
+  state => ({
+    term: state.data.search
+  }),
+  dispatch => ({
+    onChangeSearch: value => dispatch(performSearch(value))
+  })
+)(Search)
 
 export default Search
