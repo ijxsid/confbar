@@ -3,7 +3,7 @@ import { string, func } from 'prop-types'
 import styled from 'styled-components'
 import { connect } from 'react-redux'
 import AdminTools from './AdminTools'
-import { adminActions } from '../../lib/actions'
+import { adminActionsSecond } from '../../lib/actions'
 import StyledIcon from '../styled/Icon'
 
 const Styled = {
@@ -36,7 +36,7 @@ VideoAdminTools.propTypes = {
 }
 
 VideoAdminTools = connect(null, dispatch => ({
-  startEditingVideo: id => dispatch(adminActions.startEditVideo(id))
+  startEditingVideo: id => dispatch(adminActionsSecond.async.editVideo(id))
 }))(VideoAdminTools)
 
 export default VideoAdminTools

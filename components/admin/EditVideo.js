@@ -162,8 +162,8 @@ EditVideo.propTypes = {
 
 export default connect(
   state => {
-    const { editing, conferences, speakers, tags } = state.data
-    const { form, search, add } = editing
+    const { conferences, speakers, tags } = state.data
+    const { form, search, add, id } = state.editor
     return {
       video: form,
       conference: form.conference ?
@@ -173,7 +173,7 @@ export default connect(
         speakers[form.speaker] :
         null,
       tags: form.tags.map(tag => tags[tag]),
-      id: editing.id,
+      id: id,
       addForm: add,
       search: search,
       confSearchResults: selectConferencesByTerm(state, search.searchConf),

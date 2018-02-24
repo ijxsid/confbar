@@ -18,7 +18,6 @@ class Speaker extends React.Component {
   }
   render () {
     const speaker = this.props.entities.speakers[this.props.id]
-    console.log("speaker", speaker)
     const videoData = speakerNormalizer.denormalizeVideos(speaker.videos, this.props.entities)
     const videos = videoData.videos
     return (

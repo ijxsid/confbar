@@ -20,7 +20,7 @@ class Conference extends React.Component {
     }
   }
   render () {
-    const { id, entities, editing, cancelEditing } = this.props
+    const { id, entities, editor, cancelEditing } = this.props
     const conference = this.props.entities.conferences[id]
     const videoData = confNormalizer.denormalizeVideos(conference.videos, entities)
     const videos = videoData.videos
@@ -34,7 +34,7 @@ class Conference extends React.Component {
           />
         </div>
         <Dialog
-          open={!!(editing.type === 'video' && editing.id)}
+          open={!!(editor.type === 'video' && editor.id)}
           onOuterClick={cancelEditing}
         >
           <EditVideoDynamic />
@@ -50,7 +50,7 @@ Conference.propTypes = {
   id: string,
   fetchConf: func,
   onClient: bool,
-  editing: object,
+  editor: object,
   cancelEditing: func
 }
 
@@ -71,7 +71,7 @@ Conference.getInitialProps = async ({ store, isServer, req, pathname, query }) =
 Conference = withRedux(makeStore,
   (state) => ({
     entities: state.data,
-    editing: state.data.editing
+    editor: state.editor
   }),
   (dispatch, ownProps) => ({
     fetchConf: () => dispatch(fetchConfById(ownProps.id)),

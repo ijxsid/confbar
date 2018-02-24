@@ -1,5 +1,5 @@
 import React from 'react'
-import styled, { keyframes } from 'styled-components'
+import styled from 'styled-components'
 import { func, string, bool } from 'prop-types'
 import SearchInput from '../common/SearchInput'
 import animations from '../styled/animations'
