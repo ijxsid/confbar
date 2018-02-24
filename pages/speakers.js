@@ -3,7 +3,7 @@ import makeStore from '../lib/makeStore'
 import withRedux from 'next-redux-wrapper'
 import { object, func, array, bool } from 'prop-types'
 import Layout from '../components/shared/Layout'
-import { doFetchSpeakers } from '../lib/actions'
+import { doFetchSpeakers, confActions } from '../lib/actions'
 import SpeakersList from '../components/SpeakersList'
 import { setupUser } from '../lib/utils'
 
@@ -35,6 +35,7 @@ Speakers.propTypes = {
 
 
 Speakers.getInitialProps = async ({ store, isServer, req, pathname, query }) => {
+  store.dispatch(confActions.changeSearch(''))
   if (!isServer) {
     return { onClient: true }
   }

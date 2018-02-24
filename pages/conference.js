@@ -4,7 +4,7 @@ import makeStore from '../lib/makeStore'
 import withRedux from 'next-redux-wrapper'
 import { string, object, func, bool } from 'prop-types'
 import Layout from '../components/shared/Layout'
-import { fetchConfById, adminActions } from '../lib/actions'
+import { fetchConfById, adminActions, confActions } from '../lib/actions'
 import { setupUser } from '../lib/utils'
 import VideoList from '../components/VideoList'
 import ConfInfo from '../components/ConfInfo'
@@ -19,11 +19,16 @@ class Conference extends React.Component {
       this.props.fetchConf()
     }
   }
+  componentWillUpdate (nextProps) {
+    if (this.props.id !== nextProps.id) {
+      this.props.fetchConf(nextProps.id)
+    }
+  }
   render () {
     const { id, entities, editor, cancelEditing } = this.props
     const conference = this.props.entities.conferences[id]
     const videoData = confNormalizer.denormalizeVideos(conference.videos, entities)
-    const videos = videoData.videos
+    const videos = videoData.videos || []
     return (
       <Layout>
         <ConfInfo conference={conference} />
@@ -57,13 +62,15 @@ Conference.propTypes = {
 Conference.getInitialProps = async ({ store, isServer, req, pathname, query }) => {
   const props = { id: query.id }
 
+  store.dispatch(confActions.changeSearch(''))
+
   if (!isServer) {
     return { ...props, ...{ onClient: true } }
   }
 
-  await setupUser(req, store)
-
   await store.dispatch(fetchConfById(query.id))
+
+  await setupUser(req, store)
 
   return props
 }
@@ -74,7 +81,7 @@ Conference = withRedux(makeStore,
     editor: state.editor
   }),
   (dispatch, ownProps) => ({
-    fetchConf: () => dispatch(fetchConfById(ownProps.id)),
+    fetchConf: (id) => dispatch(fetchConfById(id || ownProps.id)),
     cancelEditing: () => dispatch(adminActions.resetEditVideo())
   })
 )(Conference)

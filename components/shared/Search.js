@@ -94,14 +94,14 @@ const Styled = {
   `
 }
 
-const ItemLink = ({ type, result, children }) => {
+const ItemLink = ({ type, result, children, onClickResult }) => {
   switch (type) {
   case 'Conference':
     return (
       <Link
         href={`/conference?id=${result._id}`}
         as={`/conference/${result._id}/${textToSlug(`${result.name} ${result.year}`)}`}>
-        <a>{children}</a>
+        <a onClick={onClickResult}>{children}</a>
       </Link>
     )
   case 'Technology':
@@ -109,7 +109,7 @@ const ItemLink = ({ type, result, children }) => {
       <Link
         href={`/technology?id=${result._id}`}
         as={`/technology/${result._id}/${textToSlug(`${result.name}`)}`}>
-        <a>{children}</a>
+        <a onClick={onClickResult}>{children}</a>
       </Link>
     )
   case 'Video':
@@ -117,7 +117,7 @@ const ItemLink = ({ type, result, children }) => {
       <Link
         href={`/video?id=${result._id}`}
         as={`/video/${result._id}/${textToSlug(result.name)}`} >
-        <a>{children}</a>
+        <a onClick={onClickResult}>{children}</a>
       </Link>
     )
   case 'Speaker':
@@ -125,18 +125,18 @@ const ItemLink = ({ type, result, children }) => {
       <Link
         href={`/speaker?id=${result._id}`}
         as={`/speaker/${result._id}/${textToSlug(`${result.name}`)}`}>
-        <a>{children}</a>
+        <a onClick={onClickResult}>{children}</a>
       </Link>
     )
   }
 }
 
-const ResultsListItem = ({ result }) => (
+const ResultsListItem = ({ result, onClickResult }) => (
   <Styled.ListItem>
     <Styled.ItemImg src={getResultItemImage(result.type, result)} />
     <Styled.ItemInfo>
       <Styled.ItemName>
-        <ItemLink type={result.type} result={result}>
+        <ItemLink type={result.type} result={result} onClickResult={onClickResult}>
           { result.name }
           { result.type === 'Conference' &&
             `- ${result.year}`
@@ -151,6 +151,9 @@ const ResultsListItem = ({ result }) => (
 class Search extends React.Component {
   handleSearch = (event) => {
     this.props.onChangeSearch(event.target.value)
+  }
+  handleClickResult = () => {
+    this.props.onChangeSearch('')
   }
   render () {
     const { mobile, term, searchResults } = this.props
@@ -174,6 +177,7 @@ class Search extends React.Component {
                   <ResultsListItem
                     key={result._id}
                     result={result}
+                    onClickResult={this.handleClickResult}
                   />
                 ))
               }

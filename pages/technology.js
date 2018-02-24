@@ -3,7 +3,7 @@ import makeStore from '../lib/makeStore'
 import withRedux from 'next-redux-wrapper'
 import { string, object, func, bool } from 'prop-types'
 import Layout from '../components/shared/Layout'
-import { fetchTagById } from '../lib/actions'
+import { fetchTagById, confActions } from '../lib/actions'
 import { setupUser } from '../lib/utils'
 import VideoList from '../components/VideoList'
 import TagInfo from '../components/TagInfo'
@@ -14,6 +14,11 @@ class Technology extends React.Component {
   componentWillMount () {
     if (this.props.onClient) {
       this.props.fetchTag()
+    }
+  }
+  componentWillUpdate (nextProps) {
+    if (this.props.id !== nextProps.id) {
+      this.props.fetchTag(nextProps.id)
     }
   }
   render () {
@@ -43,9 +48,8 @@ Technology.propTypes = {
 }
 
 Technology.getInitialProps = async ({ store, isServer, req, pathname, query }) => {
-
   const props = { id: query.id }
-
+  store.dispatch(confActions.changeSearch(''))
   if (!isServer) {
     return { ...props, ...{ onClient: true } }
   }
@@ -63,7 +67,7 @@ Technology = withRedux(makeStore,
     entities: state.data
   }),
   (dispatch, ownProps) => ({
-    fetchTag: () => (dispatch(fetchTagById(ownProps.id)))
+    fetchTag: (id) => (dispatch(fetchTagById(id || ownProps.id)))
   })
 )(Technology)
 

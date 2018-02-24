@@ -1,8 +1,8 @@
 import React from "react"
 import makeStore from '../lib/makeStore'
-import { authActions, fetchUserInfo } from '../lib/actions'
+import { authActions, fetchUserInfo, confActions } from '../lib/actions'
 import withRedux from 'next-redux-wrapper'
-import { object } from 'prop-types'
+import { object, string } from 'prop-types'
 import Cookies from 'js-cookie'
 import Router from 'next/router'
 import Layout from '../components/shared/Layout'
@@ -31,6 +31,9 @@ class Authenticated extends React.Component {
 
 Authenticated.getInitialProps = async ({ store, req, isServer, pathname, query }) => {
   let nextPath
+
+  store.dispatch(confActions.changeSearch(''))
+
   if (isServer && req.cookies.token) {
     store.dispatch(authActions.addToken(req.cookies.token))
   } else {
@@ -47,7 +50,8 @@ Authenticated.getInitialProps = async ({ store, req, isServer, pathname, query }
 }
 
 Authenticated.propTypes = {
-  user: object
+  user: object,
+  nextPath: string
 }
 
 Authenticated = withRedux(makeStore)(Authenticated)

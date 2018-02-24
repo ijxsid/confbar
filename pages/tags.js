@@ -3,7 +3,7 @@ import makeStore from '../lib/makeStore'
 import withRedux from 'next-redux-wrapper'
 import { object, func, array, bool } from 'prop-types'
 import Layout from '../components/shared/Layout'
-import { doFetchTags } from '../lib/actions'
+import { doFetchTags, confActions } from '../lib/actions'
 import TagsList from '../components/TagsList'
 import { setupUser } from '../lib/utils'
 
@@ -35,6 +35,7 @@ Tags.propTypes = {
 
 
 Tags.getInitialProps = async ({ store, isServer, req, pathname, query }) => {
+  store.dispatch(confActions.changeSearch(''))
   if (!isServer) {
     return { onClient: true }
   }

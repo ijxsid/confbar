@@ -3,7 +3,7 @@ import makeStore from '../lib/makeStore'
 import withRedux from 'next-redux-wrapper'
 import { string, object, func, bool } from 'prop-types'
 import Layout from '../components/shared/Layout'
-import { fetchSpeakerById } from '../lib/actions'
+import { fetchSpeakerById, confActions } from '../lib/actions'
 import { setupUser } from '../lib/utils'
 import VideoList from '../components/VideoList'
 import SpeakerInfo from '../components/SpeakerInfo'
@@ -14,6 +14,11 @@ class Speaker extends React.Component {
   componentWillMount () {
     if (this.props.onClient) {
       this.props.fetchSpeaker()
+    }
+  }
+  componentWillUpdate (nextProps) {
+    if (this.props.id !== nextProps.id) {
+      this.props.fetchSpeaker(nextProps.id)
     }
   }
   render () {
@@ -45,6 +50,8 @@ Speaker.propTypes = {
 Speaker.getInitialProps = async ({ store, isServer, req, pathname, query }) => {
   const props = { id: query.id }
 
+  store.dispatch(confActions.changeSearch(''))
+
   if (!isServer) {
     return { ...props, ...{ onClient: true } }
   }
@@ -62,7 +69,7 @@ Speaker = withRedux(makeStore,
     entities: state.data
   }),
   (dispatch, ownProps) => ({
-    fetchSpeaker: () => (dispatch(fetchSpeakerById(ownProps.id)))
+    fetchSpeaker: (id) => (dispatch(fetchSpeakerById(id || ownProps.id)))
   })
 )(Speaker)
 

@@ -3,7 +3,7 @@ import makeStore from '../lib/makeStore'
 import withRedux from 'next-redux-wrapper'
 import { object, func, array, bool } from 'prop-types'
 import Layout from '../components/shared/Layout'
-import { doFetchConferences } from '../lib/actions'
+import { doFetchConferences, confActions } from '../lib/actions'
 import ConfList from '../components/ConfList'
 import { setupUser } from '../lib/utils'
 
@@ -35,6 +35,8 @@ Conferences.propTypes = {
 
 
 Conferences.getInitialProps = async ({ store, isServer, req, pathname, query }) => {
+  store.dispatch(confActions.changeSearch(''))
+
   if (!isServer) {
     return { onClient: true }
   }

@@ -3,7 +3,7 @@ import makeStore from '../lib/makeStore'
 import withRedux from 'next-redux-wrapper'
 import { object, func, array, bool } from 'prop-types'
 import Layout from '../components/shared/Layout'
-import { fetchFeatured } from '../lib/actions'
+import { fetchFeatured, confActions } from '../lib/actions'
 import { setupUser } from '../lib/utils'
 import HomeSections from '../components/HomeSections'
 
@@ -46,6 +46,7 @@ Index.propTypes = {
 
 
 Index.getInitialProps = async ({ store, isServer, req, pathname, query }) => {
+  store.dispatch(confActions.changeSearch(''))
   if (!isServer) {
     return { onClient: true }
   }
