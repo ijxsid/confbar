@@ -16,8 +16,6 @@ const { API_KEY } = config.youtube
 
 console.log(cliOptions)
 
-const conferenceId = cliOptions.conf
-
 const channelId = cliOptions.channel
 
 function makeChannelData (data) {

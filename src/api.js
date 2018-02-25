@@ -97,6 +97,11 @@ export async function getChannels (page) {
   const data = await res.json()
   return data
 }
+export async function getChannelById (id) {
+  const res = await fetch(`${channelsAPI}/${id}`)
+  const data = await res.json()
+  return data
+}
 
 export async function getConferences (page) {
   const res = await fetch(`${confsAPI}?page=${page}`)

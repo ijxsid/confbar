@@ -2,7 +2,7 @@ import google from 'googleapis'
 import cliArgs from 'command-line-args'
 import config from '../config'
 import { collectData, makeVideoData } from './utils'
-import { addVideo } from './api'
+import { addVideo, editVideo } from './api'
 
 const cliOptionDefinitions = [
   { name: 'playlist', alias: 'p', type: String },
@@ -31,8 +31,13 @@ async function main () {
   })
 
   items.forEach(async function (video) {
-    const data = await addVideo(makeVideoData(video, conferenceId))
-    console.log(data)
+    let data = await addVideo(makeVideoData(video, conferenceId, playlistId))
+    console.log('Added =>', data)
+
+    if (data.err) {
+      data = await editVideo(data.id, makeVideoData(video, conferenceId, playlistId))
+      console.log('Edited =>', data)
+    }
   })
 }
 

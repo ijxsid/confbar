@@ -51,12 +51,13 @@ export async function collectDataAPI (fn, options) {
   return items
 }
 
-export function makeVideoData (video, conferenceId) {
+export function makeVideoData (video, conferenceId, playlistId) {
   return {
     name: video.snippet.title,
     link: `https://www.youtube.com/watch?v=${video.contentDetails.videoId}`,
     description: video.snippet.description,
     channel: `youtube-${video.snippet.channelId}`,
+    youtubePlaylistId: playlistId,
     conference: conferenceId,
     youtubePrivate: video.status.privacyStatus === 'private'
   }
