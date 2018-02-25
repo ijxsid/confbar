@@ -94,6 +94,15 @@ const AddConfPanelTab = ({ conference, onChange, onSubmit }) => (
       </div>
       <div className="panel-block">
         <TextField
+          label="URL"
+          name="url"
+          value={conference.url}
+          placeholder="url of the logo"
+          onChange={onChange}
+        />
+      </div>
+      <div className="panel-block">
+        <TextField
           label="Start Date"
           name="startDate"
           value={conference.startDate}

@@ -65,20 +65,19 @@ const Styled = {
   List: styled.ul``,
   ListItem: styled.li`
     display: block;
-    border-bottom: 1px solid rgba(0, 0, 0, 0.25);
     padding: 12px 0;
     min-height: 5rem;
   `,
   ItemImg: styled.img`
     display: inline-block;
-    width: 100px;
+    width: 35%;
     vertical-align: middle;
     min-height: 5rem;
   `,
   ItemInfo: styled.div`
     display: inline-block;
     vertical-align: top;
-    width: calc(100% - 100px);
+    width: calc(100% - 35%);
     padding: 0px 8px;
     min-height: 5rem;
   `,
