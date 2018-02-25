@@ -5,9 +5,10 @@ export function isValidObjectID (string) {
   return mongoose.Types.ObjectId.isValid(string)
 }
 
-export function ConflictError (message) {
+export function ConflictError (message, id) {
   this.name = 'ConflictError'
   this.message = message || 'Conflict Error'
+  this.id = id || undefined
   this.stack = (new Error()).stack
 }
 

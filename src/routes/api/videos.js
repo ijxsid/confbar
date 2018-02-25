@@ -19,7 +19,7 @@ router.post('/',
       .exec()
       .then((videos) => {
         if (videos.length > 0) {
-          throw new ConflictError(`Video ${data.link} already exists.`)
+          throw new ConflictError(`Video ${data.link} already exists.`, videos[0].id)
         }
         return addModel(Video, data)
       })
@@ -27,7 +27,9 @@ router.post('/',
         // Video Already Exists. Conflict Error.
         if (err instanceof ConflictError) {
           res.status(409).json({
-            info: err.message
+            err: true,
+            info: err.message,
+            id: err.id
           })
         } else {
           throw err

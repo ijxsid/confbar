@@ -12,6 +12,7 @@ const videoSchema = new Schema({
   speaker: { type: String, ref: 'Speaker' },
   channel: { type: String, ref: 'Channel' },
   tags: [{type: String, ref: 'Technology'}],
+  youtubePlaylistId: String,
   attachments: [String],
   addedBy: { type: String, ref: 'User', required: true },
   createdAt: { type: Number, required: true },
@@ -26,6 +27,7 @@ videoSchema.methods.updateData = function (data) {
   this.youtubeChannelId = data.youtubeChannelId || this.youtubeChannelId
   this.youtubeChannelTitle = data.youtubeChannelTitle || this.youtubeChannelTitle
   this.youtubePrivate = data.youtubePrivate || this.youtubePrivate
+  this.youtubePlaylistId = data.youtubePlaylistId || this.youtubePlaylistId
   this.conference = data.conference || this.conference
   this.speaker = data.speaker || this.speaker
   this.tags = data.tags || this.tags
