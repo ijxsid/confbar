@@ -18,6 +18,9 @@ const Styled = {
     padding: 3rem 12.5%;
     font-size: 5rem;
     font-weight: 700;
+    @media (min-width: 1720px) {
+      padding: 3rem 10%;
+    }
     @media (max-width: 800px) {
       padding: 3rem 2.5%;
       font-size: 3rem;    
