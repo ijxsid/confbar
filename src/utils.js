@@ -24,6 +24,7 @@ export async function collectVideos (fn, lastFetched, options) {
   let { items, nextPageToken } = resp.data
 
   while (nextPageToken) {
+    console.log('Collecting Videos =>', items.length)
     let notFetched = items.map(item => Date.parse(item.snippet.publishedAt) > lastFetched ? 1 : 0)
     notFetched = notFetched.reduce((acc, v) => acc + v, 0) // How many remaining?
 

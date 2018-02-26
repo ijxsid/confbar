@@ -5,7 +5,8 @@ import { collectData } from './utils'
 import { addChannel } from './api'
 
 const cliOptionDefinitions = [
-  { name: 'channel', alias: 'c', type: String }
+  { name: 'channel', alias: 'c', type: String },
+  { name: 'username', alias: 'u', type: String }
 ]
 
 const cliOptions = cliArgs(cliOptionDefinitions, {partial: true})
@@ -18,10 +19,18 @@ console.log(cliOptions)
 
 const channelId = cliOptions.channel
 
+const channelUsername = cliOptions.username
+
+if (!channelId && !channelUsername) {
+  process.exit()
+}
+
+const keyForChannel = channelId ? 'id' : 'forUsername'
+
 function makeChannelData (data) {
   return {
     type: 'youtube',
-    channelId: channelId,
+    channelId: channelId || data.id,
     name: data.snippet.title,
     description: data.snippet.description,
     logo: data.snippet.thumbnails.high.url,
@@ -36,7 +45,7 @@ async function main () {
   const items = await collectData(youtube.channels.list, {
     auth: API_KEY,
     part: 'snippet, contentDetails, statistics',
-    id: channelId
+    [keyForChannel]: channelId || channelUsername
   })
 
   const data = await addChannel(makeChannelData(items[0]))
