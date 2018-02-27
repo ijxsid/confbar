@@ -1,7 +1,7 @@
 import React, { Component } from "react"
 import makeStore from '../lib/makeStore'
 import withRedux from 'next-redux-wrapper'
-import { object, func, array, bool } from 'prop-types'
+import { object, func, array, bool, number } from 'prop-types'
 import Layout from '../components/shared/Layout'
 import { doFetchConferences, confActions } from '../lib/actions'
 import ConfList from '../components/ConfList'
@@ -10,17 +10,31 @@ import { setupUser } from '../lib/utils'
 
 class Conferences extends Component {
   componentWillMount () {
-    if (this.props.onClient) {
+    if (this.props.onClient && this.props.page === 0) {
+      this.props.fetchConferences()
+    }
+    if (typeof window !== 'undefined') {
+      window.addEventListener('scroll', this.handleScroll)
+    }
+  }
+  componentWillUnmount () {
+    if (typeof window !== 'undefined') {
+      window.removeEventListener('scroll', this.handleScroll)
+    }
+  }
+  handleScroll = (e) => {
+    if (window.innerHeight + window.scrollY >= document.body.offsetHeight - 5) {
       this.props.fetchConferences()
     }
   }
   render () {
-    const { user } = this.props
+    const { user, fetching } = this.props
     return (
       <Layout user={user}>
-        <div>
+        <div onClick={this.handleScroll} onScroll={this.handleScroll} >
           <ConfList conferences={this.props.conferences} />
         </div>
+        { fetching && 'Loading....' }
       </Layout>
     )
   }
@@ -30,7 +44,8 @@ Conferences.propTypes = {
   user: object,
   fetchConferences: func,
   conferences: array,
-  onClient: bool
+  onClient: bool,
+  page: number
 }
 
 
@@ -49,7 +64,9 @@ Conferences.getInitialProps = async ({ store, isServer, req, pathname, query }) 
 Conferences = withRedux(makeStore,
   (state) => ({
     conferences: Object.values(state.data.conferences),
-    user: state.auth.user
+    page: state.pagination.conference,
+    user: state.auth.user,
+    fetching: state.data.isFetching
   }),
   (dispatch) => ({
     fetchConferences: () => (dispatch(doFetchConferences()))
