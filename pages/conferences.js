@@ -31,7 +31,7 @@ class Conferences extends Component {
     const { user, fetching } = this.props
     return (
       <Layout user={user}>
-        <div onClick={this.handleScroll} onScroll={this.handleScroll} >
+        <div>
           <ConfList conferences={this.props.conferences} />
         </div>
         { fetching && 'Loading....' }
@@ -45,7 +45,8 @@ Conferences.propTypes = {
   fetchConferences: func,
   conferences: array,
   onClient: bool,
-  page: number
+  page: number,
+  fetching: bool
 }
 
 
@@ -64,9 +65,9 @@ Conferences.getInitialProps = async ({ store, isServer, req, pathname, query }) 
 Conferences = withRedux(makeStore,
   (state) => ({
     conferences: Object.values(state.data.conferences),
-    page: state.pagination.conference,
     user: state.auth.user,
-    fetching: state.data.isFetching
+    page: state.pagination.conference.page,
+    fetching: state.pagination.conference.isFetching
   }),
   (dispatch) => ({
     fetchConferences: () => (dispatch(doFetchConferences()))
