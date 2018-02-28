@@ -6,35 +6,17 @@ import Layout from '../components/shared/Layout'
 import { doFetchTags, confActions } from '../lib/actions'
 import TagsList from '../components/TagsList'
 import { setupUser } from '../lib/utils'
+import PagedList from '../components/common/PagedList'
 
 
 class Tags extends Component {
-  componentWillMount () {
-    console.log("tags =>", this.props.tags)
-    if (this.props.onClient && this.props.page === 0) {
-      this.props.fetchTags()
-    }
-    if (typeof window !== 'undefined') {
-      window.addEventListener('scroll', this.handleScroll)
-    }
-  }
-  componentWillUnmount () {
-    if (typeof window !== 'undefined') {
-      window.removeEventListener('scroll', this.handleScroll)
-    }
-  }
-  handleScroll = (e) => {
-    if (window.innerHeight + window.scrollY >= document.body.offsetHeight - 5) {
-      this.props.fetchTags()
-    }
-  }
   render () {
-    const { user } = this.props
+    const { user, onClient, page, fetchTags } = this.props
     return (
       <Layout user={user}>
-        <div>
+        <PagedList fetchItems={fetchTags} onClient={onClient} page={page}>
           <TagsList tags={this.props.tags} />
-        </div>
+        </PagedList>
       </Layout>
     )
   }

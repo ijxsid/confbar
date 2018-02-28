@@ -6,35 +6,17 @@ import Layout from '../components/shared/Layout'
 import { doFetchConferences, confActions } from '../lib/actions'
 import ConfList from '../components/ConfList'
 import { setupUser } from '../lib/utils'
+import PagedList from '../components/common/PagedList'
 
 
 class Conferences extends Component {
-  componentWillMount () {
-    if (this.props.onClient && this.props.page === 0) {
-      this.props.fetchConferences()
-    }
-    if (typeof window !== 'undefined') {
-      window.addEventListener('scroll', this.handleScroll)
-    }
-  }
-  componentWillUnmount () {
-    if (typeof window !== 'undefined') {
-      window.removeEventListener('scroll', this.handleScroll)
-    }
-  }
-  handleScroll = (e) => {
-    if (window.innerHeight + window.scrollY >= document.body.offsetHeight - 5) {
-      this.props.fetchConferences()
-    }
-  }
   render () {
-    const { user, fetching } = this.props
+    const { user, onClient, page, fetchConferences } = this.props
     return (
       <Layout user={user}>
-        <div>
+        <PagedList fetchItems={fetchConferences} onClient={onClient} page={page}>
           <ConfList conferences={this.props.conferences} />
-        </div>
-        { fetching && 'Loading....' }
+        </PagedList>
       </Layout>
     )
   }
