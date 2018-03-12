@@ -34,9 +34,10 @@ Conferences.propTypes = {
 
 Conferences.getInitialProps = async ({ store, isServer, req, pathname, query }) => {
   store.dispatch(confActions.changeSearch(''))
+  console.log(query)
 
   if (!isServer) {
-    return { onClient: true }
+    return { onClient: true, query }
   }
 
   await setupUser(req, store)
