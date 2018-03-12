@@ -14,7 +14,7 @@ const Styled = {
   `,
   ColumnContent: styled.div`
 
-    input[type="checkbox"] {
+    input[type="radio"] {
       vertical-align: middle;
       margin-right: 0.4rem;      
     }

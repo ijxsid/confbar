@@ -1,7 +1,10 @@
 import React from 'react'
 import styled from 'styled-components'
+import { connect } from 'react-redux'
+import { number, func } from 'prop-types'
 import FilterTab from './FilterTab'
 import SortTab from './SortTab'
+import { paginationActions } from '../../lib/actions'
 
 
 const Styled = {
@@ -75,22 +78,19 @@ const Styled = {
 }
 
 class FilterAndSort extends React.Component {
-  state = { selectedTab: undefined };
-  onSelect = (tabNo) => {
-    this.setState(() => ({ selectedTab: tabNo }))
-  }
   onApply = () => {
     console.log("Applying")
   }
   render () {
-    const tabContainerOpen = typeof this.state.selectedTab !== 'undefined'
+    const { selectedTab, onSelectTab } = this.props
+    const tabContainerOpen = typeof selectedTab !== 'undefined'
     return (
       <Styled.Container>
         <Styled.ButtonsContainer open={tabContainerOpen}>
           {
             tabContainerOpen &&
               <Styled.Button
-                onClick={() => this.onSelect(undefined)}
+                onClick={() => onSelectTab(undefined)}
                 open={tabContainerOpen}
                 type="danger"
               >
@@ -98,15 +98,15 @@ class FilterAndSort extends React.Component {
               </Styled.Button>
           }
           <Styled.Button
-            onClick={() => this.onSelect(0)}
-            isSelected={this.state.selectedTab === 0}
+            onClick={() => onSelectTab(0)}
+            isSelected={selectedTab === 0}
             open={tabContainerOpen}
           >
             Filter
           </Styled.Button>
           <Styled.Button
-            onClick={() => this.onSelect(1)}
-            isSelected={this.state.selectedTab === 1}
+            onClick={() => onSelectTab(1)}
+            isSelected={selectedTab === 1}
             open={tabContainerOpen}
           >
             Sort
@@ -123,13 +123,13 @@ class FilterAndSort extends React.Component {
           }
         </Styled.ButtonsContainer>
         {
-          this.state.selectedTab === 0 &&
+          selectedTab === 0 &&
             <Styled.TabContainer>
               <FilterTab />
             </Styled.TabContainer>
         }
         {
-          this.state.selectedTab === 1 &&
+          selectedTab === 1 &&
           <Styled.TabContainer>
             <SortTab />
           </Styled.TabContainer>
@@ -138,5 +138,19 @@ class FilterAndSort extends React.Component {
     )
   }
 }
+
+FilterAndSort.propTypes = {
+  selectedTab: number,
+  onSelectTab: func
+}
+
+FilterAndSort = connect(
+  state => ({
+    selectedTab: state.pagination.conference.sortAndFilterTab
+  }),
+  dispatch => ({
+    onSelectTab: tabNo => dispatch(paginationActions.setFilterAndSortTab(tabNo))
+  })
+)(FilterAndSort)
 
 export default FilterAndSort
