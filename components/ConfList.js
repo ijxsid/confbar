@@ -54,7 +54,7 @@ const Styled = {
     max-width: 960px;
     min-width: 200px;
     margin: 0 auto;
-    padding: 1.5rem 0;
+    padding: 1.5rem 0 0px;
 
     @media (min-width: 1720px) {
       max-width: unset;

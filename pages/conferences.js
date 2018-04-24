@@ -11,10 +11,10 @@ import PagedList from '../components/common/PagedList'
 
 class Conferences extends Component {
   render () {
-    const { user, onClient, page, fetchConferences } = this.props
+    const { user, onClient, page, fetchConferences, fetching } = this.props
     return (
       <Layout user={user}>
-        <PagedList fetchItems={fetchConferences} onClient={onClient} page={page}>
+        <PagedList fetchItems={fetchConferences} onClient={onClient} page={page} fetching={fetching}>
           <ConfList conferences={this.props.conferences} />
         </PagedList>
       </Layout>

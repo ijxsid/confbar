@@ -2,6 +2,7 @@ import React from 'react'
 import styled from 'styled-components'
 import { object, string } from 'prop-types'
 import Link from 'next/link'
+import Loader from './common/Loader'
 
 const Styled = {
   Container: styled.div`
@@ -28,7 +29,7 @@ const Styled = {
 
 const AuthSuccess = ({ user, nextPath }) => (
   <Styled.Container>
-    <Styled.Loader src={`/static/images/dual-ring-loader.svg`} alt="Loading Animation"/>
+    <Loader show />
     <Styled.Title>
       Hi {user.displayName}, Welcome to Confbar
     </Styled.Title>
