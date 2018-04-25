@@ -4,6 +4,8 @@ import { connect } from 'react-redux'
 import { number, func } from 'prop-types'
 import FilterTab from './FilterTab'
 import SortTab from './SortTab'
+import Router from 'next/router'
+import queryString from 'query-string'
 import { paginationActions } from '../../lib/actions'
 
 
@@ -79,7 +81,10 @@ const Styled = {
 
 class FilterAndSort extends React.Component {
   onApply = () => {
-    console.log("Applying")
+    const currentRoute = Router.router.route
+    console.log(this.props.filters)
+    const filters = queryString.stringify(this.props.filters)
+    Router.push(`${currentRoute}?${filters}`)
   }
   render () {
     const { selectedTab, onSelectTab } = this.props
@@ -146,7 +151,8 @@ FilterAndSort.propTypes = {
 
 FilterAndSort = connect(
   state => ({
-    selectedTab: state.pagination.conference.sortAndFilterTab
+    selectedTab: state.pagination.conference.sortAndFilterTab,
+    filters: state.pagination.conference.filters
   }),
   dispatch => ({
     onSelectTab: tabNo => dispatch(paginationActions.setFilterAndSortTab(tabNo))

@@ -11,10 +11,10 @@ import PagedList from '../components/common/PagedList'
 
 class Conferences extends Component {
   render () {
-    const { user, onClient, page, fetchConferences } = this.props
+    const { user, onClient, page, fetchConferences, query } = this.props
     return (
       <Layout user={user}>
-        <PagedList fetchItems={fetchConferences} onClient={onClient} page={page}>
+        <PagedList fetchItems={fetchConferences} onClient={onClient} page={page} query={query}>
           <ConfList conferences={this.props.conferences} />
         </PagedList>
       </Layout>
@@ -28,7 +28,8 @@ Conferences.propTypes = {
   conferences: array,
   onClient: bool,
   page: number,
-  fetching: bool
+  fetching: bool,
+  query: object
 }
 
 
@@ -42,7 +43,7 @@ Conferences.getInitialProps = async ({ store, isServer, req, pathname, query }) 
 
   await setupUser(req, store)
 
-  await store.dispatch(doFetchConferences())
+  await store.dispatch(doFetchConferences(query))
 }
 
 Conferences = withRedux(makeStore,
@@ -53,7 +54,7 @@ Conferences = withRedux(makeStore,
     fetching: state.pagination.conference.isFetching
   }),
   (dispatch) => ({
-    fetchConferences: () => (dispatch(doFetchConferences()))
+    fetchConferences: (query) => (dispatch(doFetchConferences(query)))
   })
 )(Conferences)
 

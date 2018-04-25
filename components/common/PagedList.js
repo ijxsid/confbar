@@ -4,7 +4,7 @@ import { func, bool, number, node, arrayOf, oneOfType } from 'prop-types'
 class ListPage extends Component {
   componentWillMount () {
     if (this.props.onClient && this.props.page === 0) {
-      this.props.fetchItems()
+      this.props.fetchItems(this.props.query || {})
     }
     if (typeof window !== 'undefined') {
       window.addEventListener('scroll', this.handleScroll)
