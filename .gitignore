@@ -1,4 +1,5 @@
 node_modules/
 .next/
+static/css/index.css
 yarn-error.log
 config.json
