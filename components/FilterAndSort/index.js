@@ -2,10 +2,10 @@ import React from 'react'
 import styled from 'styled-components'
 import { connect } from 'react-redux'
 import { number, func } from 'prop-types'
-import FilterTab from './FilterTab'
-import SortTab from './SortTab'
 import Router from 'next/router'
 import queryString from 'query-string'
+import FilterTab from './FilterTab'
+import SearchTab from './SearchTab'
 import { paginationActions } from '../../lib/actions'
 
 
@@ -65,7 +65,7 @@ const Styled = {
     padding: 0.5rem 1rem ${props => props.isSelected ? '0.50rem' : '0.75rem'};
     font-size: 1.2rem;
     box-shadow: 0px ${props => props.open ? '-6px 6px' : '0px 6px'} 4px rgba(170, 170, 190, 0.15);
-    border-bottom: ${props => props.isSelected ? '0.25rem solid #10316B' : 'none'};     
+    border-bottom: ${props => props.isSelected ? '0.25rem solid #10316B' : 'none'};
     cursor: pointer;
     :focus {
       outline: none;
@@ -75,7 +75,7 @@ const Styled = {
     background: #fff;
     box-shadow: 0px 0px 6px 4px rgba(170, 170, 190, 0.15);
     padding: 0.5rem 1rem;
-    
+
   `
 }
 
@@ -114,7 +114,7 @@ class FilterAndSort extends React.Component {
             isSelected={selectedTab === 1}
             open={tabContainerOpen}
           >
-            Sort
+            Search
           </Styled.Button>
           {
             tabContainerOpen &&
@@ -136,7 +136,7 @@ class FilterAndSort extends React.Component {
         {
           selectedTab === 1 &&
           <Styled.TabContainer>
-            <SortTab />
+            <SearchTab />
           </Styled.TabContainer>
         }
       </Styled.Container>
