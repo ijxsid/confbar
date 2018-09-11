@@ -1,12 +1,12 @@
 import React from "react"
-import makeStore from '../lib/makeStore'
-import { authActions, fetchUserInfo, confActions } from '../lib/actions'
-import withRedux from 'next-redux-wrapper'
 import { object, string } from 'prop-types'
+import { connect } from 'react-redux'
 import Cookies from 'js-cookie'
 import Router from 'next/router'
 import Layout from '../components/shared/Layout'
 import AuthSuccess from '../components/AuthSuccess'
+import { authActions, fetchUserInfo, confActions } from '../lib/actions'
+
 
 class Authenticated extends React.Component {
   componentDidMount () {
@@ -54,6 +54,6 @@ Authenticated.propTypes = {
   nextPath: string
 }
 
-Authenticated = withRedux(makeStore)(Authenticated)
+Authenticated = connect()(Authenticated)
 
 export default Authenticated

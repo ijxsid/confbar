@@ -1,6 +1,5 @@
 import React from 'react'
-import makeStore from '../lib/makeStore'
-import withRedux from 'next-redux-wrapper'
+import { connect } from 'react-redux'
 import { object, func, bool, string } from 'prop-types'
 import Layout from '../components/shared/Layout'
 import { fetchVideoById, confActions } from '../lib/actions'
@@ -57,7 +56,7 @@ Video.getInitialProps = async ({ store, isServer, req, pathname, query }) => {
   return props
 }
 
-Video = withRedux(makeStore,
+Video = connect(
   (state, ownProps) => ({
     video: videoNormalizer.denormalizeById(ownProps.id, state.data),
     user: state.auth.user

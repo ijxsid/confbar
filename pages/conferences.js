@@ -1,6 +1,5 @@
 import React, { Component } from "react"
-import makeStore from '../lib/makeStore'
-import withRedux from 'next-redux-wrapper'
+import { connect } from 'react-redux'
 import { object, func, array, bool, number } from 'prop-types'
 import Layout from '../components/shared/Layout'
 import { doFetchConferences, confActions } from '../lib/actions'
@@ -46,7 +45,7 @@ Conferences.getInitialProps = async ({ store, isServer, req, pathname, query }) 
   await store.dispatch(doFetchConferences(query))
 }
 
-Conferences = withRedux(makeStore,
+Conferences = connect(
   (state) => ({
     conferences: Object.values(state.data.conferences),
     user: state.auth.user,

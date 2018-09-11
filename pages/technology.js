@@ -1,6 +1,5 @@
 import React from 'react'
-import makeStore from '../lib/makeStore'
-import withRedux from 'next-redux-wrapper'
+import connect from 'react-redux'
 import { string, object, func, bool } from 'prop-types'
 import Layout from '../components/shared/Layout'
 import { fetchTagById, confActions } from '../lib/actions'
@@ -61,7 +60,7 @@ Technology.getInitialProps = async ({ store, isServer, req, pathname, query }) =
   return props
 }
 
-Technology = withRedux(makeStore,
+Technology = connect(
   (state) => ({
     user: state.auth.user,
     entities: state.data

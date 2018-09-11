@@ -1,6 +1,5 @@
 import React from 'react'
-import makeStore from '../lib/makeStore'
-import withRedux from 'next-redux-wrapper'
+import { connect } from 'react-redux'
 import { string, object, func, bool } from 'prop-types'
 import Layout from '../components/shared/Layout'
 import { fetchSpeakerById, confActions } from '../lib/actions'
@@ -63,7 +62,7 @@ Speaker.getInitialProps = async ({ store, isServer, req, pathname, query }) => {
   return props
 }
 
-Speaker = withRedux(makeStore,
+Speaker = connect(
   (state) => ({
     user: state.auth.user,
     entities: state.data

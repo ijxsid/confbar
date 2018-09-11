@@ -1,7 +1,6 @@
 import React from 'react'
 import dynamic from 'next/dynamic'
-import makeStore from '../lib/makeStore'
-import withRedux from 'next-redux-wrapper'
+import { connect } from 'react-redux'
 import { string, object, func, bool } from 'prop-types'
 import Layout from '../components/shared/Layout'
 import { fetchConfById, adminActions, confActions } from '../lib/actions'
@@ -75,7 +74,7 @@ Conference.getInitialProps = async ({ store, isServer, req, pathname, query }) =
   return props
 }
 
-Conference = withRedux(makeStore,
+Conference = connect(
   (state) => ({
     entities: state.data,
     editor: state.editor
