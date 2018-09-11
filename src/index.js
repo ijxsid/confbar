@@ -18,7 +18,7 @@ import jwtStrategy from './auth/jwtStrategy'
 
 function configureApp () {
   const app = express()
-  mongoose.connect(config.database.url)
+  mongoose.connect(config.database.url, { useNewUrlParser: true })
 
   mongoose.connection.on('error', function (err) {
     console.error('MongoDB error: %s', err)

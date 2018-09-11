@@ -49,6 +49,7 @@ router.get('/', (req, res) => {
 
   Conference
     .find({name: {'$regex': search || '', '$options': 'i'}})
+    .sort('-createdAt')
     .skip((page || 0) * 20)
     .limit(20)
     .exec()
