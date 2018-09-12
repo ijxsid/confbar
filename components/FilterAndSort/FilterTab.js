@@ -1,7 +1,9 @@
 import React from 'react'
 import styled from 'styled-components'
 import { connect } from 'react-redux'
+import { func, shape, array, bool, string } from 'prop-types'
 import { paginationActions } from '../../lib/actions'
+
 const Styled = {
   Container: styled.div`
     display: grid;
@@ -78,12 +80,18 @@ const Tag = ({ value, onChange, isChecked }) => (
   </Styled.Checkbox>
 )
 
+Tag.propTypes = {
+  value: string,
+  onChange: func,
+  isChecked: bool
+}
+
 class FilterTabNew extends React.Component {
   onChange = (e) => {
     this.props.onChangeFilters(e.target.name, e.target.value)
   }
   render () {
-    const { year, location, tag, keyword } = this.props.filters
+    const { tag, sortBy } = this.props.filters
     const defaultTags = ['React', 'Angular', 'Vue.js', 'Javascript', 'Python']
     return (
       <Styled.Container>
@@ -96,6 +104,7 @@ class FilterTabNew extends React.Component {
             {
               defaultTags.map(tagName => (
                 <Tag
+                  key={tagName}
                   value={tagName}
                   isChecked={tag.indexOf(tagName) > -1}
                   onChange={this.onChange}
@@ -111,7 +120,13 @@ class FilterTabNew extends React.Component {
           <Styled.ColumnContent>
             <Styled.Radio>
               <label className="radio">
-                <input type="radio" name="sortBy"/>
+                <input
+                  type="radio"
+                  name="sortBy"
+                  value="-startDate"
+                  checked={sortBy === '-startDate'}
+                  onChange={this.onChange}
+                />
                 <div className="label-name">
                   ▲ Newest First
                 </div>
@@ -119,7 +134,13 @@ class FilterTabNew extends React.Component {
             </Styled.Radio>
             <Styled.Radio>
               <label className="radio">
-                <input type="radio" name="sortBy"/>
+                <input
+                  type="radio"
+                  name="sortBy"
+                  value="+startDate"
+                  checked={sortBy === '+startDate'}
+                  onChange={this.onChange}
+                />
                 <div className="label-name">
                   ▼ Oldest First
                 </div>
@@ -127,7 +148,13 @@ class FilterTabNew extends React.Component {
             </Styled.Radio>
             <Styled.Radio>
               <label className="radio">
-                <input type="radio" name="sortBy"/>
+                <input
+                  type="radio"
+                  name="sortBy"
+                  value="-createdAt"
+                  checked={sortBy === '-createdAt'}
+                  onChange={this.onChange}
+                />
                 <div className="label-name">
                   ◷ Recently Added
                 </div>
@@ -140,12 +167,22 @@ class FilterTabNew extends React.Component {
   }
 }
 
+FilterTabNew.propTypes = {
+  onChangeFilters: func,
+  filters: shape({
+    tag: array
+  }),
+  sortBy: string
+}
+
 FilterTabNew = connect(
   state => ({
-    filters: state.pagination.conference.filters
+    filters: state.pagination.conference.filters,
+    sortBy: state.pagination.conference.sortBy
   }),
   dispatch => ({
     onChangeFilters: (key, value) => dispatch(paginationActions.setFilters(key, value))
   })
 )(FilterTabNew)
+
 export default FilterTabNew
