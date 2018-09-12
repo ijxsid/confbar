@@ -1,6 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { func, string } from 'prop-types'
+import { func, shape, string } from 'prop-types'
 import styled from 'styled-components'
 import { paginationActions } from '../../lib/actions'
 
@@ -22,12 +22,13 @@ class SearchTab extends React.Component {
     this.props.onChange(e.target.value)
   }
   render () {
+    const { search } = this.props.filters
     return (
       <Styled.Container>
         <Styled.SearchInput
           type="text"
           placeholder="Type to search a conference..."
-          value={this.props.keyword}
+          value={search}
           onChange={this.onChange}
         />
       </Styled.Container>
@@ -37,15 +38,17 @@ class SearchTab extends React.Component {
 
 SearchTab.propTypes = {
   onChange: func,
-  keyword: string
+  filters: shape({
+    search: string
+  })
 }
 
 SearchTab = connect(
   state => ({
-    keyword: state.pagination.conference.keyword,
+    filters: state.pagination.conference.filters
   }),
   dispatch => ({
-    onChange: (value) => dispatch(paginationActions.setFilters('keyword', value))
+    onChange: (value) => dispatch(paginationActions.setFilters('search', value))
   })
 )(SearchTab)
 

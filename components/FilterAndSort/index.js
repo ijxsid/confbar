@@ -6,7 +6,7 @@ import Router from 'next/router'
 import queryString from 'query-string'
 import FilterTab from './FilterTab'
 import SearchTab from './SearchTab'
-import { paginationActions } from '../../lib/actions'
+import { paginationActions, applyConferenceFilters } from '../../lib/actions'
 
 
 const Styled = {
@@ -81,10 +81,7 @@ const Styled = {
 
 class FilterAndSort extends React.Component {
   onApply = () => {
-    const currentRoute = Router.router.route
-    console.log(this.props.filters)
-    const filters = queryString.stringify(this.props.filters)
-    Router.push(`${currentRoute}?${filters}`)
+    this.props.onApply()
   }
   render () {
     const { selectedTab, onSelectTab } = this.props
@@ -155,7 +152,8 @@ FilterAndSort = connect(
     filters: state.pagination.conference.filters
   }),
   dispatch => ({
-    onSelectTab: tabNo => dispatch(paginationActions.setFilterAndSortTab(tabNo))
+    onSelectTab: tabNo => dispatch(paginationActions.setFilterAndSortTab(tabNo)),
+    onApply: () => dispatch(applyConferenceFilters())
   })
 )(FilterAndSort)
 

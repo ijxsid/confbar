@@ -2,7 +2,7 @@ import React, { Component } from "react"
 import { connect } from 'react-redux'
 import { object, func, array, bool, number } from 'prop-types'
 import Layout from '../components/shared/Layout'
-import { doFetchConferences, confActions } from '../lib/actions'
+import { doFetchConferences, confActions, paginationActions } from '../lib/actions'
 import ConfList from '../components/ConfList'
 import { setupUser } from '../lib/utils'
 import PagedList from '../components/common/PagedList'
@@ -34,14 +34,16 @@ Conferences.propTypes = {
 
 Conferences.getInitialProps = async ({ store, isServer, req, pathname, query }) => {
   store.dispatch(confActions.changeSearch(''))
-  console.log(query)
 
   if (!isServer) {
     return { onClient: true, query }
   }
 
   await setupUser(req, store)
-
+  Object.keys(query)
+    .map(queryKey => (
+      store.dispatch(paginationActions.setFilters(queryKey, query[queryKey]))
+    ))
   await store.dispatch(doFetchConferences(query))
 }
 

@@ -170,15 +170,14 @@ class FilterTabNew extends React.Component {
 FilterTabNew.propTypes = {
   onChangeFilters: func,
   filters: shape({
-    tag: array
-  }),
-  sortBy: string
+    tag: array,
+    sortBy: string
+  })
 }
 
 FilterTabNew = connect(
   state => ({
-    filters: state.pagination.conference.filters,
-    sortBy: state.pagination.conference.sortBy
+    filters: state.pagination.conference.filters
   }),
   dispatch => ({
     onChangeFilters: (key, value) => dispatch(paginationActions.setFilters(key, value))
