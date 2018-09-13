@@ -1,6 +1,5 @@
 import React, { Component } from "react"
-import makeStore from '../lib/makeStore'
-import withRedux from 'next-redux-wrapper'
+import { connect } from 'react-redux'
 import { object, func, array, bool } from 'prop-types'
 import Layout from '../components/shared/Layout'
 import { fetchFeatured, confActions } from '../lib/actions'
@@ -56,7 +55,7 @@ Index.getInitialProps = async ({ store, isServer, req, pathname, query }) => {
   await store.dispatch(fetchFeatured())
 }
 
-Index = withRedux(makeStore,
+Index = connect(
   (state) => ({
     sections: state.data.featured,
     user: state.auth.user

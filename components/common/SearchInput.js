@@ -7,7 +7,7 @@ const Styled = {
   Input: styled.div`
     margin-right: 0.5rem;
     width: 100%;
-    
+
     input[type="text"] {
       border-radius: 0px;
       width: 100%;

@@ -1,9 +1,8 @@
 import React, { Component } from "react"
-import makeStore from '../lib/makeStore'
-import withRedux from 'next-redux-wrapper'
+import { connect } from 'react-redux'
 import { object, func, array, bool, number } from 'prop-types'
 import Layout from '../components/shared/Layout'
-import { doFetchConferences, confActions } from '../lib/actions'
+import { doFetchConferences, confActions, paginationActions } from '../lib/actions'
 import ConfList from '../components/ConfList'
 import { setupUser } from '../lib/utils'
 import PagedList from '../components/common/PagedList'
@@ -11,10 +10,16 @@ import PagedList from '../components/common/PagedList'
 
 class Conferences extends Component {
   render () {
-    const { user, onClient, page, fetchConferences, fetching } = this.props
+    const { user, onClient, page, fetchConferences, fetching, query } = this.props
     return (
       <Layout user={user}>
-        <PagedList fetchItems={fetchConferences} onClient={onClient} page={page} fetching={fetching}>
+        <PagedList
+          fetchItems={fetchConferences}
+          onClient={onClient}
+          page={page}
+          fetching={fetching}
+          query={query}
+        >
           <ConfList conferences={this.props.conferences} />
         </PagedList>
       </Layout>
@@ -28,7 +33,8 @@ Conferences.propTypes = {
   conferences: array,
   onClient: bool,
   page: number,
-  fetching: bool
+  fetching: bool,
+  query: object
 }
 
 
@@ -36,15 +42,18 @@ Conferences.getInitialProps = async ({ store, isServer, req, pathname, query }) 
   store.dispatch(confActions.changeSearch(''))
 
   if (!isServer) {
-    return { onClient: true }
+    return { onClient: true, query }
   }
 
   await setupUser(req, store)
-
-  await store.dispatch(doFetchConferences())
+  Object.keys(query)
+    .map(queryKey => (
+      store.dispatch(paginationActions.setFilters(queryKey, query[queryKey]))
+    ))
+  await store.dispatch(doFetchConferences(query))
 }
 
-Conferences = withRedux(makeStore,
+Conferences = connect(
   (state) => ({
     conferences: Object.values(state.data.conferences),
     user: state.auth.user,
@@ -52,7 +61,7 @@ Conferences = withRedux(makeStore,
     fetching: state.pagination.conference.isFetching
   }),
   (dispatch) => ({
-    fetchConferences: () => (dispatch(doFetchConferences()))
+    fetchConferences: (query) => (dispatch(doFetchConferences(query)))
   })
 )(Conferences)
 

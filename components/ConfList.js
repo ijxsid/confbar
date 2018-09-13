@@ -6,6 +6,7 @@ import { object, array } from 'prop-types'
 import { getFullLink, textToSlug, getImage } from '../lib/utils'
 import StyledIcon from './styled/Icon'
 import StyledFooter from './styled/Footer'
+import FilterAndSort from './FilterAndSort'
 
 
 const Styled = {
@@ -70,7 +71,6 @@ const Styled = {
       width: 95%;
       margin: 0 auto;
     }
-
   `,
   Item: styled.div`
     display: grid;
@@ -256,6 +256,7 @@ const ConfList = ({ conferences }) => (
         At Confbar
       </Styled.Sub>
     </Styled.Header>
+    <FilterAndSort />
     <Styled.ListContainer>
       {conferences.map(c => <Conference conf={c} key={c._id} />) }
     </Styled.ListContainer>
