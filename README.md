@@ -147,6 +147,21 @@ pm2 start -i 2 npm --name "next" -- start -i 2 #Starting 2 clusters of nextjs pr
   "frontend": {
     "server": "https://confbar.com/",
     "cookieDomain": "confbar.com"
+    }
+}
+```
+
+#### Workers Config
+
+```json
+{
+  "youtube": {
+    "API_KEY": "youtube_api_key"
+  },
+  "confbar": {
+    "api": {
+      "base": "confbar_api_address"
+    }
   }
 }
 
