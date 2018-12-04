@@ -125,7 +125,6 @@ pm2 start -i 2 npm --name "next" -- start -i 2 #Starting 2 clusters of nextjs pr
 ```
 
 #### Backend Config
-
 ```json
 {
   "twitter": {
@@ -152,3 +151,11 @@ pm2 start -i 2 npm --name "next" -- start -i 2 #Starting 2 clusters of nextjs pr
 }
 
 ```
+
+### DB Design.
+
+1. Conference - Details of a conference.
+2. Video - Details of a video object. Contains Reference to Speakers, Conference, Tech, and Added By (User).
+3. Speaker - Details about a Speaker.
+4. Categories/Tech - Details about a Categories.
+5. Tags - Tags on a Video.
