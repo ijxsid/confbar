@@ -1,0 +1,14 @@
+{
+  "extends": ["standard", "react"],
+  "rules": {
+    "jsx-quotes": ["error", "prefer-double"],
+    "indent": ["error", 2],
+    "no-multiple-empty-lines": ["error", { "max": 2, "maxBOF": 1 }]
+  },
+  "globals": {
+    "console": true,
+    "document": true,
+    "Promise": true,
+    "window": true
+  }
+}
